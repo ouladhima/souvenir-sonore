@@ -1,0 +1,237 @@
+{% comment %}
+  Renders the premium audio keepsake personalization flow inside the product form.
+
+  Accepts:
+  - product: Product object
+  - block: Buy buttons block object
+  - section_id: Section id string
+{% endcomment %}
+{%- liquid
+  assign voice_audio_value = block.settings.voice_audio_value | default: 'Voix enregistrée'
+  assign ai_audio_value = block.settings.ai_audio_value | default: 'Chanson sur mesure'
+  assign voice_music_value = block.settings.voice_music_value | default: 'Voix + musique'
+
+  assign voice_audio_value_downcase = voice_audio_value | downcase
+  assign ai_audio_value_downcase = ai_audio_value | downcase
+  assign voice_music_value_downcase = voice_music_value | downcase
+
+  assign selected_audio_value = ''
+  assign selected_duration = ''
+  assign selected_packaging = ''
+
+  if product.options_with_values.size > 0
+    assign selected_audio_value = product.options_with_values[0].selected_value
+  endif
+
+  if product.options_with_values.size > 1
+    assign selected_duration = product.options_with_values[1].selected_value
+  endif
+
+  if product.options_with_values.size > 2
+    assign selected_packaging = product.options_with_values[2].selected_value
+  endif
+
+  assign selected_audio_value_downcase = selected_audio_value | downcase
+  assign initial_audio_mode = ''
+
+  if selected_audio_value_downcase == voice_audio_value_downcase
+    assign initial_audio_mode = 'voice'
+  elsif selected_audio_value_downcase == ai_audio_value_downcase
+    assign initial_audio_mode = 'ai'
+  elsif selected_audio_value_downcase == voice_music_value_downcase
+    assign initial_audio_mode = 'voice_music'
+  elsif selected_audio_value_downcase contains 'voix' and selected_audio_value_downcase contains 'musique'
+    assign initial_audio_mode = 'voice_music'
+  elsif selected_audio_value_downcase contains 'chanson' or selected_audio_value_downcase contains 'ia'
+    assign initial_audio_mode = 'ai'
+  elsif selected_audio_value_downcase contains 'voix'
+    assign initial_audio_mode = 'voice'
+  endif
+
+  assign file_group_visible = false
+  assign brief_group_visible = false
+  assign notes_group_visible = false
+
+  if initial_audio_mode == 'voice' or initial_audio_mode == 'voice_music'
+    assign file_group_visible = true
+  endif
+
+  if initial_audio_mode == 'ai' or initial_audio_mode == 'voice_music'
+    assign brief_group_visible = true
+  endif
+
+  if initial_audio_mode != blank
+    assign notes_group_visible = true
+  endif
+-%}
+
+<audio-keepsake-form
+  class="audio-keepsake-form"
+  data-voice-value="{{ voice_audio_value | escape }}"
+  data-ai-value="{{ ai_audio_value | escape }}"
+  data-voice-music-value="{{ voice_music_value | escape }}"
+  data-required-file-message="Ajoutez votre fichier audio pour continuer."
+  data-required-brief-message="Décrivez votre intention pour continuer."
+  data-missing-mode-message="Choisissez d'abord votre type audio pour personnaliser votre souvenir."
+  data-default-choice-label="À choisir"
+  data-file-ready-label="Fichier ajouté"
+  data-file-missing-label="À ajouter"
+  data-brief-ready-label="Brief prêt"
+  data-brief-missing-label="À renseigner"
+>
+  <div class="audio-keepsake-form__panel audio-keepsake-form__panel--intro">
+    <div>
+      <p class="audio-keepsake-form__eyebrow">Personnalisation</p>
+      <h2 class="audio-keepsake-form__title h4">Préparez votre souvenir sans alourdir le parcours.</h2>
+    </div>
+    <p class="audio-keepsake-form__lead">
+      Ajoutez votre fichier ou décrivez l'intention souhaitée. Ces éléments seront attachés à votre commande pour que
+      nous puissions créer votre audio avec justesse.
+    </p>
+  </div>
+
+  <div class="audio-keepsake-form__error" data-audio-form-error role="alert" hidden></div>
+
+  <input
+    type="hidden"
+    name="properties[_audio_mode]"
+    value="{{ initial_audio_mode }}"
+    data-audio-mode-input
+  >
+
+  <div
+    class="audio-keepsake-form__panel audio-keepsake-form__group"
+    data-audio-role="file"
+    {% unless file_group_visible %}
+      hidden
+    {% endunless %}
+  >
+    <label class="audio-keepsake-form__label" for="AudioFile-{{ section_id }}">Fichier audio</label>
+    <input
+      id="AudioFile-{{ section_id }}"
+      class="audio-keepsake-form__file"
+      type="file"
+      name="properties[Fichier audio]"
+      accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"
+      data-personalization-input
+      data-file-input
+      data-required-modes="voice,voice_music"
+      {% if file_group_visible %}
+        required
+      {% else %}
+        disabled
+      {% endif %}
+    >
+    <p class="audio-keepsake-form__helper">
+      Importez votre message vocal, une archive sonore ou l'enregistrement que vous souhaitez nous confier.
+    </p>
+  </div>
+
+  <div
+    class="audio-keepsake-form__panel audio-keepsake-form__group"
+    data-audio-role="brief"
+    {% unless brief_group_visible %}
+      hidden
+    {% endunless %}
+  >
+    <label class="audio-keepsake-form__label" for="CreativeBrief-{{ section_id }}">Brief créatif</label>
+    <textarea
+      id="CreativeBrief-{{ section_id }}"
+      class="audio-keepsake-form__textarea"
+      name="properties[Brief créatif]"
+      rows="5"
+      placeholder="Décrivez l'émotion, l'histoire, le ton, les prénoms ou les détails qui doivent guider la création."
+      data-personalization-input
+      data-brief-input
+      data-required-modes="ai,voice_music"
+      {% if brief_group_visible %}
+        required
+      {% else %}
+        disabled
+      {% endif %}
+    ></textarea>
+    <p class="audio-keepsake-form__helper">
+      Plus votre intention est précise, plus le rendu sera juste dès le premier aperçu.
+    </p>
+  </div>
+
+  <div
+    class="audio-keepsake-form__panel audio-keepsake-form__group"
+    data-audio-role="notes"
+    {% unless notes_group_visible %}
+      hidden
+    {% endunless %}
+  >
+    <label class="audio-keepsake-form__label" for="AdditionalNotes-{{ section_id }}">Notes complémentaires</label>
+    <textarea
+      id="AdditionalNotes-{{ section_id }}"
+      class="audio-keepsake-form__textarea audio-keepsake-form__textarea--compact"
+      name="properties[Notes complémentaires]"
+      rows="4"
+      placeholder="Ajoutez ici un contexte utile, une contrainte ou une attention particulière."
+      data-personalization-input
+      {% unless notes_group_visible %}
+        disabled
+      {% endunless %}
+    ></textarea>
+  </div>
+
+  <div class="audio-keepsake-form__panel audio-keepsake-summary" aria-live="polite">
+    <div class="audio-keepsake-summary__header">
+      <p class="audio-keepsake-form__eyebrow">Résumé discret</p>
+      <p class="audio-keepsake-summary__intro">Une vue claire avant de passer au panier.</p>
+    </div>
+    <div class="audio-keepsake-summary__grid">
+      <div class="audio-keepsake-summary__item">
+        <span>Type audio</span>
+        <strong data-summary-field="audio_type">{{ selected_audio_value | default: 'À choisir' }}</strong>
+      </div>
+      <div class="audio-keepsake-summary__item">
+        <span>Durée</span>
+        <strong data-summary-field="duration">{{ selected_duration | default: 'À choisir' }}</strong>
+      </div>
+      <div class="audio-keepsake-summary__item">
+        <span>Coffret</span>
+        <strong data-summary-field="packaging">{{ selected_packaging | default: 'À choisir' }}</strong>
+      </div>
+      <div
+        class="audio-keepsake-summary__item"
+        data-summary-row="file"
+        {% unless file_group_visible %}
+          hidden
+        {% endunless %}
+      >
+        <span>Fichier audio</span>
+        <strong data-summary-field="file_status">À ajouter</strong>
+      </div>
+      <div
+        class="audio-keepsake-summary__item"
+        data-summary-row="brief"
+        {% unless brief_group_visible %}
+          hidden
+        {% endunless %}
+      >
+        <span>Brief créatif</span>
+        <strong data-summary-field="brief_status">À renseigner</strong>
+      </div>
+    </div>
+  </div>
+
+  <aside class="audio-keepsake-form__panel audio-keepsake-reassurance" aria-label="Réassurance">
+    <p class="audio-keepsake-form__eyebrow">Réassurance</p>
+    <div class="audio-keepsake-reassurance__list">
+      <article class="audio-keepsake-reassurance__item">
+        <strong>Création en 48h</strong>
+        <p>Votre projet prend forme rapidement, avec le même soin du brief à la production.</p>
+      </article>
+      <article class="audio-keepsake-reassurance__item">
+        <strong>Aperçu avant production</strong>
+        <p>Inclus pour tout audio créé par IA afin de valider le rendu avant fabrication.</p>
+      </article>
+      <article class="audio-keepsake-reassurance__item">
+        <strong>Support humain si besoin</strong>
+        <p>Nous vous guidons à chaque étape si vous avez une question ou une hésitation.</p>
+      </article>
+    </div>
+  </aside>
+</audio-keepsake-form>

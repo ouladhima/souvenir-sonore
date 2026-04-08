@@ -1,0 +1,162 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "promise": {
+          "type": "text",
+          "settings": {
+            "text": "Un souvenir audio personnalisé, conçu pour être offert avec émotion et réécouté longtemps.",
+            "text_style": "subtitle"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "none"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false,
+            "show_pickup_availability": false,
+            "enable_audio_keepsake_experience": true,
+            "voice_audio_value": "Voix enregistrée",
+            "ai_audio_value": "Chanson sur mesure",
+            "voice_music_value": "Voix + musique"
+          }
+        }
+      },
+      "block_order": ["title", "price", "promise", "variant_picker", "buy_buttons"],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 40,
+        "padding_bottom": 20
+      }
+    },
+    "process_steps": {
+      "type": "process-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choisissez votre format de mémoire",
+            "text": "Voix enregistrée, chanson sur mesure ou création mixte selon l'émotion que vous souhaitez offrir."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Envoyez votre voix ou votre intention",
+            "text": "Vous partagez votre fichier audio ou votre brief créatif directement depuis la page produit."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Nous créons sous 48h",
+            "text": "Notre équipe prépare votre souvenir avec un soin éditorial, humain et sensible à chaque détail."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Vous écoutez, vous validez, nous produisons",
+            "text": "Pour l'audio créé par IA, vous recevez un aperçu avant toute fabrication du coffret final."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "caption": "Comment ça fonctionne",
+        "heading": "Un parcours simple, rassurant et pensé pour aller à l'essentiel.",
+        "intro": "Vous choisissez votre format, vous partagez vos éléments, puis nous revenons vers vous avec un rendu prêt à valider avant production.",
+        "heading_size": "h2",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "faq": {
+      "type": "faq-premium",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "Que puis-je envoyer comme fichier audio ?",
+            "answer": "<p>Vous pouvez partager un message vocal, une archive sonore, un extrait enregistré sur téléphone ou tout fichier audio exploitable pour la création.</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne la création sur mesure ?",
+            "answer": "<p>Vous nous expliquez l'intention, l'émotion, l'histoire ou le message à transmettre. Nous composons ensuite une proposition musicale personnalisée pensée pour votre moment.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Recevrai-je un aperçu avant la fabrication ?",
+            "answer": "<p>Oui. Pour l'audio créé par IA, vous recevez un aperçu avant production afin d'écouter, confirmer et valider le rendu final.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Sous quel délai mon projet est-il préparé ?",
+            "answer": "<p>La création est préparée sous 48h dans la majorité des cas, hors périodes exceptionnelles ou besoins de retouches plus poussées.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je ajouter des précisions à ma commande ?",
+            "answer": "<p>Oui. La zone Notes complémentaires vous permet d'ajouter un contexte utile, une attention particulière ou un détail qui aidera notre équipe à personnaliser le rendu.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Le coffret est-il prêt à offrir ?",
+            "answer": "<p>Oui. Le souvenir est conçu comme un objet cadeau premium, pensé pour être offert dès réception avec une présentation soignée et émotionnelle.</p>"
+          }
+        }
+      },
+      "block_order": ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6"],
+      "settings": {
+        "caption": "FAQ",
+        "heading": "Les réponses aux questions que l'on se pose avant d'offrir un souvenir si personnel.",
+        "intro": "Cette FAQ est pensée pour lever les doutes pratiques tout en gardant une expérience douce, claire et rassurante.",
+        "heading_size": "h2",
+        "open_first_question": false,
+        "enable_schema": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 24,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": ["main", "process_steps", "faq"]
+}
