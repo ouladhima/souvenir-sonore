@@ -93,6 +93,18 @@
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
+        {%- if audio_keepsake_enabled -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'text' and block.settings.text_style == 'subtitle' -%}
+              <div class="audio-keepsake-product__media-note" {{ block.shopify_attributes }}>
+                <p class="product__text inline-richtext subtitle">
+                  {{- block.settings.text -}}
+                </p>
+              </div>
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <section
@@ -106,12 +118,14 @@
               {%- when '@app' -%}
                 {% render block %}
               {%- when 'text' -%}
-                <p
-                  class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                  {{ block.shopify_attributes }}
-                >
-                  {{- block.settings.text -}}
-                </p>
+                {%- unless audio_keepsake_enabled and block.settings.text_style == 'subtitle' -%}
+                  <p
+                    class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{- block.settings.text -}}
+                  </p>
+                {%- endunless -%}
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
@@ -122,20 +136,52 @@
                   </a>
                 </div>
               {%- when 'price' -%}
-                <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                  {%- render 'price',
-                    product: product,
-                    use_variant: true,
-                    show_badges: true,
-                    price_class: 'price--large'
-                  -%}
-                </div>
+                {%- liquid
+                  assign audio_inline_tax_label = ''
+                  if cart.duties_included and cart.taxes_included
+                    assign audio_inline_tax_label = 'Taxes et droits inclus'
+                  elsif cart.taxes_included
+                    assign audio_inline_tax_label = 'Taxes incluses'
+                  elsif cart.duties_included
+                    assign audio_inline_tax_label = 'Droits inclus'
+                  endif
+                -%}
+                {%- if audio_keepsake_enabled -%}
+                  <div class="audio-keepsake-price" {{ block.shopify_attributes }}>
+                    {%- if audio_inline_tax_label != blank -%}
+                      <span class="audio-keepsake-price__tax">{{ audio_inline_tax_label }}</span>
+                    {%- endif -%}
+                    <div id="price-{{ section.id }}" class="audio-keepsake-price__value" role="status">
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: true,
+                        price_class: 'price--large'
+                      -%}
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                    {%- render 'price',
+                      product: product,
+                      use_variant: true,
+                      show_badges: true,
+                      price_class: 'price--large'
+                    -%}
+                  </div>
+                {%- endif -%}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
                   </div>
                 {%- endif -%}
-                {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
+                {%- if audio_keepsake_enabled -%}
+                  <div class="audio-keepsake-price__reassurance" aria-label="Réassurance rapide">
+                    <span>Création en 48h</span>
+                    <span>Aperçu avant production</span>
+                    <span>Support humain si besoin</span>
+                  </div>
+                {%- elsif cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
                   <div class="product__tax caption rte">
                     {%- if cart.duties_included and cart.taxes_included -%}
                       {{ 'products.product.duties_and_taxes_included' | t }}
@@ -959,28 +1005,7 @@
           "id": "enable_audio_keepsake_experience",
           "default": false,
           "label": "Enable audio keepsake experience",
-          "info": "Adds personalization fields, summary, and reassurance content inside the product form."
-        },
-        {
-          "type": "text",
-          "id": "voice_audio_value",
-          "default": "Voix enregistrée",
-          "label": "Voice audio value",
-          "info": "Exact variant value that should trigger the upload-only flow."
-        },
-        {
-          "type": "text",
-          "id": "ai_audio_value",
-          "default": "Chanson sur mesure",
-          "label": "AI audio value",
-          "info": "Exact variant value that should trigger the creative brief flow."
-        },
-        {
-          "type": "text",
-          "id": "voice_music_value",
-          "default": "Voix + musique",
-          "label": "Voice + music value",
-          "info": "Exact variant value that should trigger the upload + creative brief flow."
+          "info": "Adds the premium teaser, summary, and reassurance content before add to cart."
         }
       ]
     },

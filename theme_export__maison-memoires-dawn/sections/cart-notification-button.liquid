@@ -1,1 +1,31 @@
-{{ 'general.cart.view' | t: count: cart.item_count }}
+{%- liquid
+  assign audio_target_handle = settings.audio_keepsake_product_handle | strip
+  assign audio_option_name = settings.audio_option_name | default: 'Type audio'
+  assign show_audio_cta = false
+
+  for item in cart.items
+    assign audio_option_value = ''
+
+    for option in item.options_with_values
+      if option.name == audio_option_name and audio_option_value == blank
+        assign audio_option_value = option.value
+      endif
+    endfor
+
+    if audio_target_handle != blank
+      if item.product.handle == audio_target_handle
+        assign show_audio_cta = true
+        break
+      endif
+    elsif audio_option_value != blank
+      assign show_audio_cta = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if show_audio_cta -%}
+  Finaliser la personnalisation
+{%- else -%}
+  {{ 'general.cart.view' | t: count: cart.item_count }}
+{%- endif -%}

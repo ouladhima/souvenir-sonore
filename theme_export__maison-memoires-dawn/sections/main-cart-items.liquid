@@ -4,6 +4,21 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{{ 'component-audio-keepsake-cart.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign audio_target_handle = settings.audio_keepsake_product_handle | strip
+  assign audio_option_name = settings.audio_option_name | default: 'Type audio'
+  assign duration_option_name = settings.duration_option_name | default: 'Durée'
+  assign packaging_option_name = settings.packaging_option_name | default: 'Coffret'
+  assign voice_audio_value = settings.voice_audio_value | default: 'Votre enregistrement'
+  assign ai_audio_value = settings.ai_audio_value | default: "Une musique composée par nos soins ( jusqu'à 3 propositions)"
+  assign voice_music_value = settings.voice_music_value | default: 'Votre enregistrement avec une musique composée'
+
+  assign normalized_voice_audio_value = voice_audio_value | strip | downcase
+  assign normalized_ai_audio_value = ai_audio_value | strip | downcase
+  assign normalized_voice_music_value = voice_music_value | strip | downcase
+-%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -24,6 +39,7 @@
 {%- endunless -%}
 
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'audio-keepsake-cart.js' | asset_url }}" defer="defer"></script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="page-width">
@@ -79,9 +95,77 @@
 
               <tbody>
                 {%- for item in cart.items -%}
+                  {%- liquid
+                    assign line_index = item.index | plus: 1
+                    assign audio_option_value = ''
+                    assign duration_value = ''
+                    assign packaging_value = ''
+                    assign fallback_duration_value = ''
+                    assign fallback_packaging_value = ''
+
+                    for option in item.options_with_values
+                      if option.name == audio_option_name and audio_option_value == blank
+                        assign audio_option_value = option.value
+                      elsif option.name == duration_option_name and duration_value == blank
+                        assign duration_value = option.value
+                      elsif option.name == packaging_option_name and packaging_value == blank
+                        assign packaging_value = option.value
+                      elsif fallback_duration_value == blank
+                        assign fallback_duration_value = option.value
+                      elsif fallback_packaging_value == blank
+                        assign fallback_packaging_value = option.value
+                      endif
+                    endfor
+
+                    if duration_value == blank
+                      assign duration_value = fallback_duration_value
+                    endif
+
+                    if packaging_value == blank
+                      assign packaging_value = fallback_packaging_value
+                    endif
+
+                    assign is_audio_item = false
+                    if audio_target_handle != blank
+                      if item.product.handle == audio_target_handle
+                        assign is_audio_item = true
+                      endif
+                    elsif audio_option_value != blank
+                      assign is_audio_item = true
+                    endif
+
+                    assign normalized_audio_option_value = audio_option_value | strip | downcase
+                    assign audio_mode = ''
+
+                    if is_audio_item
+                      if normalized_audio_option_value == normalized_voice_audio_value
+                        assign audio_mode = 'voice'
+                      elsif normalized_audio_option_value == normalized_ai_audio_value
+                        assign audio_mode = 'ai'
+                      elsif normalized_audio_option_value == normalized_voice_music_value
+                        assign audio_mode = 'voice_music'
+                      elsif normalized_audio_option_value contains 'voix' and normalized_audio_option_value contains 'musique'
+                        assign audio_mode = 'voice_music'
+                      elsif normalized_audio_option_value contains 'chanson'
+                        assign audio_mode = 'ai'
+                      elsif normalized_audio_option_value contains 'musique composee'
+                        assign audio_mode = 'ai'
+                      elsif normalized_audio_option_value contains 'musique composée'
+                        assign audio_mode = 'ai'
+                      elsif normalized_audio_option_value contains 'ia'
+                        assign audio_mode = 'ai'
+                      elsif normalized_audio_option_value contains 'enregistrement'
+                        assign audio_mode = 'voice'
+                      elsif normalized_audio_option_value contains 'voix'
+                        assign audio_mode = 'voice'
+                      elsif normalized_audio_option_value contains 'message'
+                        assign audio_mode = 'voice'
+                      endif
+                    endif
+                  -%}
                   <tr
                     class="cart-item {% if item.parent_relationship.parent != null %}cart-item__nested-line{% endif %}"
-                    id="CartItem-{{ item.index | plus: 1 }}"
+                    id="CartItem-{{ line_index }}"
                     {% if item.parent_relationship.parent != null %}
                       aria-label="{{- 'products.product.nested_label' | t: title: item.product.title, parent_title: item.parent_relationship.parent.title | escape -}}"
                     {% endif %}
@@ -175,6 +259,19 @@
                           </li>
                         {%- endfor -%}
                       </ul>
+
+                      {%- if is_audio_item and audio_mode != blank -%}
+                        {% render 'audio-keepsake-cart-panel',
+                          item: item,
+                          line_index: line_index,
+                          line_key: item.key,
+                          variant_id: item.variant.id,
+                          audio_mode: audio_mode,
+                          audio_option_value: audio_option_value,
+                          duration_value: duration_value,
+                          packaging_value: packaging_value
+                        %}
+                      {%- endif -%}
                     </td>
 
                     <td class="cart-item__totals right medium-hide large-up-hide">

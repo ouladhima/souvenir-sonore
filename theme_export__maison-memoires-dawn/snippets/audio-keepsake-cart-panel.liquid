@@ -1,0 +1,183 @@
+{% comment %}
+  Renders the post-add personalization panel for the audio keepsake cart line.
+
+  Accepts:
+  - item: Line item object
+  - line_index: 1-based cart line index
+  - line_key: Shopify line item key
+  - variant_id: Variant id
+  - audio_mode: voice | ai | voice_music
+  - audio_option_value: Selected audio option value
+  - duration_value: Selected duration option value
+  - packaging_value: Selected packaging option value
+{% endcomment %}
+{%- liquid
+  assign existing_file = item.properties['Fichier audio']
+  assign existing_brief = item.properties['Brief créatif']
+  assign existing_notes = item.properties['Notes complémentaires']
+
+  assign needs_file = false
+  assign needs_brief = false
+
+  if audio_mode == 'voice' or audio_mode == 'voice_music'
+    assign needs_file = true
+  endif
+
+  if audio_mode == 'ai' or audio_mode == 'voice_music'
+    assign needs_brief = true
+  endif
+
+  assign line_complete = true
+  if needs_file and existing_file == blank
+    assign line_complete = false
+  endif
+  if needs_brief and existing_brief == blank
+    assign line_complete = false
+  endif
+
+  assign status_label = 'À compléter'
+  assign status_text = "Le paiement restera verrouillé tant que les éléments indispensables n'auront pas été enregistrés."
+
+  if line_complete
+    assign status_label = 'Prêt pour la suite'
+    assign status_text = 'Vos informations principales sont bien enregistrées. Vous pouvez encore les ajuster si besoin.'
+  endif
+
+  assign file_helper = "Importez ici votre message vocal, une archive sonore ou le fichier que vous souhaitez nous confier."
+  assign brief_helper = "Décrivez l'intention, le ton, l'émotion, les prénoms ou les détails qui doivent guider la création."
+  assign lead_text = "Votre souvenir est bien ajouté au panier. Il ne reste qu'à nous transmettre les éléments utiles avant de passer au paiement."
+
+  if audio_mode == 'ai'
+    assign lead_text = "Votre souvenir est bien ajouté au panier. Décrivez maintenant l'intention créative souhaitée avant de poursuivre."
+  elsif audio_mode == 'voice_music'
+    assign lead_text = "Votre souvenir est bien ajouté au panier. Ajoutez votre audio puis le brief musical pour que nous puissions créer un rendu fidèle."
+  endif
+-%}
+
+<audio-keepsake-cart-panel
+  class="audio-keepsake-cart"
+  data-line="{{ line_index }}"
+  data-line-key="{{ line_key | escape }}"
+  data-variant-id="{{ variant_id }}"
+  data-quantity="{{ item.quantity }}"
+  data-mode="{{ audio_mode }}"
+  data-complete="{{ line_complete }}"
+  data-existing-properties='{{ item.properties | json | escape }}'
+  data-required-file-message="Ajoutez votre fichier audio pour continuer."
+  data-required-brief-message="Décrivez votre intention pour continuer."
+  data-generic-error-message="Une erreur est survenue. Réessayez dans quelques instants."
+  data-success-message="Votre personnalisation a bien été enregistrée."
+>
+  <div class="audio-keepsake-cart__header">
+    <div>
+      <p class="audio-keepsake-cart__eyebrow">Personnalisation à finaliser</p>
+      <h3 class="audio-keepsake-cart__title">Finalisez votre souvenir depuis le panier</h3>
+    </div>
+    <span class="audio-keepsake-cart__status" data-status-badge>{{ status_label }}</span>
+  </div>
+
+  <p class="audio-keepsake-cart__lead">{{ lead_text }}</p>
+
+  <div class="audio-keepsake-cart__summary">
+    <div class="audio-keepsake-cart__summary-item">
+      <span>Type audio</span>
+      <strong>{{ audio_option_value }}</strong>
+    </div>
+    {%- if duration_value != blank -%}
+      <div class="audio-keepsake-cart__summary-item">
+        <span>Durée</span>
+        <strong>{{ duration_value }}</strong>
+      </div>
+    {%- endif -%}
+    {%- if packaging_value != blank -%}
+      <div class="audio-keepsake-cart__summary-item">
+        <span>Coffret</span>
+        <strong>{{ packaging_value }}</strong>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="audio-keepsake-cart__fields">
+    {%- if needs_file -%}
+      <div class="audio-keepsake-cart__field" data-role="file">
+        <div class="audio-keepsake-cart__label-row">
+          <label class="audio-keepsake-cart__label" for="AudioFile-{{ line_index }}">Fichier audio</label>
+        </div>
+        <input
+          id="AudioFile-{{ line_index }}"
+          class="audio-keepsake-cart__input audio-keepsake-cart__input--file"
+          type="file"
+          accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"
+          data-file-input
+        >
+        <p class="audio-keepsake-cart__helper">{{ file_helper }}</p>
+        <div class="audio-keepsake-cart__saved" data-file-saved-state>
+          {%- if existing_file != blank -%}
+            <span class="audio-keepsake-cart__saved-label">Fichier enregistré</span>
+            {%- if existing_file contains '/uploads/' -%}
+              <a href="{{ existing_file }}" class="link" target="_blank" rel="noopener">{{ existing_file | split: '/' | last }}</a>
+            {%- else -%}
+              <span>{{ existing_file }}</span>
+            {%- endif -%}
+          {%- else -%}
+            <span class="audio-keepsake-cart__saved-label">Aucun fichier enregistré pour le moment</span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if needs_brief -%}
+      <div class="audio-keepsake-cart__field" data-role="brief">
+        <div class="audio-keepsake-cart__label-row">
+          <label class="audio-keepsake-cart__label" for="CreativeBrief-{{ line_index }}">Brief créatif</label>
+          <details class="audio-keepsake-cart__tooltip">
+            <summary aria-label="Voir un exemple de brief créatif">i</summary>
+            <div class="audio-keepsake-cart__tooltip-content">
+              Exemple : une ambiance douce et nostalgique, comme une berceuse moderne, avec les prénoms Léa et Paul et l'idée d'un souvenir de naissance.
+            </div>
+          </details>
+        </div>
+        <textarea
+          id="CreativeBrief-{{ line_index }}"
+          class="audio-keepsake-cart__input audio-keepsake-cart__input--textarea"
+          rows="6"
+          placeholder="Décrivez ici le souvenir, le ton, les mots-clés, l'univers musical ou l'émotion souhaitée."
+          data-brief-input
+        >{{ existing_brief }}</textarea>
+        <p class="audio-keepsake-cart__helper">{{ brief_helper }}</p>
+      </div>
+    {%- endif -%}
+
+    <div class="audio-keepsake-cart__field">
+      <div class="audio-keepsake-cart__label-row">
+        <label class="audio-keepsake-cart__label" for="AdditionalNotes-{{ line_index }}">Notes complémentaires</label>
+        <details class="audio-keepsake-cart__tooltip">
+          <summary aria-label="Voir un exemple de notes complémentaires">i</summary>
+          <div class="audio-keepsake-cart__tooltip-content">
+            Exemple : éviter une voix trop solennelle, mentionner la date du 12 juin, garder un ton intime et rassurant.
+          </div>
+        </details>
+      </div>
+      <textarea
+        id="AdditionalNotes-{{ line_index }}"
+        class="audio-keepsake-cart__input audio-keepsake-cart__input--textarea audio-keepsake-cart__input--compact"
+        rows="4"
+        placeholder="Ajoutez ici un contexte utile, une date importante, une contrainte ou une attention particulière."
+        data-notes-input
+      >{{ existing_notes }}</textarea>
+      <p class="audio-keepsake-cart__helper">Optionnel, mais toujours utile si vous souhaitez nous partager une nuance importante.</p>
+    </div>
+  </div>
+
+  <div class="audio-keepsake-cart__footer">
+    <p class="audio-keepsake-cart__status-text" data-status-text>{{ status_text }}</p>
+    <p class="audio-keepsake-cart__message" data-form-message hidden></p>
+    <button type="button" class="button button--primary" data-save-button>
+      {%- if line_complete -%}
+        Mettre à jour la personnalisation
+      {%- else -%}
+        Enregistrer ma personnalisation
+      {%- endif -%}
+    </button>
+  </div>
+</audio-keepsake-cart-panel>

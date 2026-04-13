@@ -17,6 +17,92 @@
   }
 {%- endstyle -%}
 
+{%- liquid
+  assign audio_target_handle = settings.audio_keepsake_product_handle | strip
+  assign audio_option_name = settings.audio_option_name | default: 'Type audio'
+  assign voice_audio_value = settings.voice_audio_value | default: 'Votre enregistrement'
+  assign ai_audio_value = settings.ai_audio_value | default: "Une musique composée par nos soins ( jusqu'à 3 propositions)"
+  assign voice_music_value = settings.voice_music_value | default: 'Votre enregistrement avec une musique composée'
+
+  assign normalized_voice_audio_value = voice_audio_value | strip | downcase
+  assign normalized_ai_audio_value = ai_audio_value | strip | downcase
+  assign normalized_voice_music_value = voice_music_value | strip | downcase
+
+  assign audio_checkout_locked = false
+
+  for item in cart.items
+    assign audio_option_value = ''
+
+    for option in item.options_with_values
+      if option.name == audio_option_name and audio_option_value == blank
+        assign audio_option_value = option.value
+      endif
+    endfor
+
+    assign is_audio_item = false
+    if audio_target_handle != blank
+      if item.product.handle == audio_target_handle
+        assign is_audio_item = true
+      endif
+    elsif audio_option_value != blank
+      assign is_audio_item = true
+    endif
+
+    if is_audio_item == false
+      continue
+    endif
+
+    assign normalized_audio_option_value = audio_option_value | strip | downcase
+    assign audio_mode = ''
+
+    if normalized_audio_option_value == normalized_voice_audio_value
+      assign audio_mode = 'voice'
+    elsif normalized_audio_option_value == normalized_ai_audio_value
+      assign audio_mode = 'ai'
+    elsif normalized_audio_option_value == normalized_voice_music_value
+      assign audio_mode = 'voice_music'
+    elsif normalized_audio_option_value contains 'voix' and normalized_audio_option_value contains 'musique'
+      assign audio_mode = 'voice_music'
+    elsif normalized_audio_option_value contains 'chanson'
+      assign audio_mode = 'ai'
+    elsif normalized_audio_option_value contains 'musique composee'
+      assign audio_mode = 'ai'
+    elsif normalized_audio_option_value contains 'musique composée'
+      assign audio_mode = 'ai'
+    elsif normalized_audio_option_value contains 'ia'
+      assign audio_mode = 'ai'
+    elsif normalized_audio_option_value contains 'enregistrement'
+      assign audio_mode = 'voice'
+    elsif normalized_audio_option_value contains 'voix'
+      assign audio_mode = 'voice'
+    elsif normalized_audio_option_value contains 'message'
+      assign audio_mode = 'voice'
+    endif
+
+    if audio_mode == blank
+      continue
+    endif
+
+    assign line_complete = true
+    if audio_mode == 'voice' or audio_mode == 'voice_music'
+      if item.properties['Fichier audio'] == blank
+        assign line_complete = false
+      endif
+    endif
+
+    if audio_mode == 'ai' or audio_mode == 'voice_music'
+      if item.properties['Brief créatif'] == blank
+        assign line_complete = false
+      endif
+    endif
+
+    if line_complete == false
+      assign audio_checkout_locked = true
+      break
+    endif
+  endfor
+-%}
+
 <div
   class="gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}"
   id="main-cart-footer"
@@ -38,6 +124,10 @@
       {%- endif -%}
 
       <div class="cart__blocks">
+        <p class="audio-keepsake-cart__checkout-note" data-audio-checkout-note {% unless audio_checkout_locked %}hidden{% endunless %}>
+          Finalisez d'abord la personnalisation de votre souvenir audio pour déverrouiller le paiement.
+        </p>
+
         {% for block in section.blocks %}
           {%- case block.type -%}
             {%- when '@app' -%}
@@ -110,7 +200,8 @@
                   id="checkout"
                   class="cart__checkout-button button"
                   name="checkout"
-                  {% if cart == empty %}
+                  data-cart-empty="{% if cart == empty %}true{% else %}false{% endif %}"
+                  {% if cart == empty or audio_checkout_locked %}
                     disabled
                   {% endif %}
                   form="cart"
@@ -119,7 +210,7 @@
                 </button>
               </div>
 
-              {%- if additional_checkout_buttons -%}
+              {%- if additional_checkout_buttons and audio_checkout_locked == false -%}
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
                 </div>

@@ -14,7 +14,7 @@
         "promise": {
           "type": "text",
           "settings": {
-            "text": "Un souvenir audio personnalisé, conçu pour être offert avec émotion et réécouté longtemps.",
+            "text": "Un souvenir audio personnalisé pour transmettre une émotion durable, sans rien de superflu dans le parcours.",
             "text_style": "subtitle"
           }
         },
@@ -31,10 +31,7 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_pickup_availability": false,
-            "enable_audio_keepsake_experience": true,
-            "voice_audio_value": "Voix enregistrée",
-            "ai_audio_value": "Chanson sur mesure",
-            "voice_music_value": "Voix + musique"
+            "enable_audio_keepsake_experience": true
           }
         }
       },
@@ -61,37 +58,37 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "title": "Choisissez votre format de mémoire",
-            "text": "Voix enregistrée, chanson sur mesure ou création mixte selon l'émotion que vous souhaitez offrir."
+            "title": "Choisissez votre format audio",
+            "text": "Voix enregistrée, création musicale sur mesure ou formule mixte selon l'émotion que vous souhaitez offrir."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "title": "Envoyez votre voix ou votre intention",
-            "text": "Vous partagez votre fichier audio ou votre brief créatif directement depuis la page produit."
+            "title": "Ajoutez votre souvenir au panier",
+            "text": "Vous réservez d'abord le format choisi, sans avoir à remplir immédiatement tous les détails."
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "title": "Nous créons sous 48h",
-            "text": "Notre équipe prépare votre souvenir avec un soin éditorial, humain et sensible à chaque détail."
+            "title": "Finalisez la personnalisation",
+            "text": "Depuis le panier, vous ajoutez votre fichier audio, votre brief créatif et les précisions utiles selon l'option choisie."
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
-            "title": "Vous écoutez, vous validez, nous produisons",
-            "text": "Pour l'audio créé par IA, vous recevez un aperçu avant toute fabrication du coffret final."
+            "title": "Nous créons sous 48h",
+            "text": "Pour l'audio créé par IA, vous recevez un aperçu avant production afin de valider le rendu final."
           }
         }
       },
       "block_order": ["step_1", "step_2", "step_3", "step_4"],
       "settings": {
         "caption": "Comment ça fonctionne",
-        "heading": "Un parcours simple, rassurant et pensé pour aller à l'essentiel.",
-        "intro": "Vous choisissez votre format, vous partagez vos éléments, puis nous revenons vers vous avec un rendu prêt à valider avant production.",
+        "heading": "Un parcours simple, rassurant et pensé pour avancer sans vous presser.",
+        "intro": "Vous choisissez votre format, vous l'ajoutez au panier, puis vous finalisez tranquillement la personnalisation avant le paiement.",
         "heading_size": "h2",
         "color_scheme": "scheme-1",
         "padding_top": 36,
@@ -104,43 +101,43 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "Que puis-je envoyer comme fichier audio ?",
-            "answer": "<p>Vous pouvez partager un message vocal, une archive sonore, un extrait enregistré sur téléphone ou tout fichier audio exploitable pour la création.</p>"
+            "question": "Quand vais-je transmettre mon fichier audio ou mon brief ?",
+            "answer": "<p>Juste après l'ajout au panier. Le panier devient l'espace où vous finalisez tranquillement les éléments de personnalisation avant de passer au paiement.</p>"
           }
         },
         "question_2": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne la création sur mesure ?",
-            "answer": "<p>Vous nous expliquez l'intention, l'émotion, l'histoire ou le message à transmettre. Nous composons ensuite une proposition musicale personnalisée pensée pour votre moment.</p>"
+            "question": "Que puis-je envoyer comme fichier audio ?",
+            "answer": "<p>Vous pouvez partager un message vocal, une archive sonore, un extrait enregistré sur téléphone ou tout fichier audio exploitable pour la création.</p>"
           }
         },
         "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne la création sur mesure ?",
+            "answer": "<p>Vous décrivez votre intention créative dans le panier. Nous composons ensuite une proposition musicale personnalisée pensée pour votre histoire et votre émotion.</p>"
+          }
+        },
+        "question_4": {
           "type": "question",
           "settings": {
             "question": "Recevrai-je un aperçu avant la fabrication ?",
             "answer": "<p>Oui. Pour l'audio créé par IA, vous recevez un aperçu avant production afin d'écouter, confirmer et valider le rendu final.</p>"
           }
         },
-        "question_4": {
+        "question_5": {
           "type": "question",
           "settings": {
             "question": "Sous quel délai mon projet est-il préparé ?",
             "answer": "<p>La création est préparée sous 48h dans la majorité des cas, hors périodes exceptionnelles ou besoins de retouches plus poussées.</p>"
           }
         },
-        "question_5": {
+        "question_6": {
           "type": "question",
           "settings": {
             "question": "Puis-je ajouter des précisions à ma commande ?",
             "answer": "<p>Oui. La zone Notes complémentaires vous permet d'ajouter un contexte utile, une attention particulière ou un détail qui aidera notre équipe à personnaliser le rendu.</p>"
-          }
-        },
-        "question_6": {
-          "type": "question",
-          "settings": {
-            "question": "Le coffret est-il prêt à offrir ?",
-            "answer": "<p>Oui. Le souvenir est conçu comme un objet cadeau premium, pensé pour être offert dès réception avec une présentation soignée et émotionnelle.</p>"
           }
         }
       },
@@ -148,7 +145,7 @@
       "settings": {
         "caption": "FAQ",
         "heading": "Les réponses aux questions que l'on se pose avant d'offrir un souvenir si personnel.",
-        "intro": "Cette FAQ est pensée pour lever les doutes pratiques tout en gardant une expérience douce, claire et rassurante.",
+        "intro": "Cette FAQ est pensée pour rendre le parcours limpide, du choix du format jusqu'à la finalisation de la personnalisation dans le panier.",
         "heading_size": "h2",
         "open_first_question": false,
         "enable_schema": true,

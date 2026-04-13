@@ -24,6 +24,38 @@
       endif
 
       assign audio_keepsake_experience_enabled = block.settings.enable_audio_keepsake_experience
+      if audio_keepsake_experience_enabled
+        assign show_dynamic_checkout = false
+      endif
+
+      assign audio_option_name = settings.audio_option_name | default: 'Type audio'
+      assign duration_option_name = settings.duration_option_name | default: 'Durée'
+      assign packaging_option_name = settings.packaging_option_name | default: 'Coffret'
+      assign voice_audio_value = settings.voice_audio_value | default: 'Votre enregistrement'
+      assign ai_audio_value = settings.ai_audio_value | default: "Une musique composée par nos soins ( jusqu'à 3 propositions)"
+      assign voice_music_value = settings.voice_music_value | default: 'Votre enregistrement avec une musique composée'
+
+      assign check_against_inventory = true
+      if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+        assign check_against_inventory = false
+      endif
+
+      assign quantity_rule_soldout = false
+      if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+        assign quantity_rule_soldout = true
+      endif
+
+      assign submit_disabled = false
+      if product.selected_or_first_available_variant.available == false or quantity_rule_soldout or product.selected_or_first_available_variant == null
+        assign submit_disabled = true
+      endif
+
+      assign submit_label = 'products.product.add_to_cart' | t
+      if product.selected_or_first_available_variant == null
+        assign submit_label = 'products.product.unavailable' | t
+      elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+        assign submit_label = 'products.product.sold_out' | t
+      endif
     -%}
 
     <product-form
@@ -63,46 +95,78 @@
         {%- endif -%}
 
         {%- if audio_keepsake_experience_enabled -%}
-          {% render 'audio-keepsake-personalization', product: product, block: block, section_id: section_id %}
-        {%- endif -%}
-
-        <div class="product-form__buttons">
-          {%- liquid
-            assign check_against_inventory = true
-            if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
-              assign check_against_inventory = false
-            endif
-            if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
-              assign quantity_rule_soldout = true
-            endif
-          -%}
-          <button
-            id="ProductSubmitButton-{{ section_id }}"
-            type="submit"
-            name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-            {% if product.selected_or_first_available_variant.available == false
-              or quantity_rule_soldout
-              or product.selected_or_first_available_variant == null
-            %}
-              disabled
-            {% endif %}
+          <audio-keepsake-form
+            class="audio-keepsake-form"
+            data-audio-option-name="{{ audio_option_name | escape }}"
+            data-duration-option-name="{{ duration_option_name | escape }}"
+            data-packaging-option-name="{{ packaging_option_name | escape }}"
+            data-voice-value="{{ voice_audio_value | escape }}"
+            data-ai-value="{{ ai_audio_value | escape }}"
+            data-voice-music-value="{{ voice_music_value | escape }}"
+            data-default-choice-label="À choisir"
+            data-next-step-default="Ajoutez d'abord votre souvenir au panier. Vous pourrez ensuite nous transmettre les éléments utiles en quelques instants."
+            data-next-step-voice="Après l'ajout au panier, vous importerez votre fichier audio et pourrez ajouter quelques indications utiles."
+            data-next-step-ai="Après l'ajout au panier, vous décrirez l'intention créative. Un aperçu vous sera envoyé avant production."
+            data-next-step-voice-music="Après l'ajout au panier, vous joindrez votre enregistrement puis le brief musical souhaité."
           >
-            <span>
-              {%- if product.selected_or_first_available_variant == null -%}
-                {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
-              {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
-              {%- endif -%}
-            </span>
-            {%- render 'loading-spinner' -%}
-          </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
-        </div>
+            <div class="audio-keepsake-purchase">
+              <div class="audio-keepsake-purchase__primary">
+                {% render 'audio-keepsake-personalization', product: product, panel_group: 'primary' %}
+
+                <div class="product-form__buttons product-form__buttons--audio product-form__buttons--audio-main">
+                  <button
+                    id="ProductSubmitButton-{{ section_id }}"
+                    type="submit"
+                    name="add"
+                    class="product-form__submit button button--full-width button--primary"
+                    {% if submit_disabled %}
+                      disabled
+                    {% endif %}
+                  >
+                    <span>{{ submit_label }}</span>
+                    {%- render 'loading-spinner' -%}
+                  </button>
+                </div>
+              </div>
+
+              <div class="audio-keepsake-purchase__secondary">
+                {% render 'audio-keepsake-personalization', product: product, panel_group: 'secondary' %}
+
+                <div class="audio-keepsake-purchase__mobile-cta">
+                  <button
+                    type="button"
+                    class="button button--secondary button--full-width"
+                    data-audio-proxy-submit
+                    data-audio-submit-target="ProductSubmitButton-{{ section_id }}"
+                    {% if submit_disabled %}
+                      disabled
+                    {% endif %}
+                  >
+                    {{ submit_label }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </audio-keepsake-form>
+        {%- else -%}
+          <div class="product-form__buttons">
+            <button
+              id="ProductSubmitButton-{{ section_id }}"
+              type="submit"
+              name="add"
+              class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+              {% if submit_disabled %}
+                disabled
+              {% endif %}
+            >
+              <span>{{ submit_label }}</span>
+              {%- render 'loading-spinner' -%}
+            </button>
+            {%- if show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       {%- endform -%}
     </product-form>
   {%- else -%}

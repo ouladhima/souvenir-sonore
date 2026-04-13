@@ -5,86 +5,73 @@ if (!customElements.get('audio-keepsake-form')) {
       constructor() {
         super();
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmitCapture = this.handleSubmitCapture.bind(this);
+        this.handleProxySubmit = this.handleProxySubmit.bind(this);
       }
 
       connectedCallback() {
         this.productInfo = this.closest('product-info');
-        this.form = this.closest('form');
+        if (!this.productInfo) return;
 
-        if (!this.productInfo || !this.form) return;
-
-        this.modeInput = this.querySelector('[data-audio-mode-input]');
-        this.errorBox = this.querySelector('[data-audio-form-error]');
-        this.fileInput = this.querySelector('[data-file-input]');
-        this.briefInput = this.querySelector('[data-brief-input]');
         this.summaryFields = {
           audioType: this.querySelector('[data-summary-field="audio_type"]'),
           duration: this.querySelector('[data-summary-field="duration"]'),
           packaging: this.querySelector('[data-summary-field="packaging"]'),
-          fileStatus: this.querySelector('[data-summary-field="file_status"]'),
-          briefStatus: this.querySelector('[data-summary-field="brief_status"]'),
+          nextStep: this.querySelector('[data-summary-field="next_step"]'),
         };
 
-        this.productInfo.addEventListener('change', this.handleChange);
-        this.form.addEventListener('submit', this.handleSubmitCapture, true);
+        this.proxyButtons = Array.from(this.querySelectorAll('[data-audio-proxy-submit]'));
+        this.proxyButtons.forEach((button) => button.addEventListener('click', this.handleProxySubmit));
 
+        this.productInfo.addEventListener('change', this.handleChange);
         this.syncFromState();
       }
 
       disconnectedCallback() {
         this.productInfo?.removeEventListener('change', this.handleChange);
-        this.form?.removeEventListener('submit', this.handleSubmitCapture, true);
+        this.proxyButtons?.forEach((button) => button.removeEventListener('click', this.handleProxySubmit));
       }
 
-      handleChange(event) {
-        if (event.target.matches('[data-personalization-input]')) {
-          event.target.setCustomValidity('');
-          this.hideError();
-        }
-
+      handleChange() {
         window.requestAnimationFrame(() => this.syncFromState());
       }
 
-      handleSubmitCapture(event) {
-        this.hideError();
-        this.clearCustomValidity();
+      handleProxySubmit(event) {
+        event.preventDefault();
 
-        const state = this.getCurrentState();
-
-        if (!state.mode) {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          this.showError(this.dataset.missingModeMessage);
+        const submitButton = this.getSubmitButton(event.currentTarget?.dataset.audioSubmitTarget);
+        if (!submitButton || submitButton.disabled || submitButton.getAttribute('aria-disabled') === 'true') {
           return;
         }
 
-        const firstInvalidInput = this.getVisibleRequiredInputs().find((input) => !this.hasValue(input));
-
-        if (!firstInvalidInput) return;
-
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
-        firstInvalidInput.setCustomValidity(this.getRequiredMessage(firstInvalidInput));
-        firstInvalidInput.reportValidity();
-        firstInvalidInput.focus();
+        submitButton.click();
       }
 
       syncFromState() {
         const state = this.getCurrentState();
-
-        if (this.modeInput) this.modeInput.value = state.mode;
-
         this.updateGroups(state.mode);
         this.updateSummary(state);
+        this.syncProxyButtons();
       }
 
       getCurrentState() {
-        const values = this.getVariantValues();
-        const audioType = values[0] || '';
-        const duration = values[1] || '';
-        const packaging = values[2] || '';
+        const options = this.getVariantOptions();
+        const audioOptionName = this.normalizeValue(this.dataset.audioOptionName);
+        const durationOptionName = this.normalizeValue(this.dataset.durationOptionName);
+        const packagingOptionName = this.normalizeValue(this.dataset.packagingOptionName);
+
+        const audioTypeOption = options.find((option) => this.normalizeValue(option.name) === audioOptionName);
+        const durationOption = options.find((option) => this.normalizeValue(option.name) === durationOptionName);
+        const packagingOption = options.find((option) => this.normalizeValue(option.name) === packagingOptionName);
+        const fallbackOptions = options.filter(
+          (option) =>
+            this.normalizeValue(option.name) !== audioOptionName &&
+            this.normalizeValue(option.name) !== durationOptionName &&
+            this.normalizeValue(option.name) !== packagingOptionName
+        );
+
+        const audioType = audioTypeOption?.value || '';
+        const duration = durationOption?.value || fallbackOptions[0]?.value || '';
+        const packaging = packagingOption?.value || fallbackOptions[1]?.value || '';
 
         return {
           audioType,
@@ -94,7 +81,7 @@ if (!customElements.get('audio-keepsake-form')) {
         };
       }
 
-      getVariantValues() {
+      getVariantOptions() {
         const variantSelects = this.productInfo?.querySelector('variant-selects');
         if (!variantSelects) return [];
 
@@ -102,83 +89,73 @@ if (!customElements.get('audio-keepsake-form')) {
           .filter((element) => element.matches('fieldset, .product-form__input--dropdown'))
           .map((element) => {
             if (element.tagName === 'FIELDSET') {
-              return element.querySelector('input:checked')?.value || '';
+              const checkedInput = element.querySelector('input:checked');
+              return {
+                name: this.getFieldsetName(element, checkedInput),
+                value: checkedInput?.value || '',
+              };
             }
 
-            return element.querySelector('select')?.value || '';
+            const select = element.querySelector('select');
+            return {
+              name: this.getSelectName(select),
+              value: select?.value || '',
+            };
           });
       }
 
+      getFieldsetName(fieldset, checkedInput) {
+        const legend = fieldset.querySelector('legend');
+        const legendLabel = legend?.childNodes?.[0]?.textContent?.trim();
+        if (legendLabel) return legendLabel.replace(/:$/, '').trim();
+
+        return (checkedInput?.name || '').replace(/-\d+$/, '').trim();
+      }
+
+      getSelectName(select) {
+        const match = (select?.name || '').match(/^options\[(.*)\]$/);
+        return match ? match[1] : '';
+      }
+
       updateGroups(mode) {
-        const groups = this.querySelectorAll('[data-audio-role]');
-
-        groups.forEach((group) => {
-          const role = group.dataset.audioRole;
-          const active = this.isRoleActiveForMode(role, mode);
-
-          group.hidden = !active;
-
-          group.querySelectorAll('[data-personalization-input]').forEach((input) => {
-            const requiredModes = (input.dataset.requiredModes || '')
-              .split(',')
-              .map((value) => value.trim())
-              .filter(Boolean);
-
-            input.disabled = !active;
-            input.required = active && requiredModes.includes(mode);
-
-            if (!active) {
-              input.setCustomValidity('');
-            }
-          });
+        this.querySelectorAll('[data-audio-role]').forEach((group) => {
+          group.hidden = !this.isRoleActiveForMode(group.dataset.audioRole, mode);
         });
-
-        const fileRow = this.querySelector('[data-summary-row="file"]');
-        const briefRow = this.querySelector('[data-summary-row="brief"]');
-
-        if (fileRow) fileRow.hidden = !this.isRoleActiveForMode('file', mode);
-        if (briefRow) briefRow.hidden = !this.isRoleActiveForMode('brief', mode);
       }
 
       updateSummary(state) {
         this.setText(this.summaryFields.audioType, state.audioType || this.dataset.defaultChoiceLabel);
         this.setText(this.summaryFields.duration, state.duration || this.dataset.defaultChoiceLabel);
         this.setText(this.summaryFields.packaging, state.packaging || this.dataset.defaultChoiceLabel);
+        this.setText(this.summaryFields.nextStep, this.getNextStepText(state.mode));
+      }
 
-        if (this.summaryFields.fileStatus) {
-          const fileName = this.fileInput?.files?.[0]?.name;
-          this.setText(this.summaryFields.fileStatus, fileName || this.dataset.fileMissingLabel);
+      syncProxyButtons() {
+        const submitButton = this.getSubmitButton();
+        if (!submitButton) return;
+
+        const submitLabel = submitButton.querySelector('span')?.textContent?.trim() || submitButton.textContent.trim();
+        const isDisabled = submitButton.disabled || submitButton.getAttribute('aria-disabled') === 'true';
+
+        this.proxyButtons.forEach((button) => {
+          button.textContent = submitLabel;
+          button.disabled = isDisabled;
+        });
+      }
+
+      getSubmitButton(targetId) {
+        if (targetId) {
+          return this.querySelector(`#${targetId}`) || document.getElementById(targetId);
         }
 
-        if (this.summaryFields.briefStatus) {
-          const hasBrief = this.hasValue(this.briefInput);
-          this.setText(
-            this.summaryFields.briefStatus,
-            hasBrief ? this.dataset.briefReadyLabel : this.dataset.briefMissingLabel
-          );
-        }
+        return this.querySelector('button[type="submit"]');
       }
 
-      clearCustomValidity() {
-        this.querySelectorAll('[data-personalization-input]').forEach((input) => input.setCustomValidity(''));
-      }
-
-      getVisibleRequiredInputs() {
-        return Array.from(this.querySelectorAll('[data-personalization-input]')).filter(
-          (input) => !input.disabled && input.required
-        );
-      }
-
-      getRequiredMessage(input) {
-        if (input.type === 'file') return this.dataset.requiredFileMessage;
-        if (input.hasAttribute('data-brief-input')) return this.dataset.requiredBriefMessage;
-        return 'Ce champ est requis.';
-      }
-
-      hasValue(input) {
-        if (!input) return false;
-        if (input.type === 'file') return Boolean(input.files && input.files.length);
-        return Boolean(input.value && input.value.trim());
+      getNextStepText(mode) {
+        if (mode === 'voice') return this.dataset.nextStepVoice || this.dataset.nextStepDefault;
+        if (mode === 'ai') return this.dataset.nextStepAi || this.dataset.nextStepDefault;
+        if (mode === 'voice_music') return this.dataset.nextStepVoiceMusic || this.dataset.nextStepDefault;
+        return this.dataset.nextStepDefault || '';
       }
 
       isRoleActiveForMode(role, mode) {
@@ -191,15 +168,27 @@ if (!customElements.get('audio-keepsake-form')) {
 
       resolveMode(audioType) {
         const normalizedValue = this.normalizeValue(audioType);
-
         if (!normalizedValue) return '';
+
         if (normalizedValue === this.normalizeValue(this.dataset.voiceValue)) return 'voice';
         if (normalizedValue === this.normalizeValue(this.dataset.aiValue)) return 'ai';
         if (normalizedValue === this.normalizeValue(this.dataset.voiceMusicValue)) return 'voice_music';
 
         if (normalizedValue.includes('voix') && normalizedValue.includes('musique')) return 'voice_music';
-        if (normalizedValue.includes('chanson') || normalizedValue.includes('ia')) return 'ai';
-        if (normalizedValue.includes('voix') || normalizedValue.includes('message')) return 'voice';
+        if (
+          normalizedValue.includes('musique composee') ||
+          normalizedValue.includes('chanson') ||
+          normalizedValue.includes('ia')
+        ) {
+          return 'ai';
+        }
+        if (
+          normalizedValue.includes('enregistrement') ||
+          normalizedValue.includes('voix') ||
+          normalizedValue.includes('message')
+        ) {
+          return 'voice';
+        }
 
         return '';
       }
@@ -214,20 +203,7 @@ if (!customElements.get('audio-keepsake-form')) {
       }
 
       setText(element, value) {
-        if (!element) return;
-        element.textContent = value;
-      }
-
-      showError(message) {
-        if (!this.errorBox) return;
-        this.errorBox.textContent = message;
-        this.errorBox.hidden = false;
-      }
-
-      hideError() {
-        if (!this.errorBox) return;
-        this.errorBox.textContent = '';
-        this.errorBox.hidden = true;
+        if (element) element.textContent = value;
       }
     }
   );

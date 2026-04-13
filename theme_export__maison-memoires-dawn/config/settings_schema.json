@@ -1400,6 +1400,53 @@
     ]
   },
   {
+    "name": "Audio keepsake",
+    "settings": [
+      {
+        "type": "text",
+        "id": "audio_keepsake_product_handle",
+        "label": "Audio product handle",
+        "info": "Optional. When filled, only this product uses the post-add personalization flow."
+      },
+      {
+        "type": "text",
+        "id": "audio_option_name",
+        "label": "Audio option name",
+        "default": "Type audio"
+      },
+      {
+        "type": "text",
+        "id": "duration_option_name",
+        "label": "Duration option name",
+        "default": "Durée"
+      },
+      {
+        "type": "text",
+        "id": "packaging_option_name",
+        "label": "Packaging option name",
+        "default": "Coffret"
+      },
+      {
+        "type": "text",
+        "id": "voice_audio_value",
+        "label": "Voice audio value",
+        "default": "Votre enregistrement"
+      },
+      {
+        "type": "text",
+        "id": "ai_audio_value",
+        "label": "AI audio value",
+        "default": "Une musique composée par nos soins ( jusqu'à 3 propositions)"
+      },
+      {
+        "type": "text",
+        "id": "voice_music_value",
+        "label": "Voice + music value",
+        "default": "Votre enregistrement avec une musique composée"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.cart.name",
     "settings": [
       {

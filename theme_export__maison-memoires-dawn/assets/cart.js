@@ -84,6 +84,10 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
+    if (!event.target.matches('input.quantity__input[name="updates[]"]')) {
+      return;
+    }
+
     this.validateQuantity(event);
   }
 
