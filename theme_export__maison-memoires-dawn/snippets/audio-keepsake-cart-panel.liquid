@@ -67,6 +67,10 @@
   data-required-brief-message="Décrivez votre intention pour continuer."
   data-generic-error-message="Une erreur est survenue. Réessayez dans quelques instants."
   data-success-message="Votre personnalisation a bien été enregistrée."
+  data-cloudinary-cloud-name="{{ settings.cloudinary_cloud_name | escape }}"
+  data-cloudinary-upload-preset="{{ settings.cloudinary_upload_preset | escape }}"
+  data-upload-error-message="L'envoi du fichier a échoué. Vérifiez votre connexion et réessayez."
+  data-upload-size-error-message="Le fichier est trop volumineux (max 100 Mo). Choisissez un fichier plus petit."
 >
   <div class="audio-keepsake-cart__header">
     <div>
@@ -110,12 +114,18 @@
           accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"
           data-file-input
         >
+        <div class="audio-keepsake-cart__upload-progress" data-upload-progress hidden>
+          <div class="audio-keepsake-cart__upload-bar">
+            <div class="audio-keepsake-cart__upload-fill" data-upload-fill></div>
+          </div>
+          <span class="audio-keepsake-cart__upload-label" data-upload-label>Envoi en cours...</span>
+        </div>
         <p class="audio-keepsake-cart__helper">{{ file_helper }}</p>
         <div class="audio-keepsake-cart__saved" data-file-saved-state>
           {%- if existing_file != blank -%}
             <span class="audio-keepsake-cart__saved-label">Fichier enregistré</span>
-            {%- if existing_file contains '/uploads/' -%}
-              <a href="{{ existing_file }}" class="link" target="_blank" rel="noopener">{{ existing_file | split: '/' | last }}</a>
+            {%- if existing_file contains 'https://' or existing_file contains 'http://' -%}
+              <a href="{{ existing_file }}" class="link" target="_blank" rel="noopener">{{ existing_file | split: '/' | last | split: '?' | first }}</a>
             {%- else -%}
               <span>{{ existing_file }}</span>
             {%- endif -%}

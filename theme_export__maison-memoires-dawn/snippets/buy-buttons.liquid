@@ -111,8 +111,6 @@
           >
             <div class="audio-keepsake-purchase">
               <div class="audio-keepsake-purchase__primary">
-                {% render 'audio-keepsake-personalization', product: product, panel_group: 'primary' %}
-
                 <div class="product-form__buttons product-form__buttons--audio product-form__buttons--audio-main">
                   <button
                     id="ProductSubmitButton-{{ section_id }}"
@@ -125,24 +123,6 @@
                   >
                     <span>{{ submit_label }}</span>
                     {%- render 'loading-spinner' -%}
-                  </button>
-                </div>
-              </div>
-
-              <div class="audio-keepsake-purchase__secondary">
-                {% render 'audio-keepsake-personalization', product: product, panel_group: 'secondary' %}
-
-                <div class="audio-keepsake-purchase__mobile-cta">
-                  <button
-                    type="button"
-                    class="button button--secondary button--full-width"
-                    data-audio-proxy-submit
-                    data-audio-submit-target="ProductSubmitButton-{{ section_id }}"
-                    {% if submit_disabled %}
-                      disabled
-                    {% endif %}
-                  >
-                    {{ submit_label }}
                   </button>
                 </div>
               </div>

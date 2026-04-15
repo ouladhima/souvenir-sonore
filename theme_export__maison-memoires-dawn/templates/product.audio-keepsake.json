@@ -14,7 +14,7 @@
         "promise": {
           "type": "text",
           "settings": {
-            "text": "Un souvenir audio personnalisé pour transmettre une émotion durable, sans rien de superflu dans le parcours.",
+            "text": "Un souvenir audio personnalis\u00e9 pour transmettre une \u00e9motion durable, sans rien de superflu dans le parcours.",
             "text_style": "subtitle"
           }
         },
@@ -52,47 +52,23 @@
         "padding_bottom": 20
       }
     },
-    "process_steps": {
-      "type": "process-steps",
-      "blocks": {
-        "step_1": {
-          "type": "step",
-          "settings": {
-            "title": "Choisissez votre format audio",
-            "text": "Voix enregistrée, création musicale sur mesure ou formule mixte selon l'émotion que vous souhaitez offrir."
-          }
-        },
-        "step_2": {
-          "type": "step",
-          "settings": {
-            "title": "Ajoutez votre souvenir au panier",
-            "text": "Vous réservez d'abord le format choisi, sans avoir à remplir immédiatement tous les détails."
-          }
-        },
-        "step_3": {
-          "type": "step",
-          "settings": {
-            "title": "Finalisez la personnalisation",
-            "text": "Depuis le panier, vous ajoutez votre fichier audio, votre brief créatif et les précisions utiles selon l'option choisie."
-          }
-        },
-        "step_4": {
-          "type": "step",
-          "settings": {
-            "title": "Nous créons sous 48h",
-            "text": "Pour l'audio créé par IA, vous recevez un aperçu avant production afin de valider le rendu final."
-          }
-        }
-      },
-      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+    "audio_preview": {
+      "type": "audio-preview",
       "settings": {
-        "caption": "Comment ça fonctionne",
-        "heading": "Un parcours simple, rassurant et pensé pour avancer sans vous presser.",
-        "intro": "Vous choisissez votre format, vous l'ajoutez au panier, puis vous finalisez tranquillement la personnalisation avant le paiement.",
-        "heading_size": "h2",
+        "caption": "Exemple audio",
+        "heading": "\u00c9coutez le rendu d'une cr\u00e9ation audio g\u00e9n\u00e9r\u00e9e pour une histoire personnelle.",
+        "intro": "Un extrait pour se projeter dans la qualit\u00e9 du rendu, l'\u00e9motion transmise et le niveau de finition attendu avant production.",
+        "detail_one": "Cr\u00e9\u00e9 \u00e0 partir d'un brief \u00e9motionnel",
+        "detail_two": "Aper\u00e7u envoy\u00e9 avant production",
+        "detail_three": "Pens\u00e9 pour \u00eatre offert",
+        "audio_label": "Lecture",
+        "audio_title": "Extrait de cr\u00e9ation g\u00e9n\u00e9r\u00e9e",
+        "audio_description": "Un exemple de rendu g\u00e9n\u00e9r\u00e9 \u00e0 partir d'un souvenir, d'un ton et d'une intention cr\u00e9ative transmis lors de la commande.",
+        "audio_url": "",
+        "quote": "Cet extrait donne un rep\u00e8re concret sur la sensibilit\u00e9 et la qualit\u00e9 de restitution avant fabrication du coffret.",
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 24
+        "padding_top": 0,
+        "padding_bottom": 56
       }
     },
     "faq": {
@@ -102,50 +78,50 @@
           "type": "question",
           "settings": {
             "question": "Quand vais-je transmettre mon fichier audio ou mon brief ?",
-            "answer": "<p>Juste après l'ajout au panier. Le panier devient l'espace où vous finalisez tranquillement les éléments de personnalisation avant de passer au paiement.</p>"
+            "answer": "<p>Juste apr\u00e8s l'ajout au panier. Le panier devient l'espace o\u00f9 vous finalisez tranquillement les \u00e9l\u00e9ments de personnalisation avant de passer au paiement.</p>"
           }
         },
         "question_2": {
           "type": "question",
           "settings": {
             "question": "Que puis-je envoyer comme fichier audio ?",
-            "answer": "<p>Vous pouvez partager un message vocal, une archive sonore, un extrait enregistré sur téléphone ou tout fichier audio exploitable pour la création.</p>"
+            "answer": "<p>Vous pouvez partager un message vocal, une archive sonore, un extrait enregistr\u00e9 sur t\u00e9l\u00e9phone ou tout fichier audio exploitable pour la cr\u00e9ation.</p>"
           }
         },
         "question_3": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne la création sur mesure ?",
-            "answer": "<p>Vous décrivez votre intention créative dans le panier. Nous composons ensuite une proposition musicale personnalisée pensée pour votre histoire et votre émotion.</p>"
+            "question": "Comment fonctionne la cr\u00e9ation sur mesure ?",
+            "answer": "<p>Vous d\u00e9crivez votre intention cr\u00e9ative dans le panier. Nous composons ensuite une proposition musicale personnalis\u00e9e pens\u00e9e pour votre histoire et votre \u00e9motion.</p>"
           }
         },
         "question_4": {
           "type": "question",
           "settings": {
-            "question": "Recevrai-je un aperçu avant la fabrication ?",
-            "answer": "<p>Oui. Pour l'audio créé par IA, vous recevez un aperçu avant production afin d'écouter, confirmer et valider le rendu final.</p>"
+            "question": "Recevrai-je un aper\u00e7u avant la fabrication ?",
+            "answer": "<p>Oui. Pour l'audio cr\u00e9\u00e9 par IA, vous recevez un aper\u00e7u avant production afin d'\u00e9couter, confirmer et valider le rendu final.</p>"
           }
         },
         "question_5": {
           "type": "question",
           "settings": {
-            "question": "Sous quel délai mon projet est-il préparé ?",
-            "answer": "<p>La création est préparée sous 48h dans la majorité des cas, hors périodes exceptionnelles ou besoins de retouches plus poussées.</p>"
+            "question": "Sous quel d\u00e9lai mon projet est-il pr\u00e9par\u00e9 ?",
+            "answer": "<p>La cr\u00e9ation est pr\u00e9par\u00e9e sous 48h dans la majorit\u00e9 des cas, hors p\u00e9riodes exceptionnelles ou besoins de retouches plus pouss\u00e9es.</p>"
           }
         },
         "question_6": {
           "type": "question",
           "settings": {
-            "question": "Puis-je ajouter des précisions à ma commande ?",
-            "answer": "<p>Oui. La zone Notes complémentaires vous permet d'ajouter un contexte utile, une attention particulière ou un détail qui aidera notre équipe à personnaliser le rendu.</p>"
+            "question": "Puis-je ajouter des pr\u00e9cisions \u00e0 ma commande ?",
+            "answer": "<p>Oui. La zone Notes compl\u00e9mentaires vous permet d'ajouter un contexte utile, une attention particuli\u00e8re ou un d\u00e9tail qui aidera notre \u00e9quipe \u00e0 personnaliser le rendu.</p>"
           }
         }
       },
       "block_order": ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6"],
       "settings": {
         "caption": "FAQ",
-        "heading": "Les réponses aux questions que l'on se pose avant d'offrir un souvenir si personnel.",
-        "intro": "Cette FAQ est pensée pour rendre le parcours limpide, du choix du format jusqu'à la finalisation de la personnalisation dans le panier.",
+        "heading": "Les r\u00e9ponses aux questions que l'on se pose avant d'offrir un souvenir si personnel.",
+        "intro": "Cette FAQ est pens\u00e9e pour rendre le parcours limpide, du choix du format jusqu'\u00e0 la finalisation de la personnalisation dans le panier.",
         "heading_size": "h2",
         "open_first_question": false,
         "enable_schema": true,
@@ -155,5 +131,5 @@
       }
     }
   },
-  "order": ["main", "process_steps", "faq"]
+  "order": ["main", "audio_preview", "faq"]
 }

@@ -208,3 +208,77 @@ if (!customElements.get('audio-keepsake-form')) {
     }
   );
 }
+
+(() => {
+  document.querySelectorAll('[data-audio-popup]').forEach((popup) => {
+    popup.querySelector('[data-audio-popup-close]')?.addEventListener('click', () => {
+      popup.hidden = true;
+    });
+  });
+
+  document.querySelectorAll('[data-audio-preview]').forEach((preview) => {
+    const player = preview.querySelector('[data-audio-preview-player]');
+    const input = preview.querySelector('[data-audio-preview-input]');
+    const placeholder = preview.querySelector('[data-audio-preview-placeholder]');
+    const filename = preview.querySelector('[data-audio-preview-filename]');
+    const resetButton = preview.querySelector('[data-audio-preview-reset]');
+    const defaultAudio = preview.dataset.defaultAudio || '';
+    const defaultMessage = defaultAudio
+      ? "Vous pouvez aussi importer un fichier local de test. Il n'est pas envoy\u00e9 avec la commande."
+      : "Importez un fichier local de test pour l'\u00e9couter ici. Il n'est pas envoy\u00e9 avec la commande.";
+    let objectUrl = '';
+
+    const revokeObjectUrl = () => {
+      if (!objectUrl) return;
+      URL.revokeObjectURL(objectUrl);
+      objectUrl = '';
+    };
+
+    const setSource = (src) => {
+      if (!player) return;
+
+      if (!src) {
+        player.pause();
+        player.removeAttribute('src');
+        player.load();
+        player.hidden = true;
+        if (placeholder) placeholder.hidden = false;
+        return;
+      }
+
+      player.src = src;
+      player.hidden = false;
+      player.load();
+      if (placeholder) placeholder.hidden = true;
+    };
+
+    setSource(defaultAudio);
+    if (filename) filename.textContent = defaultMessage;
+
+    input?.addEventListener('change', () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      revokeObjectUrl();
+      objectUrl = URL.createObjectURL(file);
+      setSource(objectUrl);
+
+      if (filename) {
+        filename.textContent = `${file.name} - audio de test local, non envoy\u00e9 avec la commande.`;
+      }
+
+      if (resetButton) resetButton.hidden = false;
+    });
+
+    resetButton?.addEventListener('click', () => {
+      revokeObjectUrl();
+      if (input) input.value = '';
+
+      setSource(defaultAudio);
+      if (filename) filename.textContent = defaultMessage;
+      resetButton.hidden = true;
+    });
+
+    window.addEventListener('beforeunload', revokeObjectUrl);
+  });
+})();

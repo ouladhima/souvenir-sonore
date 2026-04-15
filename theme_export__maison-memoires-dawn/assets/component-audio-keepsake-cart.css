@@ -173,6 +173,35 @@
   min-height: 5.2rem;
 }
 
+.audio-keepsake-cart__upload-progress {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.audio-keepsake-cart__upload-progress[hidden] {
+  display: none;
+}
+
+.audio-keepsake-cart__upload-bar {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(var(--color-foreground), 0.1);
+  overflow: hidden;
+}
+
+.audio-keepsake-cart__upload-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: rgba(var(--color-foreground), 0.65);
+  transition: width 0.25s ease;
+}
+
+.audio-keepsake-cart__upload-label {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
 .audio-keepsake-cart__input--textarea {
   min-height: 13rem;
   resize: vertical;

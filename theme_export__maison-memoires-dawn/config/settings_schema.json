@@ -1443,6 +1443,24 @@
         "id": "voice_music_value",
         "label": "Voice + music value",
         "default": "Votre enregistrement avec une musique composée"
+      },
+      {
+        "type": "header",
+        "content": "Stockage fichiers audio (Cloudinary)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Créez un compte gratuit sur cloudinary.com. Dans Settings > Upload, créez un upload preset non signé (Unsigned). Copiez le Cloud Name depuis le tableau de bord."
+      },
+      {
+        "type": "text",
+        "id": "cloudinary_cloud_name",
+        "label": "Cloudinary — Cloud name"
+      },
+      {
+        "type": "text",
+        "id": "cloudinary_upload_preset",
+        "label": "Cloudinary — Upload preset (non signé)"
       }
     ]
   },

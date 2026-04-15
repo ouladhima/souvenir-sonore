@@ -97,110 +97,69 @@
 -%}
 
 {%- if panel_group == 'secondary' -%}
-  <div class="audio-keepsake-form__panel audio-keepsake-form__panel--intro">
-    <div>
-      <p class="audio-keepsake-form__eyebrow">Personnalisation</p>
-      <h2 class="audio-keepsake-form__title h4">Vous finaliserez les détails juste après l'ajout au panier.</h2>
-    </div>
-    <p class="audio-keepsake-form__lead">
-      Vous choisissez d'abord le format qui vous ressemble, puis vous nous transmettez les éléments créatifs dans le
-      panier, sans alourdir la décision d'achat.
-    </p>
-  </div>
-
-  <div class="audio-keepsake-form__panel audio-keepsake-preview__flow">
-    <p class="audio-keepsake-form__eyebrow">Ce que nous vous demanderons ensuite</p>
-    <div class="audio-keepsake-preview__grid">
-      <article
-        class="audio-keepsake-preview__group"
-        data-audio-role="file"
-        {% unless file_group_visible %}
-          hidden
-        {% endunless %}
-      >
-        <span class="audio-keepsake-preview__icon">01</span>
-        <div>
-          <h3 class="audio-keepsake-preview__group-title">Votre fichier audio</h3>
-          <p class="audio-keepsake-form__helper">
-            Message vocal, archive sonore, extrait enregistré sur téléphone ou tout audio que vous souhaitez confier.
-          </p>
-        </div>
-      </article>
-
-      <article
-        class="audio-keepsake-preview__group"
-        data-audio-role="brief"
-        {% unless brief_group_visible %}
-          hidden
-        {% endunless %}
-      >
-        <span class="audio-keepsake-preview__icon">02</span>
-        <div>
-          <h3 class="audio-keepsake-preview__group-title">Votre brief créatif</h3>
-          <p class="audio-keepsake-form__helper">
-            L'émotion, l'histoire, les prénoms, le ton ou les souvenirs à faire ressentir dans la création.
-          </p>
-        </div>
-      </article>
-
-      <article
-        class="audio-keepsake-preview__group"
-        data-audio-role="notes"
-        {% unless notes_group_visible %}
-          hidden
-        {% endunless %}
-      >
-        <span class="audio-keepsake-preview__icon">03</span>
-        <div>
-          <h3 class="audio-keepsake-preview__group-title">Quelques précisions si besoin</h3>
-          <p class="audio-keepsake-form__helper">
-            Un détail sensible, une date, une attention particulière ou une nuance à transmettre à notre équipe.
-          </p>
-        </div>
-      </article>
-    </div>
-  </div>
-{%- else -%}
-  <div class="audio-keepsake-form__panel audio-keepsake-summary" aria-live="polite">
-    <div class="audio-keepsake-summary__header">
-      <p class="audio-keepsake-form__eyebrow">Résumé discret</p>
-      <p class="audio-keepsake-summary__intro">Une vue claire de vos choix, puis la prochaine étape.</p>
-    </div>
-    <div class="audio-keepsake-summary__grid">
-      <div class="audio-keepsake-summary__item">
-        <span>Type audio</span>
-        <strong data-summary-field="audio_type">{{ selected_audio_value | default: 'À choisir' }}</strong>
+  <div class="audio-keepsake-form__panel audio-keepsake-form__panel--details">
+    <div class="audio-keepsake-details__section">
+      <div>
+        <p class="audio-keepsake-form__eyebrow">Personnalisation</p>
+        <h2 class="audio-keepsake-form__title h4">Vous finaliserez les détails juste après l'ajout au panier.</h2>
       </div>
-      <div class="audio-keepsake-summary__item">
-        <span>Durée</span>
-        <strong data-summary-field="duration">{{ selected_duration | default: 'À choisir' }}</strong>
-      </div>
-      <div class="audio-keepsake-summary__item">
-        <span>Coffret</span>
-        <strong data-summary-field="packaging">{{ selected_packaging | default: 'À choisir' }}</strong>
-      </div>
-      <div class="audio-keepsake-summary__item audio-keepsake-summary__item--stacked">
-        <span>Étape suivante</span>
-        <strong data-summary-field="next_step">{{ next_step_text }}</strong>
+      <p class="audio-keepsake-form__lead">
+        Vous choisissez d'abord le format qui vous ressemble, puis vous nous transmettez les éléments créatifs dans le
+        panier, sans alourdir la décision d'achat.
+      </p>
+    </div>
+
+    <div class="audio-keepsake-details__section audio-keepsake-preview__flow">
+      <p class="audio-keepsake-form__eyebrow">Ce que nous vous demanderons ensuite</p>
+      <div class="audio-keepsake-preview__grid">
+        <article
+          class="audio-keepsake-preview__group"
+          data-audio-role="file"
+          {% unless file_group_visible %}
+            hidden
+          {% endunless %}
+        >
+          <span class="audio-keepsake-preview__icon">01</span>
+          <div>
+            <h3 class="audio-keepsake-preview__group-title">Votre fichier audio</h3>
+            <p class="audio-keepsake-form__helper">
+              Message vocal, archive sonore, extrait enregistré sur téléphone ou tout audio que vous souhaitez confier.
+            </p>
+          </div>
+        </article>
+
+        <article
+          class="audio-keepsake-preview__group"
+          data-audio-role="brief"
+          {% unless brief_group_visible %}
+            hidden
+          {% endunless %}
+        >
+          <span class="audio-keepsake-preview__icon">02</span>
+          <div>
+            <h3 class="audio-keepsake-preview__group-title">Votre brief créatif</h3>
+            <p class="audio-keepsake-form__helper">
+              L'émotion, l'histoire, les prénoms, le ton ou les souvenirs à faire ressentir dans la création.
+            </p>
+          </div>
+        </article>
+
+        <article
+          class="audio-keepsake-preview__group"
+          data-audio-role="notes"
+          {% unless notes_group_visible %}
+            hidden
+          {% endunless %}
+        >
+          <span class="audio-keepsake-preview__icon">03</span>
+          <div>
+            <h3 class="audio-keepsake-preview__group-title">Quelques précisions si besoin</h3>
+            <p class="audio-keepsake-form__helper">
+              Un détail sensible, une date, une attention particulière ou une nuance à transmettre à notre équipe.
+            </p>
+          </div>
+        </article>
       </div>
     </div>
   </div>
-
-  <aside class="audio-keepsake-form__panel audio-keepsake-reassurance" aria-label="Réassurance">
-    <p class="audio-keepsake-form__eyebrow">Réassurance</p>
-    <div class="audio-keepsake-reassurance__list">
-      <article class="audio-keepsake-reassurance__item">
-        <strong>Création en 48h</strong>
-        <p>Votre projet prend forme rapidement, avec le même soin du panier jusqu'à la production.</p>
-      </article>
-      <article class="audio-keepsake-reassurance__item">
-        <strong>Aperçu avant production</strong>
-        <p>Inclus pour tout audio créé par IA afin de valider le rendu avant fabrication.</p>
-      </article>
-      <article class="audio-keepsake-reassurance__item">
-        <strong>Support humain si besoin</strong>
-        <p>Nous vous guidons à chaque étape si vous avez une question ou une hésitation.</p>
-      </article>
-    </div>
-  </aside>
 {%- endif -%}

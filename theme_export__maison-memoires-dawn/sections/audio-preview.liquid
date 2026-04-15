@@ -1,0 +1,228 @@
+{{ 'section-audio-preview.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign has_audio_url = false
+  if section.settings.audio_url != blank
+    assign has_audio_url = true
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="AudioPreview" class="audio-preview color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="audio-preview__shell">
+      <div class="audio-preview__content">
+        {%- if section.settings.caption != blank -%}
+          <p class="audio-preview__eyebrow">{{ section.settings.caption | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="audio-preview__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.intro != blank -%}
+          <p class="audio-preview__intro">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+
+        <div class="audio-preview__chips" aria-label="Points cl&eacute;s">
+          {%- if section.settings.detail_one != blank -%}
+            <span>{{ section.settings.detail_one | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.detail_two != blank -%}
+            <span>{{ section.settings.detail_two | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.detail_three != blank -%}
+            <span>{{ section.settings.detail_three | escape }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="audio-preview__card" data-audio-preview data-default-audio="{{ section.settings.audio_url | escape }}">
+        {%- if section.settings.audio_label != blank -%}
+          <p class="audio-preview__track-label">{{ section.settings.audio_label | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.audio_title != blank -%}
+          <h3 class="audio-preview__track-title">{{ section.settings.audio_title | escape }}</h3>
+        {%- endif -%}
+
+        {%- if section.settings.audio_description != blank -%}
+          <p class="audio-preview__description">{{ section.settings.audio_description | escape }}</p>
+        {%- endif -%}
+
+        <audio
+          class="audio-preview__player"
+          controls
+          preload="none"
+          data-audio-preview-player
+          {% if has_audio_url %}
+            src="{{ section.settings.audio_url | escape }}"
+          {% else %}
+            hidden
+          {% endif %}
+        >
+          Votre navigateur ne prend pas en charge la lecture audio int&eacute;gr&eacute;e.
+        </audio>
+
+        <p class="audio-preview__placeholder" data-audio-preview-placeholder {% if has_audio_url %}hidden{% endif %}>
+          Importez un audio de test pour l'&eacute;couter instantan&eacute;ment ici.
+        </p>
+
+        <div class="audio-preview__actions">
+          <label class="audio-preview__upload-button button button--secondary" for="AudioPreviewUpload-{{ section.id }}">
+            Importer un audio test
+          </label>
+          <input
+            id="AudioPreviewUpload-{{ section.id }}"
+            class="audio-preview__input"
+            type="file"
+            accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"
+            data-audio-preview-input
+          >
+          <button type="button" class="audio-preview__reset" data-audio-preview-reset hidden>
+            {%- if has_audio_url -%}
+              Revenir &agrave; l'extrait
+            {%- else -%}
+              Retirer l'audio test
+            {%- endif -%}
+          </button>
+        </div>
+
+        <p class="audio-preview__upload-note" data-audio-preview-filename>
+          {%- if has_audio_url -%}
+            Vous pouvez aussi importer un fichier local de test. Il n'est pas envoy&eacute; avec la commande.
+          {%- else -%}
+            Importez un fichier local de test pour l'&eacute;couter ici. Il n'est pas envoy&eacute; avec la commande.
+          {%- endif -%}
+        </p>
+
+        {%- if section.settings.quote != blank -%}
+          <p class="audio-preview__quote">{{ section.settings.quote | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Extrait audio",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Sur-titre",
+      "default": "Exemple audio"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "\u00c9coutez le rendu d'une cr\u00e9ation audio g\u00e9n\u00e9r\u00e9e pour une histoire personnelle."
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Un extrait pour se projeter dans la qualit\u00e9 du rendu, l'\u00e9motion transmise et le niveau de finition attendu avant production."
+    },
+    {
+      "type": "text",
+      "id": "detail_one",
+      "label": "Puce 1",
+      "default": "Cr\u00e9\u00e9 \u00e0 partir d'un brief \u00e9motionnel"
+    },
+    {
+      "type": "text",
+      "id": "detail_two",
+      "label": "Puce 2",
+      "default": "Aper\u00e7u envoy\u00e9 avant production"
+    },
+    {
+      "type": "text",
+      "id": "detail_three",
+      "label": "Puce 3",
+      "default": "Pens\u00e9 pour \u00eatre offert"
+    },
+    {
+      "type": "text",
+      "id": "audio_label",
+      "label": "Libell\u00e9 audio",
+      "default": "Lecture"
+    },
+    {
+      "type": "text",
+      "id": "audio_title",
+      "label": "Titre de l'extrait",
+      "default": "Extrait de cr\u00e9ation g\u00e9n\u00e9r\u00e9e"
+    },
+    {
+      "type": "textarea",
+      "id": "audio_description",
+      "label": "Description de l'extrait",
+      "default": "Un exemple de rendu g\u00e9n\u00e9r\u00e9 \u00e0 partir d'un souvenir, d'un ton et d'une intention cr\u00e9ative transmis lors de la commande."
+    },
+    {
+      "type": "text",
+      "id": "audio_url",
+      "label": "URL du fichier audio",
+      "info": "Collez l'URL d'un fichier audio h\u00e9berg\u00e9 dans Shopify Files ou d'un MP3/WAV publiquement accessible."
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Phrase de fermeture",
+      "default": "Cet extrait donne un rep\u00e8re concret sur la sensibilit\u00e9 et la qualit\u00e9 de restitution avant fabrication du coffret."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge sup\u00e9rieure",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge inf\u00e9rieure",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Extrait audio"
+    }
+  ]
+}
+{% endschema %}

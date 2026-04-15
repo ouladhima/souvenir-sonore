@@ -89,10 +89,37 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
+  <div class="page-width{% if audio_keepsake_enabled %} audio-keepsake-product__page-width{% endif %}">
+    {%- if audio_keepsake_enabled -%}
+      <div class="audio-keepsake-popup" data-audio-popup>
+        <button
+          type="button"
+          class="audio-keepsake-popup__close"
+          data-audio-popup-close
+          aria-label="Fermer la fenêtre"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="audio-keepsake-popup__eyebrow">Avant de commander</p>
+        <h2 class="audio-keepsake-popup__title">Écoutez un extrait ou importez un audio test.</h2>
+        <p class="audio-keepsake-popup__text">
+          Un encart dédié vous attend plus bas sur la page pour tester un fichier local en toute simplicité.
+        </p>
+        <a class="button button--secondary" href="#AudioPreview">Découvrir l'encart audio</a>
+      </div>
+    {%- endif -%}
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+        <div class="audio-keepsake-product__media-stage">
+          {% render 'product-media-gallery', variant_images: variant_images %}
+          {%- if audio_keepsake_enabled -%}
+            <div class="audio-keepsake-product__media-badges" aria-label="Réassurance rapide">
+              <span>Création en 48h</span>
+              <span>Aperçu avant production</span>
+              <span>Livraison rapide</span>
+            </div>
+          {%- endif -%}
+        </div>
         {%- if audio_keepsake_enabled -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'text' and block.settings.text_style == 'subtitle' -%}
@@ -175,26 +202,22 @@
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
                   </div>
                 {%- endif -%}
-                {%- if audio_keepsake_enabled -%}
-                  <div class="audio-keepsake-price__reassurance" aria-label="Réassurance rapide">
-                    <span>Création en 48h</span>
-                    <span>Aperçu avant production</span>
-                    <span>Support humain si besoin</span>
-                  </div>
-                {%- elsif cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-                  <div class="product__tax caption rte">
-                    {%- if cart.duties_included and cart.taxes_included -%}
-                      {{ 'products.product.duties_and_taxes_included' | t }}
-                    {%- elsif cart.taxes_included -%}
-                      {{ 'products.product.taxes_included' | t }}
-                    {%- elsif cart.duties_included -%}
-                      {{ 'products.product.duties_included' | t }}
-                    {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
-                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
+                {%- unless audio_keepsake_enabled -%}
+                  {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
+                    <div class="product__tax caption rte">
+                      {%- if cart.duties_included and cart.taxes_included -%}
+                        {{ 'products.product.duties_and_taxes_included' | t }}
+                      {%- elsif cart.taxes_included -%}
+                        {{ 'products.product.taxes_included' | t }}
+                      {%- elsif cart.duties_included -%}
+                        {{ 'products.product.duties_included' | t }}
+                      {%- endif -%}
+                      {%- if shop.shipping_policy.body != blank -%}
+                        {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endunless -%}
                 <div {{ block.shopify_attributes }}>
                   {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                   {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
