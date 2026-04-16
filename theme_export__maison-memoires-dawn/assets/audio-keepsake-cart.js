@@ -2,9 +2,10 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
   class AudioKeepsakeCartPanel extends HTMLElement {
     static updateCheckoutState() {
       const panels = Array.from(document.querySelectorAll('audio-keepsake-cart-panel'));
-      const shouldLockCheckout = panels.some(
-        (panel) => panel.isSaving || panel.isUploading || !panel.isPersistedComplete()
-      );
+      const shouldLockCheckout = panels.some((panel) => {
+        if (typeof panel.isPersistedComplete !== 'function') return true;
+        return panel.isSaving || panel.isUploading || !panel.isPersistedComplete();
+      });
 
       const checkoutButton = document.getElementById('checkout');
       if (checkoutButton) {
@@ -129,7 +130,7 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
         }
 
         const properties = this.buildProperties(fileUrl);
-        const finalState = await this.replaceLineItem(properties);
+        const finalState = await this.updateLineItem(properties);
         const itemKey = this.findItemKey(finalState, properties.__audio_keepsake_revision);
 
         this.constructor.flashMessage = {
@@ -263,73 +264,53 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       return properties;
     }
 
-    async replaceLineItem(properties) {
-      if (!this.variantId || !this.lineKey) {
+    async updateLineItem(properties) {
+      if (!this.lineKey) {
         throw new Error(this.dataset.genericErrorMessage);
       }
 
-      const addFormData = new FormData();
-      addFormData.append('id', this.variantId);
-      addFormData.append('quantity', this.quantity);
-
+      const safeProperties = {};
       Object.entries(properties).forEach(([key, value]) => {
-        if (value === null || typeof value === 'undefined') return;
-
-        const normalizedValue = value.toString().trim();
-        if (!normalizedValue) return;
-
-        addFormData.append(`properties[${key}]`, value);
+        if (value !== null && typeof value !== 'undefined') {
+          const normalized = value.toString().trim();
+          if (normalized) safeProperties[key] = normalized;
+        }
       });
 
-      const addResponse = await fetch(routes.cart_add_url, {
-        method: 'POST',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        body: addFormData,
-      });
-      const addedItem = await this.parseJsonResponse(addResponse);
-
-      if (!addResponse.ok || addedItem.status || addedItem.errors) {
-        throw new Error(addedItem.description || addedItem.errors || this.dataset.genericErrorMessage);
-      }
-
-      const removeBody = JSON.stringify({
+      const body = JSON.stringify({
         id: this.lineKey,
-        quantity: 0,
+        quantity: parseInt(this.quantity, 10),
+        properties: safeProperties,
         sections: this.getSectionsToRender().map((section) => section.section),
         sections_url: window.location.pathname,
       });
-      const removeResponse = await fetch(routes.cart_change_url, { ...fetchConfig(), body: removeBody });
-      const finalState = await this.parseJsonResponse(removeResponse);
 
-      if (!removeResponse.ok || finalState.errors) {
-        await this.rollbackAddedItem(addedItem.key);
-        throw new Error(finalState.errors || this.dataset.genericErrorMessage);
+      const response = await fetch(routes.cart_change_url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body,
+      });
+
+      const finalState = await this.parseJsonResponse(response);
+
+      if (!response.ok || finalState.errors) {
+        const errMsg =
+          typeof finalState.errors === 'string' ? finalState.errors : this.dataset.genericErrorMessage;
+        throw new Error(errMsg);
       }
-
-      finalState.__audioAddedItemKey = addedItem.key || '';
 
       return finalState;
     }
 
-    async rollbackAddedItem(itemKey) {
-      if (!itemKey) return;
-
-      try {
-        const rollbackBody = JSON.stringify({
-          id: itemKey,
-          quantity: 0,
-        });
-
-        await fetch(routes.cart_change_url, { ...fetchConfig(), body: rollbackBody });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
     async parseJsonResponse(response) {
       const responseText = await response.text();
+
+      if (responseText.trimStart().startsWith('<')) {
+        throw new Error(this.dataset.genericErrorMessage);
+      }
 
       try {
         return responseText ? JSON.parse(responseText) : {};
@@ -397,8 +378,7 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       const matchedItem = parsedState?.items?.find(
         (item) => item.properties?.__audio_keepsake_revision === revision
       );
-
-      return matchedItem?.key || parsedState.__audioAddedItemKey || '';
+      return matchedItem?.key || '';
     }
 
     restoreFlashMessage() {
