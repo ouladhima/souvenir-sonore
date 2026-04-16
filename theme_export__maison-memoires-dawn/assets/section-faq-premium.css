@@ -76,3 +76,17 @@
   margin: 0;
   line-height: 1.7;
 }
+
+@media screen and (min-width: 750px) {
+  .faq-premium__summary {
+    justify-content: flex-start;
+  }
+
+  .faq-premium__icon {
+    order: -1;
+  }
+
+  .faq-premium__question {
+    flex: 1;
+  }
+}

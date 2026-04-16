@@ -1,0 +1,1047 @@
+{%- liquid
+  assign playable_count = 0
+  assign active_index = 0
+  assign found_playable = false
+  assign active_title = 'Extrait audio'
+  assign active_description = ''
+
+  for block in section.blocks
+    if block.settings.image != blank and block.settings.audio_url != blank
+      assign playable_count = playable_count | plus: 1
+      if found_playable == false
+        assign active_index = forloop.index0
+        assign found_playable = true
+      endif
+    endif
+  endfor
+
+  assign static_mode = false
+  if playable_count < 2
+    assign static_mode = true
+  endif
+
+  assign previous_index = active_index | minus: 1
+  if previous_index < 0
+    assign previous_index = section.blocks.size | minus: 1
+  endif
+
+  assign next_index = active_index | plus: 1
+  if next_index >= section.blocks.size
+    assign next_index = 0
+  endif
+
+  for block in section.blocks
+    if forloop.index0 == active_index
+      assign active_title = block.settings.title | default: 'Extrait audio'
+      assign active_description = block.settings.description | strip_html | strip_newlines
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="audio-cassette-carousel section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="audio-cassette-carousel__inner">
+      <div class="audio-cassette-carousel__header">
+        {%- if section.settings.caption != blank -%}
+          <p class="audio-cassette-carousel__eyebrow">{{ section.settings.caption | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="audio-cassette-carousel__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.intro != blank -%}
+          <p class="audio-cassette-carousel__intro">{{ section.settings.intro | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <audio-cassette-carousel
+          class="audio-cassette-carousel__component"
+          data-initial-index="{{ active_index }}"
+          data-static-mode="{{ static_mode }}"
+          role="region"
+          aria-label="Extraits audio"
+        >
+          <div class="audio-cassette-carousel__frame">
+            <div class="audio-cassette-carousel__stage">
+              {%- for block in section.blocks -%}
+                {%- liquid
+                  assign item_title = block.settings.title | default: 'Extrait audio'
+                  assign item_description = block.settings.description | strip_html | strip_newlines
+                  assign block_is_playable = false
+                  assign initial_position = 'hidden'
+                  if block.settings.image != blank and block.settings.audio_url != blank
+                    assign block_is_playable = true
+                  endif
+
+                  if forloop.index0 == active_index
+                    assign initial_position = 'active'
+                  elsif static_mode == false
+                    if section.blocks.size == 2
+                      if active_index == 0 and forloop.index0 == 1
+                        assign initial_position = 'next'
+                      endif
+
+                      if active_index == 1 and forloop.index0 == 0
+                        assign initial_position = 'previous'
+                      endif
+                    else
+                      if forloop.index0 == previous_index
+                        assign initial_position = 'previous'
+                      endif
+
+                      if forloop.index0 == next_index
+                        assign initial_position = 'next'
+                      endif
+                    endif
+                  endif
+                -%}
+                <article
+                  class="audio-cassette-carousel__item"
+                  data-item
+                  data-index="{{ forloop.index0 }}"
+                  data-title="{{ item_title | escape }}"
+                  data-description="{{ item_description | escape }}"
+                  data-playable="{{ block_is_playable }}"
+                  data-position="{{ initial_position }}"
+                  aria-hidden="{% if initial_position == 'hidden' %}true{% else %}false{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="audio-cassette-carousel__visual">
+                    <button
+                      type="button"
+                      class="audio-cassette-carousel__focus"
+                      data-focus-button
+                      aria-controls="AudioCassetteCarouselDetails-{{ section.id }}"
+                      aria-label="Afficher l'extrait {{ item_title | escape }}"
+                      aria-pressed="{% if forloop.index0 == active_index %}true{% else %}false{% endif %}"
+                      {% if initial_position == 'hidden' %}
+                        tabindex="-1"
+                      {% endif %}
+                    ></button>
+
+                    <div class="audio-cassette-carousel__media">
+                      {%- if block.settings.image != blank -%}
+                        {{
+                          block.settings.image
+                          | image_url: width: 1200
+                          | image_tag:
+                            widths: '320, 480, 640, 800, 1000, 1200',
+                            sizes: '(min-width: 990px) 40rem, (min-width: 750px) 52vw, 78vw',
+                            loading: 'lazy',
+                            alt: item_title
+                        }}
+                      {%- else -%}
+                        <div class="audio-cassette-carousel__placeholder" aria-hidden="true">
+                          <span class="audio-cassette-carousel__placeholder-caption">Maison des mémoires</span>
+                          <span class="audio-cassette-carousel__placeholder-window"></span>
+                          <span class="audio-cassette-carousel__placeholder-reel audio-cassette-carousel__placeholder-reel--left"></span>
+                          <span class="audio-cassette-carousel__placeholder-reel audio-cassette-carousel__placeholder-reel--right"></span>
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+                    <button
+                      type="button"
+                      class="audio-cassette-carousel__play"
+                      data-play-button
+                      aria-label="Lire l'extrait {{ item_title | escape }}"
+                      aria-pressed="false"
+                      {% unless block_is_playable %}
+                        disabled
+                      {% endunless %}
+                      {% if initial_position == 'hidden' %}
+                        tabindex="-1"
+                      {% endif %}
+                    >
+                      <span class="visually-hidden" data-play-label>Lire l'extrait {{ item_title | escape }}</span>
+                      <span class="audio-cassette-carousel__play-icon" aria-hidden="true"></span>
+                    </button>
+                  </div>
+
+                  <p class="audio-cassette-carousel__item-title">{{ item_title | escape }}</p>
+
+                  <audio
+                    data-audio
+                    preload="none"
+                    {% if block.settings.audio_url != blank %}
+                      src="{{ block.settings.audio_url | escape }}"
+                    {% endif %}
+                  ></audio>
+                </article>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.blocks.size > 1 and static_mode == false -%}
+            <div class="audio-cassette-carousel__controls">
+              <button type="button" class="audio-cassette-carousel__control" data-carousel-prev aria-label="Extrait précédent">
+                <span aria-hidden="true">&#8249;</span>
+              </button>
+              <button type="button" class="audio-cassette-carousel__control" data-carousel-next aria-label="Extrait suivant">
+                <span aria-hidden="true">&#8250;</span>
+              </button>
+            </div>
+          {%- endif -%}
+
+          <div class="audio-cassette-carousel__details" id="AudioCassetteCarouselDetails-{{ section.id }}">
+            <p class="audio-cassette-carousel__details-label">Extrait sélectionné</p>
+            <h3 class="audio-cassette-carousel__details-title" data-active-title>{{ active_title | escape }}</h3>
+            <p class="audio-cassette-carousel__details-text" data-active-description {% if active_description == blank %}hidden{% endif %}>
+              {{ active_description | escape }}
+            </p>
+          </div>
+        </audio-cassette-carousel>
+      {%- elsif request.design_mode -%}
+        <div class="audio-cassette-carousel__empty">
+          Ajoutez jusqu'a trois cassettes pour composer ce carrousel audio.
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .audio-cassette-carousel {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 34%),
+      radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.42), transparent 30%),
+      linear-gradient(180deg, #fefaf3 0%, #f7f3ec 52%, #f7eee2 100%);
+    color: #1f1a16;
+  }
+
+  .audio-cassette-carousel::before,
+  .audio-cassette-carousel::after {
+    content: '';
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  .audio-cassette-carousel::before {
+    top: -12rem;
+    left: -14rem;
+    width: 34rem;
+    height: 34rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.72), transparent 70%);
+  }
+
+  .audio-cassette-carousel::after {
+    right: -10rem;
+    bottom: -14rem;
+    width: 30rem;
+    height: 30rem;
+    background: radial-gradient(circle, rgba(232, 218, 197, 0.68), transparent 72%);
+  }
+
+  .audio-cassette-carousel__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(2.4rem, 5vw, 5.6rem);
+  }
+
+  .audio-cassette-carousel__header {
+    display: grid;
+    gap: 1.2rem;
+    max-width: 68rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .audio-cassette-carousel__eyebrow,
+  .audio-cassette-carousel__details-label {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.22rem;
+    text-transform: uppercase;
+    color: rgba(31, 26, 22, 0.56);
+  }
+
+  .audio-cassette-carousel__heading {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: clamp(3.1rem, 5vw, 5.8rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    color: #1f1a16;
+  }
+
+  .audio-cassette-carousel__intro,
+  .audio-cassette-carousel__details-text {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.7;
+    color: rgba(31, 26, 22, 0.72);
+  }
+
+  .audio-cassette-carousel__component {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .audio-cassette-carousel__frame {
+    position: relative;
+    min-height: clamp(30rem, 76vw, 46rem);
+  }
+
+  .audio-cassette-carousel__stage {
+    position: relative;
+    min-height: inherit;
+  }
+
+  .audio-cassette-carousel__item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(78vw, 36rem);
+    display: grid;
+    gap: 1.4rem;
+    margin: 0;
+    transform-origin: center top;
+    transition:
+      transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 500ms ease,
+      filter 500ms ease;
+    will-change: transform, opacity;
+  }
+
+  .audio-cassette-carousel__item[data-position='active'] {
+    transform: translate3d(-50%, 0, 0) scale(1);
+    opacity: 1;
+    z-index: 3;
+  }
+
+  .audio-cassette-carousel__item[data-position='previous'] {
+    transform: translate3d(calc(-50% - 19vw), 3rem, 0) scale(0.76) rotate(-5deg);
+    opacity: 0.42;
+    z-index: 2;
+    filter: saturate(0.8);
+  }
+
+  .audio-cassette-carousel__item[data-position='next'] {
+    transform: translate3d(calc(-50% + 19vw), 3rem, 0) scale(0.76) rotate(5deg);
+    opacity: 0.42;
+    z-index: 2;
+    filter: saturate(0.8);
+  }
+
+  .audio-cassette-carousel__item[data-position='hidden'] {
+    transform: translate3d(-50%, 3rem, 0) scale(0.7);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .audio-cassette-carousel__visual {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .audio-cassette-carousel__media {
+    position: relative;
+    width: 100%;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 400ms ease;
+    filter: drop-shadow(0 2rem 2.6rem rgba(84, 61, 35, 0.14));
+  }
+
+  .audio-cassette-carousel__item[data-position='active'] .audio-cassette-carousel__media {
+    filter: drop-shadow(0 3.4rem 4rem rgba(84, 61, 35, 0.2));
+  }
+
+  .audio-cassette-carousel__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .audio-cassette-carousel__focus {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .audio-cassette-carousel__visual:focus-within .audio-cassette-carousel__media {
+    transform: translateY(-0.4rem);
+  }
+
+  .audio-cassette-carousel__focus:focus-visible {
+    outline: none;
+  }
+
+  .audio-cassette-carousel__focus:focus-visible ~ .audio-cassette-carousel__media {
+    filter:
+      drop-shadow(0 3.4rem 4rem rgba(84, 61, 35, 0.2))
+      drop-shadow(0 0 0.1rem rgba(31, 26, 22, 0.24));
+  }
+
+  .audio-cassette-carousel__play {
+    position: absolute;
+    right: 1.6rem;
+    bottom: 1.4rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.6rem;
+    height: 4.6rem;
+    padding: 0;
+    border: 0.1rem solid rgba(31, 26, 22, 0.08);
+    border-radius: 999px;
+    background: rgba(254, 250, 243, 0.92);
+    box-shadow: 0 1.4rem 2.8rem rgba(84, 61, 35, 0.14);
+    color: #1f1a16;
+    cursor: pointer;
+    transition:
+      transform 250ms ease,
+      background 250ms ease,
+      opacity 250ms ease;
+  }
+
+  .audio-cassette-carousel__play:hover:not(:disabled),
+  .audio-cassette-carousel__play:focus-visible:not(:disabled) {
+    background: #ffffff;
+    transform: translateY(-0.2rem);
+  }
+
+  .audio-cassette-carousel__play:disabled {
+    opacity: 0.52;
+    cursor: not-allowed;
+  }
+
+  .audio-cassette-carousel__play-icon {
+    position: relative;
+    display: block;
+    width: 1.5rem;
+    height: 1.6rem;
+    margin-left: 0.2rem;
+  }
+
+  .audio-cassette-carousel__play-icon::before,
+  .audio-cassette-carousel__play-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .audio-cassette-carousel__play-icon::before {
+    width: 0;
+    height: 0;
+    border-top: 0.8rem solid transparent;
+    border-bottom: 0.8rem solid transparent;
+    border-left: 1.4rem solid currentColor;
+  }
+
+  .audio-cassette-carousel__play[data-playing='true'] .audio-cassette-carousel__play-icon {
+    width: 1.2rem;
+    margin-left: 0;
+  }
+
+  .audio-cassette-carousel__play[data-playing='true'] .audio-cassette-carousel__play-icon::before,
+  .audio-cassette-carousel__play[data-playing='true'] .audio-cassette-carousel__play-icon::after {
+    top: 0.1rem;
+    width: 0.34rem;
+    height: 1.4rem;
+    border: 0;
+    background: currentColor;
+    border-radius: 999px;
+  }
+
+  .audio-cassette-carousel__play[data-playing='true'] .audio-cassette-carousel__play-icon::before {
+    left: 0.16rem;
+  }
+
+  .audio-cassette-carousel__play[data-playing='true'] .audio-cassette-carousel__play-icon::after {
+    right: 0.16rem;
+  }
+
+  .audio-cassette-carousel__item-title {
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-heading-family);
+    font-size: clamp(1.5rem, 2vw, 1.9rem);
+    letter-spacing: -0.03em;
+    color: rgba(31, 26, 22, 0.52);
+    transition: color 350ms ease, transform 350ms ease;
+  }
+
+  .audio-cassette-carousel__item[data-position='active'] .audio-cassette-carousel__item-title {
+    color: #1f1a16;
+    transform: translateY(-0.2rem);
+  }
+
+  .audio-cassette-carousel__controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .audio-cassette-carousel__control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 0;
+    border: 0.1rem solid rgba(31, 26, 22, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.42);
+    color: #1f1a16;
+    font-size: 2.8rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform 250ms ease,
+      background 250ms ease,
+      border-color 250ms ease;
+  }
+
+  .audio-cassette-carousel__control:hover,
+  .audio-cassette-carousel__control:focus-visible {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(31, 26, 22, 0.16);
+    transform: translateY(-0.2rem);
+  }
+
+  .audio-cassette-carousel__details {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .audio-cassette-carousel__details-title {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: clamp(2.6rem, 4vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: #1f1a16;
+  }
+
+  .audio-cassette-carousel__details-text[hidden] {
+    display: none;
+  }
+
+  .audio-cassette-carousel__placeholder {
+    position: relative;
+    aspect-ratio: 1.68;
+    width: 100%;
+    border-radius: 2.4rem;
+    border: 0.1rem solid rgba(141, 118, 91, 0.1);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(244, 237, 226, 0.92)),
+      #f8f1e8;
+    box-shadow:
+      inset 0 0.1rem 0 rgba(255, 255, 255, 0.7),
+      0 2rem 3.6rem rgba(107, 79, 46, 0.1);
+    overflow: hidden;
+  }
+
+  .audio-cassette-carousel__placeholder-caption {
+    position: absolute;
+    top: 14%;
+    left: 9%;
+    font-size: 1rem;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+    color: rgba(31, 26, 22, 0.46);
+  }
+
+  .audio-cassette-carousel__placeholder-window {
+    position: absolute;
+    top: 29%;
+    left: 35%;
+    width: 30%;
+    height: 21%;
+    border-radius: 1rem;
+    background:
+      linear-gradient(90deg, rgba(70, 53, 35, 0.18), rgba(70, 53, 35, 0.34), rgba(70, 53, 35, 0.16)),
+      #d9cfbf;
+    border: 0.1rem solid rgba(70, 53, 35, 0.08);
+  }
+
+  .audio-cassette-carousel__placeholder-reel {
+    position: absolute;
+    top: 30%;
+    width: 16%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.84) 0 28%, transparent 29%),
+      radial-gradient(circle, rgba(93, 70, 47, 0.12) 0 58%, transparent 59%),
+      rgba(255, 250, 243, 0.96);
+    border: 0.1rem solid rgba(70, 53, 35, 0.12);
+  }
+
+  .audio-cassette-carousel__placeholder-reel--left {
+    left: 20%;
+  }
+
+  .audio-cassette-carousel__placeholder-reel--right {
+    right: 20%;
+  }
+
+  .audio-cassette-carousel__empty {
+    padding: 3.2rem;
+    text-align: center;
+    color: rgba(31, 26, 22, 0.68);
+    border-radius: 2.4rem;
+    border: 0.1rem dashed rgba(31, 26, 22, 0.16);
+    background: rgba(255, 255, 255, 0.26);
+  }
+
+  @media screen and (max-width: 749px) {
+    .audio-cassette-carousel__frame {
+      min-height: clamp(28rem, 92vw, 42rem);
+    }
+
+    .audio-cassette-carousel__item[data-position='previous'] {
+      transform: translate3d(calc(-50% - 13vw), 2.4rem, 0) scale(0.72) rotate(-5deg);
+      opacity: 0.34;
+    }
+
+    .audio-cassette-carousel__item[data-position='next'] {
+      transform: translate3d(calc(-50% + 13vw), 2.4rem, 0) scale(0.72) rotate(5deg);
+      opacity: 0.34;
+    }
+
+    .audio-cassette-carousel__play {
+      right: 1.1rem;
+      bottom: 1rem;
+      width: 4.2rem;
+      height: 4.2rem;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .audio-cassette-carousel__item {
+      width: min(40rem, 46vw);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .audio-cassette-carousel__frame {
+      min-height: 52rem;
+    }
+
+    .audio-cassette-carousel__item[data-position='previous'] {
+      transform: translate3d(calc(-50% - min(33vw, 29rem)), 3rem, 0) scale(0.78) rotate(-5deg);
+    }
+
+    .audio-cassette-carousel__item[data-position='next'] {
+      transform: translate3d(calc(-50% + min(33vw, 29rem)), 3rem, 0) scale(0.78) rotate(5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .audio-cassette-carousel__item,
+    .audio-cassette-carousel__media,
+    .audio-cassette-carousel__play,
+    .audio-cassette-carousel__control,
+    .audio-cassette-carousel__item-title {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('audio-cassette-carousel')) {
+    class AudioCassetteCarousel extends HTMLElement {
+      static editorEventsBound = false;
+
+      connectedCallback() {
+        if (this.initialized) return;
+
+        this.items = Array.from(this.querySelectorAll('[data-item]'));
+        if (!this.items.length) return;
+
+        this.previousButton = this.querySelector('[data-carousel-prev]');
+        this.nextButton = this.querySelector('[data-carousel-next]');
+        this.activeTitle = this.querySelector('[data-active-title]');
+        this.activeDescription = this.querySelector('[data-active-description]');
+        this.staticMode = this.dataset.staticMode === 'true';
+        this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.activeIndex = this.getInitialIndex();
+
+        this.bindItemEvents();
+        this.bindControls();
+        this.bindKeyboard();
+        this.update();
+
+        this.initialized = true;
+        AudioCassetteCarousel.bindEditorEvents();
+      }
+
+      disconnectedCallback() {
+        this.stopAll();
+      }
+
+      getInitialIndex() {
+        const parsedIndex = Number.parseInt(this.dataset.initialIndex, 10);
+        if (Number.isNaN(parsedIndex)) return 0;
+        if (parsedIndex < 0) return 0;
+        if (parsedIndex >= this.items.length) return 0;
+        return parsedIndex;
+      }
+
+      bindItemEvents() {
+        this.items.forEach((item, index) => {
+          item.querySelector('[data-focus-button]')?.addEventListener('click', () => {
+            this.setActive(index, { focus: false });
+          });
+
+          item.querySelector('[data-play-button]')?.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            this.toggleAudio(index);
+          });
+
+          item.querySelector('[data-audio]')?.addEventListener('play', () => {
+            this.handleAudioPlay(index);
+          });
+
+          item.querySelector('[data-audio]')?.addEventListener('pause', () => {
+            this.syncPlayButtons();
+          });
+
+          item.querySelector('[data-audio]')?.addEventListener('ended', () => {
+            this.syncPlayButtons();
+          });
+        });
+      }
+
+      bindControls() {
+        this.previousButton?.addEventListener('click', () => {
+          this.move(-1);
+        });
+
+        this.nextButton?.addEventListener('click', () => {
+          this.move(1);
+        });
+      }
+
+      bindKeyboard() {
+        this.addEventListener('keydown', (event) => {
+          if (this.staticMode || this.items.length < 2) return;
+
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            this.move(-1);
+          }
+
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            this.move(1);
+          }
+        });
+      }
+
+      move(step) {
+        if (this.items.length < 2) return;
+        const nextIndex = (this.activeIndex + step + this.items.length) % this.items.length;
+        this.setActive(nextIndex, { focus: true });
+      }
+
+      setActive(index, options = {}) {
+        if (index < 0 || index >= this.items.length) return;
+
+        const focus = options.focus === true;
+        const shouldStop = options.stop !== false;
+        const hasChanged = this.activeIndex !== index;
+
+        const applyState = () => {
+          if (hasChanged && shouldStop) {
+            this.stopAll(index);
+          }
+
+          this.activeIndex = index;
+          this.update();
+        };
+
+        if (hasChanged && document.startViewTransition && !this.prefersReducedMotion) {
+          document.startViewTransition(applyState);
+        } else {
+          applyState();
+        }
+
+        if (focus) {
+          this.items[index].querySelector('[data-focus-button]')?.focus();
+        }
+      }
+
+      update() {
+        const previousIndex = (this.activeIndex - 1 + this.items.length) % this.items.length;
+        const nextIndex = (this.activeIndex + 1) % this.items.length;
+
+        this.items.forEach((item, index) => {
+          let position = 'hidden';
+
+          if (index === this.activeIndex) {
+            position = 'active';
+          } else if (!this.staticMode) {
+            if (this.items.length === 2) {
+              const secondaryPosition = this.activeIndex === 0 ? 'next' : 'previous';
+              const secondaryIndex = this.activeIndex === 0 ? 1 : 0;
+              if (index === secondaryIndex) position = secondaryPosition;
+            } else {
+              if (index === previousIndex) position = 'previous';
+              if (index === nextIndex) position = 'next';
+            }
+          }
+
+          item.dataset.position = position;
+          item.setAttribute('aria-hidden', position === 'hidden' ? 'true' : 'false');
+
+          const focusButton = item.querySelector('[data-focus-button]');
+          const playButton = item.querySelector('[data-play-button]');
+          const visible = position !== 'hidden';
+          const active = position === 'active';
+
+          if (focusButton) {
+            focusButton.setAttribute('aria-pressed', active ? 'true' : 'false');
+            focusButton.tabIndex = visible ? 0 : -1;
+          }
+
+          if (playButton && !playButton.disabled) {
+            playButton.tabIndex = visible ? 0 : -1;
+          }
+        });
+
+        this.updateDetails();
+        this.syncPlayButtons();
+      }
+
+      updateDetails() {
+        const activeItem = this.items[this.activeIndex];
+        if (!activeItem) return;
+
+        if (this.activeTitle) {
+          this.activeTitle.textContent = activeItem.dataset.title || '';
+        }
+
+        if (this.activeDescription) {
+          const description = activeItem.dataset.description || '';
+          this.activeDescription.textContent = description;
+          this.activeDescription.hidden = description.length === 0;
+        }
+      }
+
+      toggleAudio(index) {
+        const item = this.items[index];
+        const audio = item?.querySelector('[data-audio]');
+        if (!audio || !audio.src) return;
+
+        this.setActive(index, { focus: false });
+
+        if (audio.paused) {
+          this.stopAll(index);
+          audio.play().catch(() => {});
+        } else {
+          audio.pause();
+        }
+      }
+
+      handleAudioPlay(index) {
+        this.setActive(index, { stop: false, focus: false });
+        this.stopAll(index);
+        this.syncPlayButtons();
+      }
+
+      stopAll(exceptIndex = null) {
+        this.items.forEach((item, index) => {
+          if (index === exceptIndex) return;
+
+          const audio = item.querySelector('[data-audio]');
+          if (!audio) return;
+
+          audio.pause();
+
+          try {
+            audio.currentTime = 0;
+          } catch (error) {}
+        });
+
+        this.syncPlayButtons();
+      }
+
+      syncPlayButtons() {
+        this.items.forEach((item) => {
+          const title = item.dataset.title || 'Extrait audio';
+          const audio = item.querySelector('[data-audio]');
+          const playButton = item.querySelector('[data-play-button]');
+          const playLabel = item.querySelector('[data-play-label]');
+          const isPlaying = Boolean(audio && !audio.paused && !audio.ended);
+          const label = isPlaying ? `Mettre en pause l'extrait ${title}` : `Lire l'extrait ${title}`;
+
+          if (!playButton) return;
+
+          playButton.dataset.playing = isPlaying ? 'true' : 'false';
+          playButton.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+          playButton.setAttribute('aria-label', label);
+
+          if (playLabel) {
+            playLabel.textContent = label;
+          }
+        });
+      }
+
+      static bindEditorEvents() {
+        if (this.editorEventsBound || !window.Shopify || !window.Shopify.designMode) return;
+
+        document.addEventListener('shopify:block:select', (event) => {
+          const carousel = event.target.closest('audio-cassette-carousel');
+          const item = event.target.closest('[data-item]');
+          if (!carousel || !item) return;
+
+          const index = Number.parseInt(item.dataset.index, 10);
+          if (Number.isNaN(index)) return;
+
+          carousel.setActive(index, { focus: true });
+        });
+
+        this.editorEventsBound = true;
+      }
+    }
+
+    customElements.define('audio-cassette-carousel', AudioCassetteCarousel);
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Carrousel cassettes audio",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Sur-titre",
+      "default": "Extraits audio"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Trois façons d'offrir un souvenir qui se réécoute."
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Chaque cassette révèle une intention différente, pensée pour un moment précis et pour la personne qui la reçoit."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge supérieure",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge inférieure",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sample",
+      "name": "Cassette",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Anniversaire"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Une voix pensée pour marquer un jour qui compte."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Visuel de la cassette"
+        },
+        {
+          "type": "url",
+          "id": "audio_url",
+          "label": "Lien du fichier audio",
+          "info": "Ajoutez l'URL d'un audio hébergé dans Shopify Files ou d'un fichier publiquement accessible."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrousel cassettes audio",
+      "blocks": [
+        {
+          "type": "sample",
+          "settings": {
+            "title": "Anniversaire",
+            "description": "Une voix pensée pour marquer un jour qui compte."
+          }
+        },
+        {
+          "type": "sample",
+          "settings": {
+            "title": "Message d'amour",
+            "description": "Quelques mots choisis pour rester près de l'autre."
+          }
+        },
+        {
+          "type": "sample",
+          "settings": {
+            "title": "Pour maman",
+            "description": "Un souvenir tendre à écouter quand l'émotion revient."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

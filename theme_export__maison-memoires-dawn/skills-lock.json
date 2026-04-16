@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "skills": {
+    "shopify-admin": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "e08643a2ab3555eb3ebc51663009d2ea4c608d3042143d615cc5bb42cc23d57e"
+    },
+    "shopify-admin-execution": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "12be5182bf347fd38da78b1e1ee7e8375d8bfb0ded019580b38d5a03bc59b0fd"
+    },
+    "shopify-dev": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "6ac7a412b8d5653e4e6bf714270b1a53731c1a29606110b0ee508fa52b54f7ff"
+    },
+    "shopify-functions": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "c79011a81f4b05a2f781adc2ea1476dbd134358267886542aacb1a363a83b2d4"
+    },
+    "shopify-hydrogen": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "05bdbecd472deb9f7eee3324c7c13be2b001daade2190a6fcb0d3b57c7a6a8be"
+    },
+    "shopify-liquid": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "379e50fd6f36582989614940036ace49d7f0c8486c4c12710f21b34ab78bc3fc"
+    },
+    "shopify-merchant-onboarding": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "e8e78caf117813e67dca4d10ca1d0fa0b705c3e71276d454f740a41e84603876"
+    },
+    "shopify-onboarding-dev": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "dc364b3954cb57469fe01b1c199dc72d16e7df5b4575e1077ddc36c43967c810"
+    },
+    "shopify-polaris-app-home": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "0e38995aabedf31a8a9606fc7627fa3f7b2593a652b487da6c7da44693ba5458"
+    },
+    "shopify-pos-ui": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "computedHash": "bd3e2eacc8e96a4269c975d8f8edbbd7f4eccd77746e3752aa6399a0cb45d7f2"
+    }
+  }
+}

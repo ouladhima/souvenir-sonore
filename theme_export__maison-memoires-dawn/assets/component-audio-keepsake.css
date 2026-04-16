@@ -369,9 +369,7 @@
 
 @media screen and (min-width: 990px) {
   .audio-keepsake-popup {
-    top: 2rem;
-    right: 2rem;
-    width: min(39rem, calc(100% - 4rem));
+    display: none;
   }
 
   .audio-keepsake-product .product.grid {

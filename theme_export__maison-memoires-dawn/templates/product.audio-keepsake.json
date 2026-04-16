@@ -52,21 +52,39 @@
         "padding_bottom": 20
       }
     },
-    "audio_preview": {
-      "type": "audio-preview",
+    "audio_cassette_carousel": {
+      "type": "audio-cassette-carousel",
+      "blocks": {
+        "sample_anniversaire": {
+          "type": "sample",
+          "settings": {
+            "title": "Anniversaire",
+            "description": "Une voix pensée pour marquer un jour qui compte.",
+            "audio_url": ""
+          }
+        },
+        "sample_amour": {
+          "type": "sample",
+          "settings": {
+            "title": "Message d'amour",
+            "description": "Quelques mots choisis pour rester près de l'autre.",
+            "audio_url": ""
+          }
+        },
+        "sample_maman": {
+          "type": "sample",
+          "settings": {
+            "title": "Pour maman",
+            "description": "Un souvenir tendre à écouter quand l'émotion revient.",
+            "audio_url": ""
+          }
+        }
+      },
+      "block_order": ["sample_anniversaire", "sample_amour", "sample_maman"],
       "settings": {
-        "caption": "Exemple audio",
-        "heading": "\u00c9coutez le rendu d'une cr\u00e9ation audio g\u00e9n\u00e9r\u00e9e pour une histoire personnelle.",
-        "intro": "Un extrait pour se projeter dans la qualit\u00e9 du rendu, l'\u00e9motion transmise et le niveau de finition attendu avant production.",
-        "detail_one": "Cr\u00e9\u00e9 \u00e0 partir d'un brief \u00e9motionnel",
-        "detail_two": "Aper\u00e7u envoy\u00e9 avant production",
-        "detail_three": "Pens\u00e9 pour \u00eatre offert",
-        "audio_label": "Lecture",
-        "audio_title": "Extrait de cr\u00e9ation g\u00e9n\u00e9r\u00e9e",
-        "audio_description": "Un exemple de rendu g\u00e9n\u00e9r\u00e9 \u00e0 partir d'un souvenir, d'un ton et d'une intention cr\u00e9ative transmis lors de la commande.",
-        "audio_url": "",
-        "quote": "Cet extrait donne un rep\u00e8re concret sur la sensibilit\u00e9 et la qualit\u00e9 de restitution avant fabrication du coffret.",
-        "color_scheme": "scheme-1",
+        "caption": "Extraits audio",
+        "heading": "Trois façons d'offrir un souvenir qui se réécoute.",
+        "intro": "Chaque cassette révèle une intention différente, pensée pour un moment précis et pour la personne qui la reçoit.",
         "padding_top": 0,
         "padding_bottom": 56
       }
@@ -131,5 +149,5 @@
       }
     }
   },
-  "order": ["main", "audio_preview", "faq"]
+  "order": ["main", "audio_cassette_carousel", "faq"]
 }
