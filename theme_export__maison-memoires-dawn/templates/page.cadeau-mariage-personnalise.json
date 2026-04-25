@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "after_day": {
+          "type": "text",
+          "settings": {
+            "heading": "Un cadeau de mariage à écouter après l'intensité du jour",
+            "text": "<p>Le jour d'un mariage passe vite. Les discours, les regards, les messages et les émotions se succèdent, puis il reste ce que les mariés peuvent garder. Un cadeau de mariage personnalisé sous forme de cassette audio permet de prolonger ce moment autrement. Il ne cherche pas à remplacer les photos ou les vidéos, mais à préserver une dimension plus intime : les voix, les mots, une chanson, une intention.</p><p>Maison des mémoires propose de transformer cette matière émotionnelle en cassette audio personnalisée, présentée dans un coffret premium. Le cadeau peut être offert par un témoin, un parent, un groupe d'amis, un frère, une sœur ou un conjoint. Il peut contenir un message vocal, une chanson sur mesure ou une création mixte pensée pour les mariés.</p>"
+          }
+        },
+        "ideas": {
+          "type": "text",
+          "settings": {
+            "heading": "Des idées pour les témoins, la famille ou les proches",
+            "text": "<p>Les témoins peuvent préparer une narration courte autour du couple, avec quelques souvenirs et une dédicace finale. Les parents peuvent offrir une voix plus tendre, tournée vers le chemin parcouru et l'avenir. Les amis peuvent créer un message collectif, plus vivant, qui reste élégant grâce au coffret. Le conjoint peut aussi offrir une déclaration privée, à écouter après la journée.</p><p>La chanson personnalisée est particulièrement adaptée au mariage lorsqu'elle reprend des détails réels : un lieu, une rencontre, une phrase, une ambiance, un prénom, un souvenir. Elle donne au cadeau une dimension plus construite, sans perdre l'intimité qui fait sa valeur.</p>"
+          }
+        },
+        "timing": {
+          "type": "text",
+          "settings": {
+            "heading": "Quand préparer le souvenir audio",
+            "text": "<p>Pour un mariage, il est préférable d'anticiper. Même si la création est généralement préparée sous 48h, un cadeau aussi personnel mérite un peu de temps pour rassembler les éléments utiles. Vous pouvez préparer un message, collecter quelques phrases auprès de proches, définir le ton musical ou transmettre un brief simple.</p><p>Après le choix du format, la personnalisation se finalise depuis le panier. Pour les créations sur mesure, un aperçu est envoyé avant production. Cette validation est importante pour un mariage : elle permet de vérifier que le rendu reste juste, sobre et fidèle aux mariés avant que le coffret ne soit préparé.</p>"
+          }
+        },
+        "keepsake": {
+          "type": "text",
+          "settings": {
+            "heading": "Un objet de mémoire, pas une animation de plus",
+            "text": "<p>Le mariage compte déjà de nombreuses animations et attentions. La cassette audio personnalisée se place dans une autre logique : elle n'est pas faite pour créer du bruit pendant la fête, mais pour rester après. Les mariés peuvent l'écouter à deux, plus tard, lorsqu'ils veulent retrouver une voix ou une émotion liée à leur union.</p><p>Le coffret donne au souvenir une présence physique et premium. Il permet d'offrir un cadeau sensible sans tomber dans le spectaculaire. Cette retenue correspond à la direction de Maison des mémoires : créer un objet audio élégant, émotionnel, personnalisé et suffisamment durable pour accompagner les années qui suivent.</p><p>Cette approche convient aussi lorsque plusieurs proches veulent offrir un cadeau commun sans ajouter une animation supplémentaire au planning du mariage. Chacun peut contribuer au message, à l'histoire ou au brief, puis le souvenir final reste entre les mains des mariés comme une capsule intime de leur entourage.</p>"
+          }
+        },
+        "link_couple": {
+          "type": "link",
+          "settings": {
+            "title": "Pour l'histoire du couple",
+            "text": "Si le cadeau est offert par l'un des deux partenaires, le guide couple aide à construire une attention plus intime.",
+            "link_url": "/pages/cadeau-personnalise-couple",
+            "link_label": "Voir le cadeau couple"
+          }
+        },
+        "link_audio": {
+          "type": "link",
+          "settings": {
+            "title": "Choisir le bon format",
+            "text": "Le guide général détaille les différences entre message vocal, chanson personnalisée et formule voix + musique.",
+            "link_url": "/pages/cadeau-audio-personnalise",
+            "link_label": "Lire le guide cadeau audio"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Qui peut offrir une cassette audio de mariage ?",
+            "answer": "<p>Un témoin, un parent, un groupe d'amis, un proche ou l'un des mariés peut offrir ce souvenir selon l'intention souhaitée.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on inclure plusieurs voix ?",
+            "answer": "<p>Oui, vous pouvez préparer un message collectif ou transmettre plusieurs éléments audio pour nourrir le souvenir.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Est-ce plutôt un cadeau à ouvrir le jour J ou après ?",
+            "answer": "<p>Les deux sont possibles, mais le format est particulièrement fort lorsqu'il est écouté dans un moment calme après la célébration.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Le rendu peut-il rester élégant ?",
+            "answer": "<p>Oui. La création privilégie une émotion sobre et raffinée, adaptée à un cadeau de mariage premium.</p>"
+          }
+        }
+      },
+      "block_order": ["after_day", "ideas", "timing", "keepsake", "link_couple", "link_audio", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "eyebrow": "Cadeau mariage",
+        "heading": "Cadeau de mariage personnalisé : une mémoire audio à offrir aux mariés",
+        "intro": "<p>Pour un mariage, la cassette audio personnalisée permet de conserver les voix, les vœux ou une chanson sur mesure dans un coffret élégant à réécouter après le jour J.</p>",
+        "primary_label": "Créer un cadeau de mariage",
+        "primary_link": "/products/ecrin-sonore",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}

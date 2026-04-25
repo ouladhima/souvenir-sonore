@@ -1913,7 +1913,10 @@
                 "label": "Vertikal"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Zum Ausblenden dieser Kombination leer lassen"
             },
             "icon_1": {

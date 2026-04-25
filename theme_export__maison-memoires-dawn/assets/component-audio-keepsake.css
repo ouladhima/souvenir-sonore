@@ -137,6 +137,29 @@
   border-radius: 999px;
 }
 
+.audio-keepsake-purchase__microcopy {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.2rem 1.4rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  border-radius: 1.8rem;
+  background: rgba(var(--color-foreground), 0.025);
+}
+
+.audio-keepsake-purchase__microcopy span {
+  color: rgba(var(--color-foreground), 0.72);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.audio-keepsake-purchase__note {
+  margin: 0;
+  color: rgba(var(--color-foreground), 0.66);
+  font-size: 1.35rem;
+  line-height: 1.6;
+}
+
 .audio-keepsake-product .button--secondary,
 .audio-keepsake-product .shopify-payment-button__button--unbranded {
   --color-button: var(--color-secondary-button);
@@ -357,6 +380,10 @@
   .audio-keepsake-purchase {
     display: grid;
     gap: 1.6rem;
+  }
+
+  .audio-keepsake-purchase__microcopy {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .audio-keepsake-purchase__primary,

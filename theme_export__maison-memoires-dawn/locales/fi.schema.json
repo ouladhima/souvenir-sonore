@@ -1913,7 +1913,10 @@
                 "label": "Pysty"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Jos haluat piilottaa tämän parin, jätä tyhjäksi"
             },
             "icon_1": {

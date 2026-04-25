@@ -1,0 +1,30 @@
+{% doc %}
+  Outputs the best available URL for the audio keepsake product.
+
+  Uses the configured handle first, then the current active product handle,
+  then the first product in the all collection, and finally the all-products collection.
+
+  @example
+  {% render 'audio-keepsake-product-url' %}
+{% enddoc %}
+
+{%- liquid
+  assign target_handle = settings.audio_keepsake_product_handle | default: 'ecrin-sonore' | strip
+  assign target_product = blank
+
+  if target_handle != blank
+    assign target_product = all_products[target_handle]
+  endif
+
+  if target_product == blank
+    assign target_product = collections['all'].products | first
+  endif
+
+  if target_product != blank
+    echo target_product.url
+  elsif target_handle != blank
+    echo routes.root_url | append: 'products/' | append: target_handle
+  else
+    echo routes.all_products_collection_url
+  endif
+-%}

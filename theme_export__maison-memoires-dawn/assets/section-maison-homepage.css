@@ -675,3 +675,46 @@ html.js-enabled .maison-homepage__sequence.is-complete .maison-homepage__sequenc
     transition: none;
   }
 }
+
+/* ── Audio Preview Section ── */
+.maison-homepage__audio-cards {
+  display: grid;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.maison-homepage__audio-card {
+  display: grid;
+  gap: 1.6rem;
+  padding: 2.8rem;
+  border-radius: 2.4rem;
+  border: 0.1rem solid var(--maison-border-strong);
+  background: rgba(var(--maison-bg-soft), 0.7);
+}
+
+.maison-homepage__audio-card-label {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgb(var(--maison-fg));
+}
+
+.maison-homepage__audio-card-desc {
+  margin: 0.4rem 0 0;
+  font-size: 1.5rem;
+  color: rgba(var(--maison-fg-muted));
+  line-height: 1.6;
+}
+
+.maison-homepage__audio-player {
+  width: 100%;
+  border-radius: 999px;
+  accent-color: rgb(var(--maison-fg));
+}
+
+@media screen and (min-width: 750px) {
+  .maison-homepage__audio-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,375 @@
+<section class="seo-intent-page color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="seo-intent-page__hero">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="seo-intent-page__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="seo-intent-page__title">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.intro != blank -%}
+        <div class="seo-intent-page__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+
+      <div class="seo-intent-page__actions">
+        {%- if section.settings.primary_label != blank -%}
+          <a
+            class="button button--primary"
+            {% if section.settings.primary_link == blank %}
+              role="link" aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.primary_link }}"
+            {% endif %}
+          >
+            {{ section.settings.primary_label | escape }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_label != blank -%}
+          <a
+            class="button button--secondary"
+            {% if section.settings.secondary_link == blank %}
+              href="#seo-intent-page-faq-{{ section.id }}"
+            {% else %}
+              href="{{ section.settings.secondary_link }}"
+            {% endif %}
+          >
+            {{ section.settings.secondary_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="seo-intent-page__content">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'text' -%}
+            <article class="seo-intent-page__text-block" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h2>{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="rte">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </article>
+
+          {%- when 'link' -%}
+            <article class="seo-intent-page__link-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h2>{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p>{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                <a href="{{ block.settings.link_url }}">{{ block.settings.link_label | escape }}</a>
+              {%- endif -%}
+            </article>
+
+          {%- when 'faq' -%}
+            {%- assign has_faq = true -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- if has_faq -%}
+        <section class="seo-intent-page__faq" id="seo-intent-page-faq-{{ section.id }}">
+          <div class="seo-intent-page__faq-header">
+            <p class="seo-intent-page__eyebrow">Questions fréquentes</p>
+            <h2>Avant d'offrir ce souvenir audio</h2>
+          </div>
+
+          <div class="seo-intent-page__faq-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank -%}
+                <details class="seo-intent-page__faq-item" {{ block.shopify_attributes }}>
+                  <summary>{{ block.settings.question | escape }}</summary>
+                  <div class="rte">{{ block.settings.answer }}</div>
+                </details>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </section>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .seo-intent-page {
+    color: rgb(var(--color-foreground));
+  }
+
+  .seo-intent-page .page-width {
+    padding-top: clamp(3.2rem, 6vw, 7.2rem);
+    padding-bottom: clamp(4.8rem, 8vw, 9.6rem);
+  }
+
+  .seo-intent-page__hero {
+    display: grid;
+    gap: 1.8rem;
+    max-width: 86rem;
+    margin: 0 auto clamp(3.6rem, 7vw, 7.2rem);
+    text-align: center;
+  }
+
+  .seo-intent-page__eyebrow {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.58);
+  }
+
+  .seo-intent-page__title {
+    max-width: 78rem;
+    margin: 0 auto;
+    font-size: clamp(3.8rem, 6vw, 7.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  .seo-intent-page__intro {
+    max-width: 70rem;
+    margin: 0 auto;
+    color: rgba(var(--color-foreground), 0.75);
+    font-size: 1.7rem;
+    line-height: 1.75;
+  }
+
+  .seo-intent-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .seo-intent-page__content {
+    display: grid;
+    gap: clamp(2.4rem, 4vw, 4.8rem);
+    max-width: 96rem;
+    margin: 0 auto;
+  }
+
+  .seo-intent-page__text-block {
+    display: grid;
+    gap: 1.2rem;
+    padding-top: clamp(2rem, 3vw, 3.2rem);
+    border-top: 0.1rem solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .seo-intent-page__text-block h2,
+  .seo-intent-page__link-card h2,
+  .seo-intent-page__faq-header h2 {
+    margin: 0;
+    font-size: clamp(2.6rem, 3.2vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  .seo-intent-page__text-block .rte,
+  .seo-intent-page__faq-item .rte,
+  .seo-intent-page__link-card p {
+    color: rgba(var(--color-foreground), 0.74);
+    font-size: 1.62rem;
+    line-height: 1.75;
+  }
+
+  .seo-intent-page__link-card {
+    display: grid;
+    gap: 1rem;
+    padding: 2rem;
+    border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+    background: rgba(var(--color-foreground), 0.025);
+  }
+
+  .seo-intent-page__link-card a {
+    color: rgb(var(--color-foreground));
+    text-underline-offset: 0.3rem;
+  }
+
+  .seo-intent-page__faq {
+    display: grid;
+    gap: 2rem;
+    padding-top: clamp(2.4rem, 4vw, 4.8rem);
+    border-top: 0.1rem solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .seo-intent-page__faq-header {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .seo-intent-page__faq-list {
+    display: grid;
+    border-top: 0.1rem solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .seo-intent-page__faq-item {
+    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.12);
+  }
+
+  .seo-intent-page__faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding: 1.8rem 0;
+    color: rgb(var(--color-foreground));
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .seo-intent-page__faq-item summary::after {
+    content: '+';
+    color: rgba(var(--color-foreground), 0.48);
+  }
+
+  .seo-intent-page__faq-item[open] summary::after {
+    content: '−';
+  }
+
+  .seo-intent-page__faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .seo-intent-page__faq-item .rte {
+    padding-bottom: 1.8rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .seo-intent-page__link-card {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+      padding: 2.8rem;
+    }
+
+    .seo-intent-page__link-card a {
+      grid-column: 2;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Page SEO intention",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sur-titre",
+      "default": "Guide cadeau"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre H1",
+      "default": "Cadeau audio personnalisé : offrir une voix qui reste"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Un cadeau audio personnalisé permet de transmettre une voix, une chanson ou une émotion dans un format pensé pour être conservé.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "CTA principal",
+      "default": "Créer ma cassette audio"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Lien CTA principal"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "CTA secondaire",
+      "default": "Lire les questions"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Lien CTA secondaire"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Bloc texte",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texte"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Lien interne",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texte"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Lien"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Libellé du lien"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Question FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Réponse"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page SEO intention"
+    }
+  ]
+}
+{% endschema %}

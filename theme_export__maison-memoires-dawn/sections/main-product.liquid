@@ -644,6 +644,7 @@
                           >
                             {% assign skip_card_product_styles = false %}
                             {%- for i in (1..number_of_slides) -%}
+                              {% assign product_offset = forloop.index0 | times: block.settings.products_per_page %}
                               <div
                                 id="Slide-{{ block.id }}-{{ forloop.index }}"
                                 class="complementary-slide complementary-slide--{{ settings.card_style }} grid__item slider__slide slideshow__slide"
@@ -657,7 +658,7 @@
                                 <ul class="list-unstyled" role="list">
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
-                                    offset: continue
+                                    offset: product_offset
                                   -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
@@ -796,14 +797,6 @@
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
-
-    {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
-      endif
-    -%}
 
     <script type="application/ld+json">
       {{ product | structured_data }}

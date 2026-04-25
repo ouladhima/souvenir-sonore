@@ -1914,7 +1914,10 @@
                 "label": "수직"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "이 페어링을 숨기려면 비워 둡니다"
             },
             "icon_1": {

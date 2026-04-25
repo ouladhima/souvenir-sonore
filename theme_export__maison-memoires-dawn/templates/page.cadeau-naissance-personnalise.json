@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "welcome": {
+          "type": "text",
+          "settings": {
+            "heading": "Un cadeau de naissance qui garde une voix",
+            "text": "<p>Un cadeau de naissance personnalisé peut devenir bien plus qu'une attention pour les premiers jours. Lorsqu'il contient une voix, une dédicace ou une création musicale, il garde une trace de l'émotion qui entoure l'arrivée d'un enfant. Les mots des parents, des grands-parents, d'un parrain, d'une marraine ou d'un proche prennent une valeur particulière lorsqu'ils peuvent être réécoutés plus tard.</p><p>La cassette audio personnalisée Maison des mémoires permet de transformer cette intention en coffret délicat. Elle peut accueillir un message de bienvenue, une chanson douce créée pour l'enfant, une archive familiale ou une composition mixte associant voix et musique. Le résultat est pensé comme un souvenir à conserver, pas comme un cadeau de naissance interchangeable.</p>"
+          }
+        },
+        "audience": {
+          "type": "text",
+          "settings": {
+            "heading": "Pour les parents, l'enfant ou toute la famille",
+            "text": "<p>Le destinataire réel peut varier. Le cadeau peut être offert aux parents pour célébrer l'arrivée de leur enfant, à l'enfant lui-même comme trace à découvrir plus tard, ou à la famille comme objet de mémoire partagé. Cette souplesse permet d'adapter le ton : tendre, protecteur, joyeux, poétique ou très personnel.</p><p>Une voix enregistrée peut dire bienvenue, raconter le contexte de la naissance ou transmettre une promesse. Une chanson sur mesure peut reprendre le prénom, l'ambiance souhaitée, les premiers instants ou les valeurs que l'on veut associer à ce souvenir. Le coffret donne ensuite à cette émotion une forme tangible et raffinée.</p>"
+          }
+        },
+        "preparation": {
+          "type": "text",
+          "settings": {
+            "heading": "Préparer une dédicace de naissance simple et juste",
+            "text": "<p>Pour créer un cadeau de naissance audio, il n'est pas nécessaire d'écrire un long texte. Quelques éléments suffisent : le prénom, le lien avec l'enfant, une phrase de bienvenue, une émotion dominante, une anecdote ou une intention pour l'avenir. Vous pouvez aussi transmettre une ambiance musicale : douce, lumineuse, intime, familiale ou plus cérémonielle.</p><p>La personnalisation se finalise depuis le panier, après le choix du format. Ce parcours évite de vous demander trop d'informations trop tôt. Pour les créations audio sur mesure, un aperçu est envoyé avant production, afin de confirmer que le rendu reste délicat et fidèle à l'émotion recherchée.</p>"
+          }
+        },
+        "object": {
+          "type": "text",
+          "settings": {
+            "heading": "Un coffret à conserver dans le temps",
+            "text": "<p>Les cadeaux de naissance sont souvent liés aux premiers mois : vêtements, accessoires, objets utiles. Une cassette audio personnalisée s'inscrit dans une autre temporalité. Elle peut être réécoutée dans quelques années, devenir une trace familiale et rappeler les voix qui entouraient l'enfant au moment de son arrivée.</p><p>Le coffret premium joue un rôle important. Il protège le souvenir et rend le geste immédiatement présentable. Maison des mémoires privilégie une esthétique sobre et sensible, adaptée à la douceur de l'occasion. Le cadeau reste élégant, sans surcharge, avec une valeur émotionnelle qui vient du contenu audio autant que de la manière de l'offrir.</p><p>Cette attention peut aussi devenir un repère familial. Les parents peuvent la garder avec les premiers souvenirs de l'enfant, puis la lui faire découvrir plus tard. La voix ne raconte pas seulement ce qui a été dit ; elle garde l'intonation, la tendresse et le contexte d'un moment que l'on ne pourra jamais refaire exactement.</p>"
+          }
+        },
+        "link_anniversary": {
+          "type": "link",
+          "settings": {
+            "title": "Pour les anniversaires à venir",
+            "text": "La même cassette personnalisée peut aussi marquer un premier anniversaire ou une date importante de l'enfance.",
+            "link_url": "/pages/cadeau-anniversaire-personnalise",
+            "link_label": "Voir le cadeau anniversaire"
+          }
+        },
+        "link_audio": {
+          "type": "link",
+          "settings": {
+            "title": "Comprendre les formats audio",
+            "text": "Message vocal, chanson sur mesure ou voix + musique : le guide général aide à choisir la bonne intention.",
+            "link_url": "/pages/cadeau-audio-personnalise",
+            "link_label": "Lire le guide cadeau audio"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "À qui offrir une cassette audio de naissance ?",
+            "answer": "<p>Elle peut être offerte aux parents, à l'enfant pour plus tard, ou à toute la famille comme souvenir sonore de l'arrivée du bébé.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Que dire dans un message de naissance ?",
+            "answer": "<p>Une phrase de bienvenue, une émotion, un prénom, une promesse ou une anecdote familiale suffisent souvent à créer un souvenir très personnel.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on créer une chanson douce pour le bébé ?",
+            "answer": "<p>Oui. Vous pouvez transmettre une intention musicale et quelques détails pour créer une chanson ou une ambiance sonore sur mesure.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Le coffret est-il adapté à un cadeau premium ?",
+            "answer": "<p>Oui. La présentation est pensée pour être offerte avec soin, dans une esthétique sobre, douce et mémorielle.</p>"
+          }
+        }
+      },
+      "block_order": ["welcome", "audience", "preparation", "object", "link_anniversary", "link_audio", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "eyebrow": "Cadeau naissance",
+        "heading": "Cadeau de naissance personnalisé : conserver une voix, une dédicace, une émotion",
+        "intro": "<p>Pour une naissance, la voix devient une trace précieuse. Maison des mémoires transforme une dédicace, une chanson ou un message de bienvenue en cassette audio personnalisée à conserver.</p>",
+        "primary_label": "Créer un souvenir de naissance",
+        "primary_link": "/products/ecrin-sonore",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}

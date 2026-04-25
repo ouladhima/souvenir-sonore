@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "meaning": {
+          "type": "text",
+          "settings": {
+            "heading": "Pourquoi un cadeau audio touche autrement",
+            "text": "<p>Un cadeau audio personnalisé ne se contente pas d'être regardé. Il se découvre dans une voix, un souffle, une mélodie ou une intonation que la personne reconnaît immédiatement. C'est ce qui le rend plus intime qu'un objet décoratif et plus durable qu'un simple message envoyé sur un téléphone. Avec Maison des mémoires, cette émotion prend la forme d'une cassette audio personnalisée, présentée dans un coffret cadeau premium que l'on peut ouvrir, offrir, conserver et réécouter.</p><p>Ce format répond à une attente très précise : offrir quelque chose qui porte réellement une histoire. Il peut s'agir d'un message vocal, d'une déclaration, d'un souvenir familial, d'une chanson sur mesure ou d'une création mixte où la voix est soutenue par une composition musicale. Le cadeau devient alors une présence, pas seulement une attention.</p>"
+          }
+        },
+        "formats": {
+          "type": "text",
+          "settings": {
+            "heading": "Trois façons de personnaliser l'émotion",
+            "text": "<p>La première possibilité consiste à confier un enregistrement vocal : quelques mots, une archive, une note vocale ou un message préparé spécialement pour la personne qui recevra le coffret. La deuxième consiste à faire créer une chanson personnalisée à partir de votre intention, de votre histoire et du ton souhaité. La troisième associe les deux : votre voix devient la matière principale, puis une création musicale vient lui donner plus d'ampleur.</p><p>Cette approche permet de choisir un cadeau audio personnalisé adapté à la relation et au moment. Pour un parent, la voix peut rassurer. Pour un couple, elle peut dire ce qui se formule difficilement à l'écrit. Pour une naissance, elle peut garder une trace de bienvenue. Pour un mariage, elle peut porter un message à écouter après l'intensité du jour.</p>"
+          }
+        },
+        "object": {
+          "type": "text",
+          "settings": {
+            "heading": "Un coffret pensé comme un vrai présent",
+            "text": "<p>Le support compte autant que le fichier audio. Une cassette audio personnalisée donne une forme concrète à ce que l'on veut transmettre. Le coffret crée le premier moment d'émotion, avant même l'écoute. Il annonce que le cadeau a été pensé, préparé, choisi avec soin. C'est cette différence qui permet à Maison des mémoires de s'éloigner du cadeau digital impersonnel et de proposer un objet de mémoire prêt à offrir.</p><p>La personnalisation se finalise après l'ajout au panier pour garder une expérience simple. Vous choisissez d'abord le format, puis vous transmettez les éléments utiles : fichier audio, brief créatif, contexte, prénoms, occasion, ton souhaité ou précisions sensibles. Pour les créations sur mesure, un aperçu est envoyé avant production afin de valider le rendu.</p>"
+          }
+        },
+        "confidence": {
+          "type": "text",
+          "settings": {
+            "heading": "Pour quelles occasions choisir ce souvenir sonore",
+            "text": "<p>Ce cadeau convient aux moments où l'on veut laisser une trace : anniversaire, fête des mères, fête des pères, naissance, mariage, relation à distance, remerciement, hommage ou demande symbolique. Il fonctionne particulièrement bien quand l'émotion est forte, mais difficile à réduire à un objet classique. La cassette audio personnalisée permet de faire entendre une présence et de donner une forme raffinée à ce lien.</p><p>Le résultat n'a pas besoin d'être spectaculaire pour être puissant. Quelques mots sincères peuvent suffire. Une chanson peut donner plus de relief à une histoire. Un coffret sobre peut rendre le moment plus cérémoniel. L'essentiel est que la personne reçoive un souvenir qu'elle pourra rouvrir et réécouter, pas seulement le jour du cadeau, mais longtemps après.</p>"
+          }
+        },
+        "link_couple": {
+          "type": "link",
+          "settings": {
+            "title": "Pour un couple",
+            "text": "Quand le cadeau doit raconter une histoire intime, la cassette audio peut devenir une déclaration à réécouter à deux.",
+            "link_url": "/pages/cadeau-personnalise-couple",
+            "link_label": "Voir l'idée cadeau couple"
+          }
+        },
+        "link_anniversary": {
+          "type": "link",
+          "settings": {
+            "title": "Pour un anniversaire",
+            "text": "Un message vocal ou une chanson sur mesure permet de marquer une date avec plus de présence qu'un cadeau classique.",
+            "link_url": "/pages/cadeau-anniversaire-personnalise",
+            "link_label": "Explorer le cadeau d'anniversaire"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Que peut contenir un cadeau audio personnalisé ?",
+            "answer": "<p>Il peut contenir un message vocal, une archive sonore, une chanson créée sur mesure ou une combinaison voix + musique selon l'émotion que vous voulez transmettre.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "La cassette est-elle prête à offrir ?",
+            "answer": "<p>Oui. Le souvenir est pensé comme un coffret cadeau premium, avec une présentation soignée et une expérience d'ouverture qui compte autant que l'écoute.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Quand transmettre mon fichier audio ou mon brief ?",
+            "answer": "<p>Vous choisissez d'abord le format puis, depuis le panier, vous transmettez votre fichier, votre intention créative et les précisions utiles.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je valider le rendu avant production ?",
+            "answer": "<p>Pour les créations audio sur mesure, un aperçu est envoyé avant production afin de confirmer le ton, l'émotion et le rendu final.</p>"
+          }
+        }
+      },
+      "block_order": ["meaning", "formats", "object", "confidence", "link_couple", "link_anniversary", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "eyebrow": "Cadeau audio personnalisé",
+        "heading": "Cadeau audio personnalisé : offrir une voix qui reste",
+        "intro": "<p>Offrir un cadeau audio personnalisé, c'est transmettre une voix, une chanson ou une émotion dans un format que l'on garde. Maison des mémoires transforme cette intention en cassette audio personnalisée, présentée dans un coffret raffiné et prête à devenir un souvenir durable.</p>",
+        "primary_label": "Créer ma cassette audio",
+        "primary_link": "/products/ecrin-sonore",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}

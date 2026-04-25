@@ -1914,7 +1914,10 @@
                 "label": "Verticaal"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Laat leeg om deze koppeling te verbergen"
             },
             "icon_1": {

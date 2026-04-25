@@ -2,14 +2,20 @@
 <script src="{{ 'section-maison-homepage.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
-  assign product_handle = 'cassette-audio-personnalisee'
-  assign product_url = routes.all_products_collection_url
+  assign product_handle = settings.audio_keepsake_product_handle | default: 'ecrin-sonore' | strip
+  capture product_url
+    render 'audio-keepsake-product-url'
+  endcapture
+  assign product_url = product_url | strip
 
   if section.settings.home_product != blank
     assign product_handle = section.settings.home_product.handle
     assign product_url = section.settings.home_product.url
   elsif all_products[product_handle] != blank
+    assign product_handle = all_products[product_handle].handle
     assign product_url = all_products[product_handle].url
+  elsif collections['all'].products.first != blank
+    assign product_handle = collections['all'].products.first.handle
   endif
 -%}
 
@@ -23,87 +29,28 @@
   ]
 {%- endcapture -%}
 
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "name": "Maison des mémoires",
-        "url": {{ shop.url | json }},
-        "description": "Maison des mémoires conçoit des souvenirs audio personnalisés présentés comme de véritables objets cadeau."
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Comment transmettre mon enregistrement vocal ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Après votre commande, vous recevez des indications simples pour transmettre votre enregistrement ou votre message vocal dans les meilleures conditions."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Comment fonctionne la chanson sur mesure ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Vous partagez l'intention, l'histoire et l'émotion à transmettre. Nous composons ensuite une proposition musicale personnalisée pensée pour votre moment."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Puis-je écouter avant la production ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui. Vous recevez un aperçu avant fabrication afin d'écouter, confirmer et valider le rendu final."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Sous quel délai la création est-elle préparée ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "La création est généralement préparée sous 48 heures avant validation, hors besoins de retouches plus poussées ou périodes exceptionnelles."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Le coffret est-il prêt à offrir ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui. Le souvenir est pensé comme un objet cadeau premium, avec une présentation soignée et une finition conçue pour être offerte dès réception."
-            }
-          }
-        ]
-      }
-    ]
-  }
-</script>
-
 <div class="maison-homepage">
   <section class="maison-homepage__hero" id="maison-homepage-hero">
     <div class="page-width maison-homepage__hero-shell">
       <div class="maison-homepage__hero-copy">
-        <p class="maison-homepage__eyebrow">Maison des mémoires</p>
-        <h1 class="maison-homepage__hero-title">Offrir une voix, c'est offrir une présence qui reste.</h1>
+        <p class="maison-homepage__eyebrow">Cassette audio personnalisée · coffret cadeau premium</p>
+        <h1 class="maison-homepage__hero-title">La cassette audio personnalisée qui transforme une voix en souvenir à offrir.</h1>
         <p class="maison-homepage__hero-lead">
-          Un souvenir audio pensé comme un vrai geste cadeau : intime, raffiné et assez durable
-          pour être réécouté quand l'émotion revient.
+          Transformez un message vocal, une chanson sur mesure ou une création mixte en coffret raffiné,
+          prêt à offrir et à réécouter longtemps après le moment reçu.
         </p>
 
         <div class="maison-homepage__actions">
           <a class="button button--primary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
             Créer mon souvenir
           </a>
-          <a class="button button--secondary" href="#maison-homepage-pourquoi">Découvrir pourquoi</a>
+          <a class="button button--secondary" href="#maison-homepage-pourquoi">Découvrir le concept</a>
         </div>
 
         <ul class="maison-homepage__trust" aria-label="Points de réassurance">
           <li>Création sous 48h</li>
           <li>Aperçu avant production</li>
-          <li>Validation avant expédition</li>
+          <li>Coffret prêt à offrir</li>
         </ul>
       </div>
 
@@ -123,8 +70,8 @@
   <section class="maison-homepage__section" id="maison-homepage-pourquoi">
     <div class="page-width maison-homepage__intro-grid">
       <div class="maison-homepage__heading-group">
-        <p class="maison-homepage__eyebrow">Pourquoi ce geste compte</p>
-        <h2>Parce qu'il y a des choses que l'on ne veut pas laisser devenir silencieuses.</h2>
+        <p class="maison-homepage__eyebrow">Un cadeau audio personnel</p>
+        <h2>Vous confiez une voix, une histoire ou une intention. Nous en faisons une cassette à offrir.</h2>
       </div>
 
       <div class="maison-homepage__prose">
@@ -311,6 +258,48 @@
     </div>
   </section>
 
+  {%- if section.settings.ai_audio_1_url != blank or section.settings.ai_audio_2_url != blank -%}
+  <section class="maison-homepage__section maison-homepage__audio-preview" id="maison-homepage-audio-preview">
+    <div class="page-width">
+      <div class="maison-homepage__section-heading">
+        <p class="maison-homepage__eyebrow">Exemples de créations</p>
+        <h2>{{ section.settings.ai_audio_heading | default: 'Écoutez ce que nos créations sonores donnent.' }}</h2>
+        <p>{{ section.settings.ai_audio_subtext | default: 'Des compositions musicales générées sur mesure, pensées pour accompagner un moment intime.' }}</p>
+      </div>
+
+      <div class="maison-homepage__audio-cards">
+        {%- if section.settings.ai_audio_1_url != blank -%}
+          <div class="maison-homepage__audio-card">
+            <div class="maison-homepage__audio-card-meta">
+              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_1_label | default: 'Création 1' }}</p>
+              {%- if section.settings.ai_audio_1_desc != blank -%}
+                <p class="maison-homepage__audio-card-desc">{{ section.settings.ai_audio_1_desc }}</p>
+              {%- endif -%}
+            </div>
+            <audio class="maison-homepage__audio-player" controls preload="none">
+              <source src="{{ section.settings.ai_audio_1_url }}" type="audio/mpeg">
+            </audio>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.ai_audio_2_url != blank -%}
+          <div class="maison-homepage__audio-card">
+            <div class="maison-homepage__audio-card-meta">
+              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_2_label | default: 'Création 2' }}</p>
+              {%- if section.settings.ai_audio_2_desc != blank -%}
+                <p class="maison-homepage__audio-card-desc">{{ section.settings.ai_audio_2_desc }}</p>
+              {%- endif -%}
+            </div>
+            <audio class="maison-homepage__audio-player" controls preload="none">
+              <source src="{{ section.settings.ai_audio_2_url }}" type="audio/mpeg">
+            </audio>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
   <section class="maison-homepage__section maison-homepage__testimonials">
     <div class="page-width">
       <div class="maison-homepage__section-heading">
@@ -425,6 +414,56 @@
       "type": "product",
       "id": "home_product",
       "label": "Produit des CTA"
+    },
+    {
+      "type": "header",
+      "content": "Exemples audio IA"
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_heading",
+      "label": "Titre de la section",
+      "default": "Écoutez ce que nos créations sonores donnent."
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_subtext",
+      "label": "Sous-titre",
+      "default": "Des compositions musicales générées sur mesure, pensées pour accompagner un moment intime."
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_1_label",
+      "label": "Encart 1 — Titre",
+      "default": "Ambiance romantique"
+    },
+    {
+      "type": "url",
+      "id": "ai_audio_1_url",
+      "label": "Encart 1 — Lien audio (Shopify CDN)"
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_1_desc",
+      "label": "Encart 1 — Description courte",
+      "default": "Composition douce et intime pour un anniversaire ou une déclaration."
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_2_label",
+      "label": "Encart 2 — Titre",
+      "default": "Mélodie de naissance"
+    },
+    {
+      "type": "url",
+      "id": "ai_audio_2_url",
+      "label": "Encart 2 — Lien audio (Shopify CDN)"
+    },
+    {
+      "type": "text",
+      "id": "ai_audio_2_desc",
+      "label": "Encart 2 — Description courte",
+      "default": "Berceuse moderne pour célébrer l'arrivée d'un enfant."
     }
   ],
   "presets": [

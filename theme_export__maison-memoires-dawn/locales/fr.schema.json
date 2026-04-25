@@ -1913,6 +1913,10 @@
                 "label": "Verticale"
               }
             },
+            "content": {
+              "label": "Contenu",
+              "info": "Choisissez les icones, images et titres affiches dans ce bloc"
+            },
             "heading": {
               "info": "Laisser vide pour masquer ce jumelage"
             },

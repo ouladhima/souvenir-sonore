@@ -1913,7 +1913,10 @@
                 "label": "Vertikalt"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "La stå tom for å skjule denne sammenkoblingen"
             },
             "icon_1": {

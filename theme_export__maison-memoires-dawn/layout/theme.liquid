@@ -15,18 +15,50 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    {%- liquid
+      assign seo_page_title = page_title
+      assign seo_page_description = page_description
+
+      if request.page_type == 'index'
+        assign seo_page_title = 'Cassette audio personnalisée premium | Maison des mémoires'
+        assign seo_page_description = 'Offrez une cassette audio personnalisée dans un coffret cadeau raffiné. Voix, chanson sur mesure ou création mixte, avec aperçu avant production.'
+      elsif request.page_type == 'product' and product.handle == 'ecrin-sonore'
+        assign seo_page_title = 'Cassette audio personnalisée | Maison des mémoires'
+        assign seo_page_description = 'Créez une cassette audio personnalisée dans un coffret prêt à offrir. Message vocal, chanson sur mesure ou création mixte, avec aperçu avant production.'
+      elsif request.page_type == 'page'
+        case page.handle
+          when 'cadeau-audio-personnalise'
+            assign seo_page_title = 'Cadeau audio personnalisé | Maison des mémoires'
+            assign seo_page_description = 'Offrez un cadeau audio personnalisé dans un coffret raffiné. Une voix, un message ou une chanson sur mesure à réécouter longtemps.'
+          when 'cadeau-personnalise-couple'
+            assign seo_page_title = 'Cadeau personnalisé couple | Maison des mémoires'
+            assign seo_page_description = 'Un cadeau personnalisé pour couple sous forme de cassette audio raffinée. Message vocal, chanson sur mesure et coffret souvenir à offrir.'
+          when 'cadeau-anniversaire-personnalise'
+            assign seo_page_title = 'Cadeau anniversaire personnalisé | Maison des mémoires'
+            assign seo_page_description = 'Transformez un message, une voix ou une chanson en cadeau d’anniversaire personnalisé, présenté dans une cassette audio premium.'
+          when 'cadeau-naissance-personnalise'
+            assign seo_page_title = 'Cadeau naissance personnalisé | Maison des mémoires'
+            assign seo_page_description = 'Offrez un cadeau de naissance personnalisé avec une voix, une dédicace ou une création audio dans un coffret souvenir délicat.'
+          when 'cadeau-mariage-personnalise'
+            assign seo_page_title = 'Cadeau mariage personnalisé | Maison des mémoires'
+            assign seo_page_description = 'Un cadeau de mariage personnalisé à écouter et conserver : cassette audio, message vocal ou chanson sur mesure dans un coffret élégant.'
+        endcase
+      endif
+    -%}
+
     <title>
-      {{ page_title }}
+      {{ seo_page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless request.page_type == 'index' or seo_page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
+    {% if seo_page_description %}
+      <meta name="description" content="{{ seo_page_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
+    {% render 'meta-tags', seo_title: seo_page_title, seo_description: seo_page_description %}
+    {% render 'seo-structured-data', seo_title: seo_page_title, seo_description: seo_page_description %}
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
@@ -54,6 +86,7 @@
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
+      {% assign scheme_classes = '' %}
       {% for scheme in settings.color_schemes -%}
         {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
         {% if forloop.index == 1 -%}

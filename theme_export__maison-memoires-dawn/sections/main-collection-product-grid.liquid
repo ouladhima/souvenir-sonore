@@ -38,6 +38,73 @@
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- assign single_collection_product = collection.products | first -%}
+    {%- if collection.products_count == 1 and single_collection_product != blank -%}
+      <div class="collection-single-product page-width" id="ProductGridContainer">
+        <div class="collection-single-product__copy">
+          <p class="collection-single-product__eyebrow">Maison des mémoires</p>
+          <h1 id="collection-single-product-title">Un seul souvenir, pensé pour être entièrement personnel.</h1>
+          <p>
+            Ici, pas de catalogue à parcourir. Tout le parcours mène vers une cassette audio personnalisée, conçue
+            comme un cadeau intime, premium et prêt à offrir.
+          </p>
+
+          <div class="collection-single-product__price" role="status">
+            {%- render 'price',
+              product: single_collection_product,
+              use_variant: true,
+              show_badges: true,
+              price_class: 'price--large'
+            -%}
+          </div>
+
+          <div class="collection-single-product__actions">
+            <a class="button button--primary" href="{{ single_collection_product.url }}">Créer mon souvenir</a>
+            <a class="button button--secondary" href="{{ routes.root_url }}#maison-homepage-pourquoi">
+              Comprendre le concept
+            </a>
+          </div>
+
+          <ul class="collection-single-product__trust" aria-label="Points de réassurance">
+            <li>Aperçu avant production</li>
+            <li>Personnalisation guidée</li>
+            <li>Coffret prêt à offrir</li>
+          </ul>
+        </div>
+
+        <a class="collection-single-product__media" href="{{ single_collection_product.url }}" aria-labelledby="collection-single-product-title">
+          {%- if single_collection_product.featured_image -%}
+            <img
+              src="{{ single_collection_product.featured_image | image_url: width: 1400 }}"
+              alt="{{ single_collection_product.featured_image.alt | default: single_collection_product.title | escape }}"
+              width="{{ single_collection_product.featured_image.width }}"
+              height="{{ single_collection_product.featured_image.height }}"
+              loading="eager"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </a>
+      </div>
+
+      <div class="collection-single-product-flow page-width">
+        <article>
+          <span>01</span>
+          <h2>Choisissez l'intention</h2>
+          <p>Message vocal, création musicale ou association des deux selon le souvenir à transmettre.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Ajoutez votre souvenir</h2>
+          <p>Le produit rejoint le panier, puis vous transmettez les éléments utiles avant le paiement.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Validez avant fabrication</h2>
+          <p>Un aperçu vous rassure avant production pour garder une expérience claire et maîtrisée.</p>
+        </article>
+      </div>
+    {%- else -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
@@ -189,6 +256,7 @@
         {%- endif -%}
       </div>
     </div>
+    {%- endif -%}
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}

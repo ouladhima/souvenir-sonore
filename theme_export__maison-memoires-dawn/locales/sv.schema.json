@@ -1914,7 +1914,10 @@
                 "label": "Stående"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Lämna tomt för att dölja den här parkoppling"
             },
             "icon_1": {

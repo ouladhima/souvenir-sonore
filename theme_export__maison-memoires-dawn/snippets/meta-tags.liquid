@@ -1,8 +1,11 @@
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  assign fallback_description = 'Maison des mémoires crée des cassettes audio personnalisées et des coffrets cadeaux sonores pensés pour conserver une voix, une émotion et un souvenir.'
+  assign og_title = seo_title | default: page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = seo_description | default: page_description | default: shop.description | default: fallback_description
+  assign og_locale = request.locale.iso_code | replace: '-', '_'
+  assign social_image_source = page_image | default: settings.brand_image | default: settings.logo
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -14,16 +17,18 @@
 %}
 
 <meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:locale" content="{{ og_locale }}">
 <meta property="og:url" content="{{ og_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 
-{%- if page_image -%}
-  <meta property="og:image" content="http:{{ page_image | image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
+{%- if social_image_source -%}
+  {%- assign social_image = social_image_source | image_url: width: 1200 | prepend: 'https:' -%}
+  <meta property="og:image" content="{{ social_image }}">
+  <meta property="og:image:secure_url" content="{{ social_image }}">
+  <meta property="og:image:width" content="{{ social_image_source.width }}">
+  <meta property="og:image:height" content="{{ social_image_source.height }}">
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
@@ -37,3 +42,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
+{%- if social_image_source -%}
+  <meta name="twitter:image" content="{{ social_image }}">
+  <meta name="twitter:image:alt" content="{{ og_title | escape }}">
+{%- endif -%}

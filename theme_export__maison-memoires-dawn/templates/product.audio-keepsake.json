@@ -14,7 +14,7 @@
         "promise": {
           "type": "text",
           "settings": {
-            "text": "Un souvenir audio personnalis\u00e9 pour transmettre une \u00e9motion durable, sans rien de superflu dans le parcours.",
+            "text": "Une cassette audio personnalis\u00e9e dans un coffret pr\u00eat \u00e0 offrir, avec aper\u00e7u avant production.",
             "text_style": "subtitle"
           }
         },
@@ -50,6 +50,107 @@
         "enable_video_looping": false,
         "padding_top": 40,
         "padding_bottom": 20
+      }
+    },
+    "how_it_works": {
+      "type": "process-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choisissez votre format audio",
+            "text": "Message vocal, chanson sur mesure ou formule voix + musique : vous s\u00e9lectionnez l'intention la plus juste pour la personne qui recevra le cadeau."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Ajoutez la cassette au panier",
+            "text": "Le choix principal se fait d'abord simplement, pour \u00e9viter de transformer l'achat en long formulaire technique."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Finalisez la personnalisation",
+            "text": "Depuis le panier, vous transmettez votre fichier audio, votre brief cr\u00e9atif et les pr\u00e9cisions utiles pour le coffret."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Validez avant production",
+            "text": "Pour les cr\u00e9ations sur mesure, un aper\u00e7u vous est envoy\u00e9 afin de confirmer le rendu avant la pr\u00e9paration finale."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "caption": "Comment \u00e7a fonctionne",
+        "heading": "Un parcours clair pour cr\u00e9er un souvenir audio sans friction.",
+        "intro": "La cassette audio personnalis\u00e9e reste un cadeau tr\u00e8s intime. Le parcours est donc pens\u00e9 pour vous guider avec pr\u00e9cision, sans vous demander trop d'informations avant l'achat.",
+        "heading_size": "h2",
+        "color_scheme": "scheme-1",
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
+    "seo_product_story": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Cassette audio personnalis\u00e9e",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Un cadeau audio personnalis\u00e9, pens\u00e9 comme un objet de m\u00e9moire.",
+            "heading_size": "h1"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>La cassette audio personnalis\u00e9e Maison des m\u00e9moires est con\u00e7ue pour celles et ceux qui veulent offrir plus qu'un bel objet. Elle transforme une voix, un message, une chanson sur mesure ou une intention musicale en souvenir que l'on peut ouvrir, \u00e9couter et garder. L'objectif n'est pas de livrer un fichier audio impersonnel, mais de cr\u00e9er un coffret cadeau premium o\u00f9 le son, la pr\u00e9sentation et le geste forment un ensemble coh\u00e9rent.</p><p>Ce choix est particuli\u00e8rement pertinent lorsque le cadeau porte une forte charge affective. Une voix ne transmet pas seulement des mots : elle garde un rythme, une intonation, une fragilit\u00e9 et une chaleur que l'\u00e9crit ne remplace pas. La cassette donne ensuite \u00e0 cette pr\u00e9sence une forme concr\u00e8te, plus durable qu'un lien envoy\u00e9 par message.</p>"
+          }
+        },
+        "text_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Vous pouvez partir d'un message vocal d\u00e9j\u00e0 enregistr\u00e9, d'une archive sonore, d'une d\u00e9claration, d'un souvenir familial ou d'un brief cr\u00e9atif. Selon l'option choisie, la cassette peut porter votre propre voix, une cr\u00e9ation musicale compos\u00e9e pour l'occasion, ou une combinaison des deux. Cette souplesse permet d'adapter le cadeau \u00e0 un anniversaire, une naissance, un mariage, une relation \u00e0 distance, un hommage ou un moment que l'on veut rendre plus durable.</p><p>Le message vocal convient aux attentions les plus directes : dire merci, annoncer une nouvelle, garder une voix, transmettre une pr\u00e9sence. La chanson sur mesure permet de raconter une histoire avec plus d'ampleur. La formule voix + musique cr\u00e9e un rendu plus immersif, id\u00e9al lorsque le souvenir doit devenir une exp\u00e9rience compl\u00e8te.</p>"
+          }
+        },
+        "text_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Chaque commande est construite pour rassurer avant la fabrication. Vous choisissez le format, puis vous finalisez les \u00e9l\u00e9ments de personnalisation depuis le panier. Pour les cr\u00e9ations audio sur mesure, un aper\u00e7u est envoy\u00e9 avant production afin de valider l'\u00e9motion, le ton et le rendu final. Le coffret est ensuite pr\u00e9par\u00e9 comme un pr\u00e9sent \u00e0 part enti\u00e8re : sobre, sensible, pr\u00eat \u00e0 offrir et suffisamment personnel pour ne ressembler \u00e0 aucun autre cadeau.</p><p>Cette m\u00e9thode \u00e9vite la sensation de produit standard. Elle laisse la place \u00e0 votre histoire tout en gardant un parcours d'achat clair : choisir, ajouter au panier, pr\u00e9ciser, valider. La valeur du cadeau vient autant de la personnalisation que de la confiance donn\u00e9e avant production. C'est ce qui rend l'objet adapt\u00e9 aux cadeaux importants : il reste facile \u00e0 commander, mais jamais anonyme dans ce qu'il transmet durablement, sinc\u00e8rement.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Cr\u00e9er ma cassette audio",
+            "button_link": "shopify://products/ecrin-sonore",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": ["caption", "heading", "text_1", "text_2", "text_3", "button"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 32,
+        "padding_bottom": 48
       }
     },
     "audio_cassette_carousel": {
@@ -149,5 +250,5 @@
       }
     }
   },
-  "order": ["main", "audio_cassette_carousel", "faq"]
+  "order": ["main", "how_it_works", "seo_product_story", "audio_cassette_carousel", "faq"]
 }

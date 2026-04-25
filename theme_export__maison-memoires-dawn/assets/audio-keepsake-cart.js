@@ -10,7 +10,16 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       const checkoutButton = document.getElementById('checkout');
       if (checkoutButton) {
         const cartEmpty = checkoutButton.dataset.cartEmpty === 'true';
-        checkoutButton.disabled = cartEmpty || shouldLockCheckout;
+        const locked = cartEmpty || shouldLockCheckout;
+        checkoutButton.disabled = locked;
+        checkoutButton.setAttribute('aria-disabled', String(locked));
+        checkoutButton.classList.toggle('cart__checkout-button--locked', shouldLockCheckout && !cartEmpty);
+        if (shouldLockCheckout && !cartEmpty) {
+          checkoutButton.dataset.originalLabel = checkoutButton.dataset.originalLabel || checkoutButton.textContent.trim();
+          checkoutButton.textContent = '\uD83D\uDD12\u00A0 Personnalisation à compléter';
+        } else if (checkoutButton.dataset.originalLabel) {
+          checkoutButton.textContent = checkoutButton.dataset.originalLabel;
+        }
       }
 
       document.querySelectorAll('[data-audio-checkout-note]').forEach((note) => {
@@ -60,6 +69,18 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       this.briefInput?.addEventListener('input', this.handleInput);
       this.notesInput?.addEventListener('input', this.handleInput);
       this.saveButton?.addEventListener('click', this.handleSave);
+
+      this.querySelectorAll('[data-brief-template]').forEach((chip) => {
+        chip.addEventListener('click', () => {
+          if (this.briefInput) {
+            this.briefInput.value = chip.dataset.briefTemplate;
+            this.briefInput.dispatchEvent(new Event('input'));
+            this.briefInput.focus();
+          }
+          this.querySelectorAll('[data-brief-template]').forEach((c) => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+        });
+      });
 
       this.refreshUI();
       this.restoreFlashMessage();

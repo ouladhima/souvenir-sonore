@@ -71,9 +71,29 @@
             </details>
           </header-menu>
         {%- else -%}
+          {%- liquid
+            capture maison_menu_product_url
+              render 'audio-keepsake-product-url'
+            endcapture
+            assign maison_menu_product_url = maison_menu_product_url | strip
+            assign maison_menu_link_title = link.title
+            assign maison_menu_link_url = link.url
+            assign maison_menu_title_normalized = link.title | strip | downcase
+
+            if link.url == routes.all_products_collection_url
+              assign maison_menu_link_title = 'Le souvenir audio'
+              assign maison_menu_link_url = maison_menu_product_url
+            elsif maison_menu_title_normalized == 'catalogue'
+              assign maison_menu_link_title = 'Le souvenir audio'
+              assign maison_menu_link_url = maison_menu_product_url
+            elsif maison_menu_title_normalized == 'catalog'
+              assign maison_menu_link_title = 'Le souvenir audio'
+              assign maison_menu_link_url = maison_menu_product_url
+            endif
+          -%}
           <a
             id="HeaderMenu-{{ link.handle }}"
-            href="{{ link.url }}"
+            href="{{ maison_menu_link_url }}"
             class="header__menu-item list-menu__item link link--text focus-inset"
             {% if link.current %}
               aria-current="page"
@@ -84,7 +104,7 @@
                 class="header__active-menu-item"
               {% endif %}
             >
-              {{- link.title | escape -}}
+              {{- maison_menu_link_title | escape -}}
             </span>
           </a>
         {%- endif -%}

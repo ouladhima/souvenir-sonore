@@ -11,13 +11,26 @@
 </style>
 
 <div class="template-404 page-width page-margin center">
+  {%- liquid
+    capture audio_product_url
+      render 'audio-keepsake-product-url'
+    endcapture
+    assign audio_product_url = audio_product_url | strip
+  -%}
+  {%- if audio_product_url != blank -%}
+    <script>
+      if (window.location.pathname.replace(/\/$/, '') === '/products/cassette-audio-personnalisee') {
+        window.location.replace({{ audio_product_url | json }});
+      }
+    </script>
+  {%- endif -%}
   <p>
     {{ 'templates.404.subtext' | t }}
   </p>
   <h1 class="title">
     {{ 'templates.404.title' | t }}
   </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
+  <a href="{{ audio_product_url }}" class="button">
+    Créer mon souvenir
   </a>
 </div>

@@ -51,31 +51,6 @@
     </div>
   </div>
 
-  {%- if section.settings.enable_schema -%}
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {%- assign schema_first = true -%}
-          {%- for block in section.blocks -%}
-            {%- if block.settings.question != blank and block.settings.answer != blank -%}
-              {%- unless schema_first -%},{%- endunless -%}
-              {
-                "@type": "Question",
-                "name": {{ block.settings.question | strip_html | json }},
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": {{ block.settings.answer | strip_html | json }}
-                }
-              }
-              {%- assign schema_first = false -%}
-            {%- endif -%}
-          {%- endfor -%}
-        ]
-      }
-    </script>
-  {%- endif -%}
 </section>
 
 {% schema %}
@@ -134,7 +109,7 @@
     {
       "type": "checkbox",
       "id": "enable_schema",
-      "label": "Enable FAQ schema",
+      "label": "Legacy FAQ schema switch (disabled)",
       "default": true
     },
     {

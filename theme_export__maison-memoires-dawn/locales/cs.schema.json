@@ -1914,7 +1914,10 @@
                 "label": "Svisle"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Pro skrytí tohoto párování ponechte prázdné místo"
             },
             "icon_1": {

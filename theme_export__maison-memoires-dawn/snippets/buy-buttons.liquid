@@ -56,6 +56,10 @@
       elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout
         assign submit_label = 'products.product.sold_out' | t
       endif
+
+      if audio_keepsake_experience_enabled and submit_disabled == false
+        assign submit_label = 'Créer mon souvenir'
+      endif
     -%}
 
     <product-form
@@ -125,6 +129,14 @@
                     {%- render 'loading-spinner' -%}
                   </button>
                 </div>
+                <div class="audio-keepsake-purchase__microcopy" aria-label="Déroulé de la personnalisation">
+                  <span>01. Choix du format</span>
+                  <span>02. Ajout au panier</span>
+                  <span>03. Personnalisation avant paiement</span>
+                </div>
+                <p class="audio-keepsake-purchase__note">
+                  Votre fichier audio ou brief créatif se transmet juste après, dans le panier, pour garder cette page simple.
+                </p>
               </div>
             </div>
           </audio-keepsake-form>

@@ -1914,7 +1914,10 @@
                 "label": "垂直"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "このペアリングを非表示にするには空白のままにします"
             },
             "icon_1": {

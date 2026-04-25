@@ -1914,7 +1914,10 @@
                 "label": "Vertical"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Deixe em branco para ocultar este emparelhamento"
             },
             "icon_1": {

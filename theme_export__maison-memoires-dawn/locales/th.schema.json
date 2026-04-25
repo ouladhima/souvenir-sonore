@@ -1914,7 +1914,10 @@
                 "label": "แนวตั้ง"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "ปล่อยว่างไว้เพื่อซ่อนการจับคู่นี้"
             },
             "icon_1": {

@@ -19,6 +19,11 @@
 
 {%- liquid
   assign audio_target_handle = settings.audio_keepsake_product_handle | strip
+  if audio_target_handle == blank or all_products[audio_target_handle] == blank
+    if all_products['ecrin-sonore'] != blank
+      assign audio_target_handle = 'ecrin-sonore'
+    endif
+  endif
   assign audio_option_name = settings.audio_option_name | default: 'Type audio'
   assign voice_audio_value = settings.voice_audio_value | default: 'Votre enregistrement'
   assign ai_audio_value = settings.ai_audio_value | default: "Une musique composée par nos soins ( jusqu'à 3 propositions)"
@@ -145,9 +150,13 @@
       {%- endif -%}
 
       <div class="cart__blocks">
-        <p class="audio-keepsake-cart__checkout-note" data-audio-checkout-note {% unless audio_checkout_locked %}hidden{% endunless %}>
-          Finalisez d'abord la personnalisation de votre souvenir audio pour déverrouiller le paiement.
-        </p>
+        <div class="audio-keepsake-cart__checkout-note" data-audio-checkout-note {% unless audio_checkout_locked %}hidden{% endunless %}>
+          <span class="audio-keepsake-cart__checkout-note-icon" aria-hidden="true">&#128274;</span>
+          <div>
+            <strong>Personnalisation incomplète</strong>
+            <p>Complétez les informations requises dans votre souvenir audio ci-dessus pour déverrouiller le paiement.</p>
+          </div>
+        </div>
 
         {% for block in section.blocks %}
           {%- case block.type -%}
@@ -219,15 +228,20 @@
                 <button
                   type="submit"
                   id="checkout"
-                  class="cart__checkout-button button"
+                  class="cart__checkout-button button{% if audio_checkout_locked %} cart__checkout-button--locked{% endif %}"
                   name="checkout"
                   data-cart-empty="{% if cart == empty %}true{% else %}false{% endif %}"
                   {% if cart == empty or audio_checkout_locked %}
                     disabled
+                    aria-disabled="true"
                   {% endif %}
                   form="cart"
                 >
-                  {{ 'sections.cart.checkout' | t }}
+                  {%- if audio_checkout_locked -%}
+                    &#128274;&nbsp; Personnalisation à compléter
+                  {%- else -%}
+                    {{ 'sections.cart.checkout' | t }}
+                  {%- endif -%}
                 </button>
               </div>
 

@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "moment": {
+          "type": "text",
+          "settings": {
+            "heading": "Un anniversaire mérite parfois plus qu'un objet",
+            "text": "<p>Un cadeau d'anniversaire personnalisé devient vraiment fort lorsqu'il parle de la personne, de son histoire et du lien que vous partagez avec elle. Beaucoup de cadeaux marquent le jour même, puis disparaissent dans le quotidien. Un souvenir audio, lui, peut être réécouté plus tard, dans un moment calme, avec la même émotion ou avec une émotion nouvelle.</p><p>La cassette audio personnalisée Maison des mémoires est pensée pour ce type de moment. Elle peut contenir une voix, une archive, un message collectif, une chanson créée sur mesure ou une création mixte. Le coffret donne à l'anniversaire une dimension plus cérémonielle : on n'envoie pas simplement un fichier, on offre un objet de mémoire.</p>"
+          }
+        },
+        "ideas": {
+          "type": "text",
+          "settings": {
+            "heading": "Des idées selon l'âge, la relation et l'intention",
+            "text": "<p>Pour un parent, vous pouvez enregistrer une parole de gratitude, réunir quelques souvenirs ou faire créer une chanson qui reprend des moments de vie. Pour un ami proche, le cadeau peut être plus léger, drôle ou complice, tout en restant élégant. Pour un anniversaire marquant, comme 30, 40, 50 ou 60 ans, la cassette peut devenir un hommage plus construit, avec une narration, une musique et un coffret prêt à offrir.</p><p>Le format s'adapte aussi à la personne qui offre. Vous pouvez rester dans une intention simple avec votre propre message vocal, ou demander une création musicale plus travaillée si vous voulez produire un effet de surprise. Dans les deux cas, le but reste le même : faire entendre une attention réellement personnelle.</p>"
+          }
+        },
+        "process": {
+          "type": "text",
+          "settings": {
+            "heading": "Comment préparer le contenu sans se compliquer",
+            "text": "<p>Pour préparer un cadeau d'anniversaire audio, rassemblez quelques éléments concrets : le prénom de la personne, l'occasion, le ton souhaité, une anecdote, une phrase importante, un souvenir ou une émotion à transmettre. Vous n'avez pas besoin d'écrire un texte parfait. Une intention claire suffit souvent à créer un rendu juste.</p><p>Après l'ajout au panier, vous transmettez ces éléments dans l'espace de personnalisation. Si vous choisissez une création sur mesure, un aperçu vous est envoyé avant production. Cette étape permet de vérifier que le souvenir reste fidèle à la personne et au moment, sans mauvaise surprise au moment d'offrir.</p>"
+          }
+        },
+        "lasting": {
+          "type": "text",
+          "settings": {
+            "heading": "Un souvenir que l'on peut réouvrir après la fête",
+            "text": "<p>L'intérêt d'une cassette audio personnalisée pour un anniversaire est qu'elle ne s'épuise pas le jour de la célébration. Elle reste disponible quand la personne veut retrouver une voix, revivre une phrase ou entendre à nouveau la chanson créée pour elle. C'est un cadeau qui accompagne plutôt qu'il ne s'impose.</p><p>Le coffret premium renforce cette durabilité. Il protège le souvenir, le rend présentable et donne envie de le garder. Cette dimension est essentielle pour un cadeau émotionnel : le support doit être aussi soigné que le message. Maison des mémoires cherche justement cet équilibre entre simplicité, intensité et retenue.</p><p>Cette retenue est particulièrement importante pour les anniversaires sensibles, lorsque l'on veut dire merci, célébrer un cap ou réunir plusieurs générations autour d'une même attention. La voix apporte une vérité immédiate, tandis que la cassette donne au souvenir une forme que l'on peut conserver sans dépendre d'un lien ou d'une application.</p>"
+          }
+        },
+        "link_naissance": {
+          "type": "link",
+          "settings": {
+            "title": "Pour une naissance",
+            "text": "Si l'anniversaire célèbre une arrivée dans la famille, le cadeau de naissance personnalisé peut garder une dédicace ou une voix de bienvenue.",
+            "link_url": "/pages/cadeau-naissance-personnalise",
+            "link_label": "Voir le cadeau naissance"
+          }
+        },
+        "link_audio": {
+          "type": "link",
+          "settings": {
+            "title": "Guide cadeau audio",
+            "text": "Découvrez comment choisir entre message vocal, chanson sur mesure et formule voix + musique.",
+            "link_url": "/pages/cadeau-audio-personnalise",
+            "link_label": "Lire le guide général"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Quel cadeau audio offrir pour un anniversaire marquant ?",
+            "answer": "<p>Une chanson sur mesure ou une formule voix + musique est souvent adaptée aux grands anniversaires, car elle permet de raconter une histoire plus complète.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je envoyer un message vocal déjà enregistré ?",
+            "answer": "<p>Oui. Vous pouvez transmettre un message vocal, une archive sonore ou un enregistrement réalisé spécialement pour l'occasion.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Le cadeau convient-il à un anniversaire de dernière minute ?",
+            "answer": "<p>La création est généralement préparée sous 48h, mais il vaut mieux anticiper si vous souhaitez une création musicale plus précise ou une validation sereine.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on faire participer plusieurs proches ?",
+            "answer": "<p>Oui, vous pouvez préparer un message collectif ou transmettre plusieurs éléments de contexte pour nourrir la création du souvenir.</p>"
+          }
+        }
+      },
+      "block_order": ["moment", "ideas", "process", "lasting", "link_naissance", "link_audio", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "eyebrow": "Cadeau anniversaire",
+        "heading": "Cadeau d’anniversaire personnalisé : transformer un message en souvenir audio",
+        "intro": "<p>Pour un anniversaire, une voix ou une chanson personnalisée peut toucher plus durablement qu'un objet classique. La cassette audio Maison des mémoires transforme cette attention en coffret prêt à offrir.</p>",
+        "primary_label": "Créer un cadeau d'anniversaire",
+        "primary_link": "/products/ecrin-sonore",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "intro_story": {
+          "type": "text",
+          "settings": {
+            "heading": "Un cadeau de couple qui parle vraiment de vous",
+            "text": "<p>Un cadeau personnalisé pour couple doit éviter deux pièges : être trop générique ou trop décoratif. Quand il s'agit d'une histoire amoureuse, d'un anniversaire de rencontre, d'une demande symbolique ou d'une relation à distance, le plus précieux n'est pas toujours ce que l'on montre. C'est souvent ce que l'on entend : une voix, une phrase, une mélodie, une manière de dire je pense à toi sans répéter les codes habituels.</p><p>La cassette audio personnalisée Maison des mémoires donne une forme élégante à cette émotion. Elle peut porter un message vocal intime, une chanson sur mesure inspirée de votre histoire, ou une création mixte qui associe votre voix à une composition musicale. Le coffret devient alors un objet à ouvrir à deux, puis à garder comme trace d'un moment important.</p>"
+          }
+        },
+        "use_cases": {
+          "type": "text",
+          "settings": {
+            "heading": "Pour une déclaration, un anniversaire ou une relation à distance",
+            "text": "<p>Ce format fonctionne particulièrement bien lorsqu'un simple bijou, un bouquet ou un dîner ne suffit pas à exprimer l'intention. Pour un anniversaire de couple, la cassette peut réunir les souvenirs qui vous ont construits. Pour une déclaration, elle peut faire entendre les mots que l'on n'ose pas toujours dire face à face. Pour une relation à distance, elle permet à l'autre de retrouver une présence concrète dans la voix, même lorsque les kilomètres restent là.</p><p>Le cadeau peut rester très sobre : quelques phrases sincères, une archive audio, une dédicace. Il peut aussi devenir plus cinématographique avec une musique créée sur mesure. L'important est de choisir le niveau d'intensité adapté à votre relation, sans transformer le geste en démonstration artificielle.</p>"
+          }
+        },
+        "creation": {
+          "type": "text",
+          "settings": {
+            "heading": "Comment préparer une cassette audio pour son ou sa partenaire",
+            "text": "<p>Commencez par choisir ce que vous voulez faire ressentir : tendresse, surprise, gratitude, promesse, nostalgie ou joie. Vous pouvez ensuite préparer un message vocal court, raconter une anecdote, citer un lieu important, évoquer une date ou décrire l'ambiance musicale souhaitée. Ces éléments donnent de la matière à la création et permettent de produire un souvenir plus juste.</p><p>La personnalisation se fait après l'ajout au panier pour garder l'achat simple. Vous sélectionnez d'abord le format de la cassette, puis vous transmettez les éléments utiles. Pour les créations sur mesure, un aperçu est envoyé avant production. Vous pouvez ainsi vérifier que le rendu respecte l'émotion recherchée avant que le coffret ne soit finalisé.</p>"
+          }
+        },
+        "premium": {
+          "type": "text",
+          "settings": {
+            "heading": "Pourquoi le coffret change la valeur perçue du cadeau",
+            "text": "<p>Un fichier audio peut toucher. Un coffret cadeau audio donne un rituel à cette émotion. La personne reçoit un objet, l'ouvre, découvre la cassette, puis écoute le souvenir. Cette progression donne au cadeau une présence plus forte et évite l'effet trop digital de certains cadeaux personnalisés. La cassette devient un symbole du lien, pas seulement un support.</p><p>Maison des mémoires s'inscrit dans une esthétique douce, sobre et premium. Le but n'est pas de faire un cadeau bruyant ou gadget, mais de créer un souvenir intime, élégant et durable. Pour un couple, cette retenue est importante : elle laisse la place aux mots, à la musique et à l'histoire réelle plutôt qu'à une mise en scène excessive.</p>"
+          }
+        },
+        "link_audio": {
+          "type": "link",
+          "settings": {
+            "title": "Comprendre le cadeau audio personnalisé",
+            "text": "Si vous hésitez encore sur le format, commencez par le guide général autour du cadeau audio et de la cassette personnalisée.",
+            "link_url": "/pages/cadeau-audio-personnalise",
+            "link_label": "Lire le guide cadeau audio"
+          }
+        },
+        "link_mariage": {
+          "type": "link",
+          "settings": {
+            "title": "Pour un mariage",
+            "text": "La même logique peut devenir un cadeau de mariage sensible, à écouter après l'intensité de la journée.",
+            "link_url": "/pages/cadeau-mariage-personnalise",
+            "link_label": "Voir le cadeau mariage"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Quel format choisir pour un couple ?",
+            "answer": "<p>Un message vocal fonctionne très bien pour une déclaration intime. Une chanson sur mesure convient mieux si vous voulez raconter une histoire plus complète et marquer un grand moment.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Est-ce adapté à une relation à distance ?",
+            "answer": "<p>Oui. La voix permet de recréer une présence concrète, et la cassette donne au message une forme que l'autre peut garder près de lui ou d'elle.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Faut-il savoir écrire une chanson ?",
+            "answer": "<p>Non. Vous transmettez seulement l'intention, les souvenirs, le ton et quelques détails. La création musicale est ensuite préparée à partir de ces éléments.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Le rendu peut-il rester discret et élégant ?",
+            "answer": "<p>Oui. La direction de Maison des mémoires privilégie une émotion sobre, premium et personnelle, sans effet trop démonstratif.</p>"
+          }
+        }
+      },
+      "block_order": ["intro_story", "use_cases", "creation", "premium", "link_audio", "link_mariage", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "eyebrow": "Cadeau couple",
+        "heading": "Cadeau personnalisé pour couple : une cassette audio à réécouter à deux",
+        "intro": "<p>Pour un anniversaire de couple, une déclaration ou une relation à distance, la cassette audio personnalisée permet d'offrir une voix, une chanson ou un souvenir commun dans un coffret à garder.</p>",
+        "primary_label": "Créer une cassette pour nous deux",
+        "primary_link": "/products/ecrin-sonore",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}

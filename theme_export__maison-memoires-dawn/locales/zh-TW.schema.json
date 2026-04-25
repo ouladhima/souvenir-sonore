@@ -1914,7 +1914,10 @@
                 "label": "垂直"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "留白以隱藏此配對"
             },
             "icon_1": {

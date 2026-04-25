@@ -1913,7 +1913,10 @@
                 "label": "Dikey"
               }
             },
-            "heading": {
+            "content": {
+              "label": "Content",
+              "info": "Choose the icons, images, and headings displayed in this block"
+            },            "heading": {
               "info": "Bu eşlemeyi gizlemek için boş bırakın"
             },
             "icon_1": {

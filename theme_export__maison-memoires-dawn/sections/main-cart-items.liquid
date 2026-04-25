@@ -8,6 +8,15 @@
 
 {%- liquid
   assign audio_target_handle = settings.audio_keepsake_product_handle | strip
+  if audio_target_handle == blank or all_products[audio_target_handle] == blank
+    if all_products['ecrin-sonore'] != blank
+      assign audio_target_handle = 'ecrin-sonore'
+    endif
+  endif
+  capture audio_product_url
+    render 'audio-keepsake-product-url'
+  endcapture
+  assign audio_product_url = audio_product_url | strip
   assign audio_option_name = settings.audio_option_name | default: 'Type audio'
   assign duration_option_name = settings.duration_option_name | default: 'Durée'
   assign packaging_option_name = settings.packaging_option_name | default: 'Coffret'
@@ -45,15 +54,15 @@
   <div class="page-width">
     <div class="title-wrapper-with-link">
       <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
-        {{- 'general.continue_shopping' | t -}}
+      <a href="{{ audio_product_url }}" class="underlined-link">
+        Voir le souvenir audio
       </a>
     </div>
 
     <div class="cart__warnings">
       <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="button">
-        {{ 'general.continue_shopping' | t }}
+      <a href="{{ audio_product_url }}" class="button">
+        Créer mon souvenir
       </a>
 
       {%- if shop.customer_accounts_enabled and customer == null -%}

@@ -1,0 +1,66 @@
+{%- liquid
+  assign site_url = shop.url | default: request.origin
+  assign organization_id = site_url | append: '#organization'
+  assign website_id = site_url | append: '#website'
+  assign current_title = seo_title | default: page_title | default: shop.name
+  assign brand_description = shop.description | default: 'Maison des mémoires crée des cassettes audio personnalisées et des coffrets cadeaux sonores pensés pour conserver une voix, une émotion et un souvenir.'
+  assign search_template = request.origin | append: routes.search_url | append: '?q={search_term_string}'
+-%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": {{ organization_id | json }},
+        "name": {{ shop.name | default: 'Maison des mémoires' | json }},
+        "url": {{ site_url | json }},
+        "description": {{ brand_description | strip_html | json }}
+        {%- if settings.logo != blank -%}
+          ,"logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}
+        {%- endif -%}
+      },
+      {
+        "@type": "WebSite",
+        "@id": {{ website_id | json }},
+        "url": {{ site_url | json }},
+        "name": {{ shop.name | default: 'Maison des mémoires' | json }},
+        "description": {{ brand_description | strip_html | json }},
+        "publisher": {
+          "@id": {{ organization_id | json }}
+        },
+        "inLanguage": {{ request.locale.iso_code | json }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": {{ search_template | json }}
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+      {%- unless request.page_type == 'index' -%}
+        ,
+        {
+          "@type": "BreadcrumbList",
+          "@id": {{ canonical_url | append: '#breadcrumb' | json }},
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": {{ site_url | json }}
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": {{ current_title | strip_html | json }},
+              "item": {{ canonical_url | json }}
+            }
+          ]
+        }
+      {%- endunless -%}
+    ]
+  }
+</script>
