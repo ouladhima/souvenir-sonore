@@ -60,7 +60,7 @@
           "settings": {
             "title": "Anniversaire",
             "description": "Une voix pensée pour marquer un jour qui compte.",
-            "audio_url": ""
+            "audio_url": "https://www.youtube.com/watch?v=Y3POl9bm4g4"
           }
         },
         "sample_amour": {
@@ -68,7 +68,7 @@
           "settings": {
             "title": "Message d'amour",
             "description": "Quelques mots choisis pour rester près de l'autre.",
-            "audio_url": ""
+            "audio_url": "https://www.youtube.com/watch?v=pzzpcyDUX1g&list=RDpzzpcyDUX1g&start_radio=1"
           }
         },
         "sample_maman": {

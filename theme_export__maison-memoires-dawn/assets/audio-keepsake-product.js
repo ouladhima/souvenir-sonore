@@ -210,12 +210,6 @@ if (!customElements.get('audio-keepsake-form')) {
 }
 
 (() => {
-  document.querySelectorAll('[data-audio-popup]').forEach((popup) => {
-    popup.querySelector('[data-audio-popup-close]')?.addEventListener('click', () => {
-      popup.hidden = true;
-    });
-  });
-
   document.querySelectorAll('[data-audio-preview]').forEach((preview) => {
     const player = preview.querySelector('[data-audio-preview-player]');
     const input = preview.querySelector('[data-audio-preview-input]');

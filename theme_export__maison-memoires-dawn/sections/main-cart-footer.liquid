@@ -55,7 +55,28 @@
     assign normalized_audio_option_value = audio_option_value | strip | downcase
     assign audio_mode = ''
 
-    if normalized_audio_option_value == normalized_voice_audio_value
+    assign has_voice_hint = false
+    assign has_music_hint = false
+
+    if normalized_audio_option_value contains 'enregistrement'
+      assign has_voice_hint = true
+    elsif normalized_audio_option_value contains 'voix'
+      assign has_voice_hint = true
+    elsif normalized_audio_option_value contains 'message'
+      assign has_voice_hint = true
+    endif
+
+    if normalized_audio_option_value contains 'musique'
+      assign has_music_hint = true
+    endif
+
+    if normalized_audio_option_value contains 'compos'
+      assign has_music_hint = true
+    endif
+
+    if has_voice_hint and has_music_hint
+      assign audio_mode = 'voice_music'
+    elsif normalized_audio_option_value == normalized_voice_audio_value
       assign audio_mode = 'voice'
     elsif normalized_audio_option_value == normalized_ai_audio_value
       assign audio_mode = 'ai'

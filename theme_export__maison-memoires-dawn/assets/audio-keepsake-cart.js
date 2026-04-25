@@ -75,11 +75,41 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
 
     parseProperties(rawValue) {
       try {
-        return JSON.parse(rawValue || '{}') || {};
+        const parsedValue = JSON.parse(rawValue || '{}') || {};
+        return this.normalizeProperties(parsedValue);
       } catch (error) {
         console.error(error);
         return {};
       }
+    }
+
+    normalizeProperties(rawProperties) {
+      const normalizedProperties = {};
+
+      const appendEntry = (key, value) => {
+        const normalizedKey = `${key || ''}`.trim();
+        if (!normalizedKey || /^\d+$/.test(normalizedKey)) return;
+
+        normalizedProperties[normalizedKey] =
+          value === null || typeof value === 'undefined' ? '' : value;
+      };
+
+      if (Array.isArray(rawProperties)) {
+        rawProperties.forEach((entry) => {
+          if (!Array.isArray(entry) || entry.length < 2) return;
+          appendEntry(entry[0], entry[1]);
+        });
+
+        return normalizedProperties;
+      }
+
+      if (rawProperties && typeof rawProperties === 'object') {
+        Object.entries(rawProperties).forEach(([key, value]) => {
+          appendEntry(key, value);
+        });
+      }
+
+      return normalizedProperties;
     }
 
     handleInput() {

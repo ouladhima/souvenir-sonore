@@ -73,14 +73,18 @@
   data-upload-size-error-message="Le fichier est trop volumineux (max 100 Mo). Choisissez un fichier plus petit."
 >
   <div class="audio-keepsake-cart__header">
-    <div>
-      <p class="audio-keepsake-cart__eyebrow">Personnalisation à finaliser</p>
-      <h3 class="audio-keepsake-cart__title">Finalisez votre souvenir depuis le panier</h3>
-    </div>
+    {%- unless line_complete -%}
+      <div>
+        <p class="audio-keepsake-cart__eyebrow">Personnalisation à finaliser</p>
+        <h3 class="audio-keepsake-cart__title">Finalisez votre souvenir depuis le panier</h3>
+      </div>
+    {%- endunless -%}
     <span class="audio-keepsake-cart__status" data-status-badge>{{ status_label }}</span>
   </div>
 
-  <p class="audio-keepsake-cart__lead">{{ lead_text }}</p>
+  {%- unless line_complete -%}
+    <p class="audio-keepsake-cart__lead">{{ lead_text }}</p>
+  {%- endunless -%}
 
   <div class="audio-keepsake-cart__summary">
     <div class="audio-keepsake-cart__summary-item">
@@ -95,7 +99,7 @@
     {%- endif -%}
     {%- if packaging_value != blank -%}
       <div class="audio-keepsake-cart__summary-item">
-        <span>Coffret</span>
+        <span>Packaging</span>
         <strong>{{ packaging_value }}</strong>
       </div>
     {%- endif -%}

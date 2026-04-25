@@ -1,3 +1,16 @@
+.audio-keepsake-product {
+  --color-background: 254, 250, 243;
+  --color-background-contrast: 247, 243, 236;
+  --color-foreground: 58, 43, 34;
+  --color-shadow: 58, 43, 34;
+  --color-button: 58, 43, 34;
+  --color-button-text: 254, 250, 243;
+  --color-secondary-button: 247, 243, 236;
+  --color-secondary-button-text: 58, 43, 34;
+  --color-link: 58, 43, 34;
+  background: rgb(var(--color-background));
+}
+
 .audio-keepsake-product .product {
   align-items: start;
   gap: 2.4rem;
@@ -11,89 +24,6 @@
   position: relative;
 }
 
-.audio-keepsake-popup {
-  position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
-  right: 1.2rem;
-  z-index: 5;
-  display: grid;
-  gap: 1rem;
-  max-width: 39rem;
-  padding: 1.8rem 4.8rem 1.8rem 1.8rem;
-  border-radius: 2.4rem;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  background:
-    linear-gradient(180deg, rgba(var(--color-background), 0.98), rgba(var(--color-foreground), 0.03)),
-    rgb(var(--color-background));
-  box-shadow: 0 2rem 5rem rgba(18, 18, 18, 0.12);
-  backdrop-filter: blur(1.2rem);
-  animation: audio-keepsake-popup-in 280ms ease both;
-}
-
-.audio-keepsake-popup[hidden] {
-  display: none;
-}
-
-.audio-keepsake-popup__close {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.6rem;
-  height: 3.6rem;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(var(--color-foreground), 0.06);
-  color: rgba(var(--color-foreground), 0.72);
-  cursor: pointer;
-}
-
-.audio-keepsake-popup__close span {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.audio-keepsake-popup__eyebrow {
-  margin: 0;
-  font-size: 1.05rem;
-  letter-spacing: 0.16rem;
-  text-transform: uppercase;
-  color: rgba(var(--color-foreground), 0.56);
-}
-
-.audio-keepsake-popup__title {
-  margin: 0;
-  max-width: 22rem;
-  font-size: clamp(2.2rem, 2.5vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-}
-
-.audio-keepsake-popup__text {
-  margin: 0;
-  color: rgba(var(--color-foreground), 0.72);
-  line-height: 1.55;
-}
-
-.audio-keepsake-popup .button {
-  width: fit-content;
-}
-
-@keyframes audio-keepsake-popup-in {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .audio-keepsake-product .product__info-container {
   padding: 2rem;
   border-radius: 2.8rem;
@@ -101,12 +31,19 @@
   background:
     linear-gradient(180deg, rgba(var(--color-background), 0.98), rgba(var(--color-foreground), 0.02)),
     rgb(var(--color-background));
+  box-shadow: 0 2rem 5rem rgba(58, 43, 34, 0.08);
 }
 
 .audio-keepsake-product .product__media-item,
 .audio-keepsake-product .product-media-container,
 .audio-keepsake-product .thumbnail {
   border-radius: 2.4rem;
+  background: rgba(var(--color-background), 0.72);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.06);
+}
+
+.audio-keepsake-product .product__media-wrapper .media {
+  background: rgba(247, 243, 236, 0.72);
 }
 
 .audio-keepsake-product .product__title h1 {
@@ -198,6 +135,18 @@
 .audio-keepsake-product .product-form__submit {
   min-height: 5.6rem;
   border-radius: 999px;
+}
+
+.audio-keepsake-product .button--secondary,
+.audio-keepsake-product .shopify-payment-button__button--unbranded {
+  --color-button: var(--color-secondary-button);
+  --color-button-text: var(--color-secondary-button-text);
+}
+
+.audio-keepsake-product .button--secondary,
+.audio-keepsake-product .product-form__submit,
+.audio-keepsake-product .shopify-payment-button__button--unbranded {
+  box-shadow: none;
 }
 
 .audio-keepsake-form__panel {
@@ -351,13 +300,6 @@
 }
 
 @media screen and (min-width: 750px) {
-  .audio-keepsake-popup {
-    top: 1.6rem;
-    left: auto;
-    right: 1.6rem;
-    width: min(39rem, calc(100% - 3.2rem));
-  }
-
   .audio-keepsake-product .product__info-container {
     padding: 2.4rem;
   }
@@ -368,10 +310,6 @@
 }
 
 @media screen and (min-width: 990px) {
-  .audio-keepsake-popup {
-    display: none;
-  }
-
   .audio-keepsake-product .product.grid {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(36rem, 0.9fr);

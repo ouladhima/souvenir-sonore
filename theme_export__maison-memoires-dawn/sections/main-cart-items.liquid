@@ -138,7 +138,28 @@
                     assign audio_mode = ''
 
                     if is_audio_item
-                      if normalized_audio_option_value == normalized_voice_audio_value
+                      assign has_voice_hint = false
+                      assign has_music_hint = false
+
+                      if normalized_audio_option_value contains 'enregistrement'
+                        assign has_voice_hint = true
+                      elsif normalized_audio_option_value contains 'voix'
+                        assign has_voice_hint = true
+                      elsif normalized_audio_option_value contains 'message'
+                        assign has_voice_hint = true
+                      endif
+
+                      if normalized_audio_option_value contains 'musique'
+                        assign has_music_hint = true
+                      endif
+
+                      if normalized_audio_option_value contains 'compos'
+                        assign has_music_hint = true
+                      endif
+
+                      if has_voice_hint and has_music_hint
+                        assign audio_mode = 'voice_music'
+                      elsif normalized_audio_option_value == normalized_voice_audio_value
                         assign audio_mode = 'voice'
                       elsif normalized_audio_option_value == normalized_ai_audio_value
                         assign audio_mode = 'ai'
@@ -222,18 +243,47 @@
                         <dl>
                           {%- if item.product.has_only_default_variant == false -%}
                             {%- for option in item.options_with_values -%}
-                              <div class="product-option">
-                                <dt>{{ option.name }}:</dt>
-                                <dd>{{ option.value }}</dd>
-                              </div>
+                              {%- liquid
+                                assign hide_option = false
+                                assign option_label = option.name
+
+                                if is_audio_item and option.name == packaging_option_name
+                                  assign option_label = 'Packaging'
+                                endif
+
+                                if is_audio_item and option.name == audio_option_name
+                                  assign hide_option = true
+                                elsif is_audio_item and option.name == duration_option_name
+                                  assign hide_option = true
+                                endif
+                              -%}
+                              {%- unless hide_option -%}
+                                <div class="product-option">
+                                  <dt{% if is_audio_item %} class="audio-keepsake-cart__meta-label"{% endif %}>{{ option_label }}:</dt>
+                                  <dd>{{ option.value }}</dd>
+                                </div>
+                              {%- endunless -%}
                             {%- endfor -%}
                           {%- endif -%}
 
                           {%- for property in item.properties -%}
-                            {%- assign property_first_char = property.first | slice: 0 -%}
-                            {%- if property.last != blank and property_first_char != '_' -%}
+                            {%- liquid
+                              assign property_first_char = property.first | slice: 0
+                              assign normalized_property_key = property.first | strip
+                              assign property_key_without_digits = normalized_property_key | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
+                              assign hide_property = false
+
+                              if property_first_char == '_' or property_key_without_digits == blank
+                                assign hide_property = true
+                              elsif is_audio_item and normalized_property_key == audio_option_name
+                                assign hide_property = true
+                              elsif is_audio_item and normalized_property_key == duration_option_name
+                                assign hide_property = true
+                              endif
+                            -%}
+                            {%- if property.last != blank and hide_property == false -%}
                               <div class="product-option">
-                                <dt>{{ property.first }}:</dt>
+                                <dt{% if is_audio_item %} class="audio-keepsake-cart__meta-label"{% endif %}>{{ property.first }}:</dt>
                                 <dd>
                                   {%- if property.last contains '/uploads/' -%}
                                     <a href="{{ property.last }}" class="link" target="_blank">

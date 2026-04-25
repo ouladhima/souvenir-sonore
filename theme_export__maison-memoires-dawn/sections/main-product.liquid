@@ -90,24 +90,6 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width{% if audio_keepsake_enabled %} audio-keepsake-product__page-width{% endif %}">
-    {%- if audio_keepsake_enabled -%}
-      <div class="audio-keepsake-popup" data-audio-popup>
-        <button
-          type="button"
-          class="audio-keepsake-popup__close"
-          data-audio-popup-close
-          aria-label="Fermer la fenêtre"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="audio-keepsake-popup__eyebrow">Avant de commander</p>
-        <h2 class="audio-keepsake-popup__title">Écoutez un extrait ou importez un audio test.</h2>
-        <p class="audio-keepsake-popup__text">
-          Un encart dédié vous attend plus bas sur la page pour tester un fichier local en toute simplicité.
-        </p>
-        <a class="button button--secondary" href="#AudioPreview">Découvrir l'encart audio</a>
-      </div>
-    {%- endif -%}
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         <div class="audio-keepsake-product__media-stage">

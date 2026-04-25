@@ -8,6 +8,43 @@
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
+body,
+.color-scheme-1 {
+  --color-background: 254, 250, 243;
+  --gradient-background: linear-gradient(180deg, #fefaf3 0%, #f7f3ec 55%, #f7eee2 100%);
+  --color-foreground: 58, 43, 34;
+  --color-background-contrast: 229, 218, 205;
+  --color-shadow: 58, 43, 34;
+  --color-button: 58, 43, 34;
+  --color-button-text: 254, 250, 243;
+  --color-secondary-button: 247, 243, 236;
+  --color-secondary-button-text: 58, 43, 34;
+  --color-link: 58, 43, 34;
+  --color-badge-foreground: 58, 43, 34;
+  --color-badge-background: 247, 243, 236;
+  --color-badge-border: 58, 43, 34;
+}
+
+.color-scheme-2 {
+  --color-background: 247, 243, 236;
+  --gradient-background: linear-gradient(180deg, #f7f3ec 0%, #f7eee2 100%);
+  --color-foreground: 58, 43, 34;
+  --color-background-contrast: 225, 214, 202;
+  --color-shadow: 58, 43, 34;
+  --color-button: 58, 43, 34;
+  --color-button-text: 254, 250, 243;
+  --color-secondary-button: 254, 250, 243;
+  --color-secondary-button-text: 58, 43, 34;
+  --color-link: 58, 43, 34;
+  --color-badge-foreground: 58, 43, 34;
+  --color-badge-background: 254, 250, 243;
+  --color-badge-border: 58, 43, 34;
+}
+
+body {
+  color: rgba(var(--color-foreground), 0.78);
+}
+
 .product-card-wrapper .card,
 .contains-card--product {
   --border-radius: var(--product-card-corner-radius);
@@ -2092,6 +2129,8 @@ input[type='checkbox'] {
 /* utility-bar */
 .utility-bar {
   height: 100%;
+  background: rgba(247, 243, 236, 0.78);
+  backdrop-filter: blur(0.8rem);
 }
 
 .utility-bar--bottom-border {
@@ -2343,7 +2382,9 @@ input[type='checkbox'] {
 .header-wrapper {
   display: block;
   position: relative;
-  background-color: rgb(var(--color-background));
+  background: rgba(var(--color-background), 0.88);
+  backdrop-filter: blur(1.4rem);
+  box-shadow: 0 1.6rem 3.6rem rgba(58, 43, 34, 0.05);
 }
 
 .header-wrapper--border-bottom {
@@ -2355,6 +2396,7 @@ input[type='checkbox'] {
   grid-template-areas: 'left-icons heading icons';
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
+  gap: 1.6rem;
 }
 
 @media screen and (max-width: 749px) {
@@ -2448,6 +2490,12 @@ input[type='checkbox'] {
 .header__heading-link .h2 {
   line-height: 1;
   color: rgba(var(--color-foreground), 0.75);
+}
+
+.header__menu-item,
+.header__icon,
+.header__icon span {
+  color: rgba(var(--color-foreground), 0.76);
 }
 
 .header__heading-logo {
