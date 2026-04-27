@@ -1,15 +1,45 @@
 {
   "sections": {
+    "intro": {
+      "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "caption",
+          "settings": {
+            "caption": "Espace personnel",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Accédez à votre espace pour finaliser votre souvenir.",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": ["eyebrow", "heading"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 32,
+        "padding_bottom": 0
+      }
+    },
     "main": {
       "type": "main-login",
       "settings": {
         "enable_shop_login_button": "true",
-        "padding_top": 36,
+        "padding_top": 24,
         "padding_bottom": 36
       }
     }
   },
   "order": [
+    "intro",
     "main"
   ]
 }

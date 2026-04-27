@@ -1,0 +1,280 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="cassette-testimonials section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="cassette-testimonials__heading-group">
+      {%- if section.settings.caption != blank -%}
+        <p class="cassette-testimonials__eyebrow">{{ section.settings.caption | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cassette-testimonials__heading {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cassette-testimonials__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial' -%}
+            <blockquote class="cassette-testimonials__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.quote != blank -%}
+                <p class="cassette-testimonials__quote">{{ block.settings.quote | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.author != blank or block.settings.context != blank -%}
+                <footer class="cassette-testimonials__attribution">
+                  {%- if block.settings.author != blank -%}
+                    <span class="cassette-testimonials__author">{{ block.settings.author | escape }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.context != blank -%}
+                    <span class="cassette-testimonials__context">{{ block.settings.context | escape }}</span>
+                  {%- endif -%}
+                </footer>
+              {%- endif -%}
+            </blockquote>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .cassette-testimonials {
+    background: #fefaf3;
+    color: #211a15;
+  }
+
+  .cassette-testimonials__heading-group {
+    max-width: 62rem;
+    margin: 0 auto 3.2rem;
+    text-align: center;
+  }
+
+  .cassette-testimonials__eyebrow {
+    margin: 0 0 1.4rem;
+    color: rgba(33, 26, 21, 0.62);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cassette-testimonials__heading {
+    margin: 0;
+    color: #211a15;
+  }
+
+  .cassette-testimonials__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .cassette-testimonials__item {
+    margin: 0;
+    padding: 2.4rem 2.2rem;
+    background: #f7eee2;
+    border: 0.1rem solid rgba(118, 91, 69, 0.14);
+    box-shadow: 0 1.6rem 3.6rem rgba(58, 43, 34, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .cassette-testimonials__quote {
+    margin: 0;
+    color: rgba(33, 26, 21, 0.86);
+    font-size: 1.55rem;
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .cassette-testimonials__quote::before {
+    content: "« ";
+    color: rgba(33, 26, 21, 0.42);
+  }
+
+  .cassette-testimonials__quote::after {
+    content: " »";
+    color: rgba(33, 26, 21, 0.42);
+  }
+
+  .cassette-testimonials__attribution {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: rgba(33, 26, 21, 0.62);
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .cassette-testimonials__author {
+    font-weight: 600;
+    color: rgba(33, 26, 21, 0.82);
+    letter-spacing: 0.02em;
+  }
+
+  .cassette-testimonials__context {
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(33, 26, 21, 0.5);
+  }
+
+  @media screen and (min-width: 750px) {
+    .cassette-testimonials__heading-group {
+      margin-bottom: 4.2rem;
+    }
+
+    .cassette-testimonials__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.4rem;
+    }
+
+    .cassette-testimonials__item {
+      padding: 2.8rem 2.6rem;
+    }
+
+    .cassette-testimonials__quote {
+      font-size: 1.6rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Témoignages cassette",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Surtitre",
+      "default": "Ils l'ont offert"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Des réactions discrètes, mais très révélatrices de l'effet produit."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Petit" },
+        { "value": "h1", "label": "Moyen" },
+        { "value": "h0", "label": "Grand" }
+      ],
+      "default": "h2",
+      "label": "Taille du titre"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge supérieure",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge inférieure",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Témoignage",
+      "limit": 9,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Citation",
+          "default": "Je voulais offrir la voix de notre fille à son grand-père. Ce n'était pas simplement beau. C'était déjà chargé d'émotion avant même la première écoute."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Auteur",
+          "default": "Camille"
+        },
+        {
+          "type": "text",
+          "id": "context",
+          "label": "Contexte (optionnel)",
+          "default": "Cadeau de famille"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Témoignages cassette",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Je voulais offrir la voix de notre fille à son grand-père. Ce n'était pas simplement beau. C'était déjà chargé d'émotion avant même la première écoute.",
+            "author": "Camille",
+            "context": "Cadeau de famille"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Nous cherchions quelque chose de plus personnel qu'un bel objet. Le fait de pouvoir écouter avant production nous a tout de suite rassurés.",
+            "author": "Julien",
+            "context": "Anniversaire de couple"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Pour une naissance, nous voulions un cadeau qui reste. Le coffret était prêt à offrir et l'émotion était là dès l'ouverture.",
+            "author": "Sarah",
+            "context": "Cadeau de naissance"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

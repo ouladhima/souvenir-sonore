@@ -86,6 +86,13 @@
     letter-spacing: 0;
   }
 
+  .header__maison-cta::before,
+  .header__maison-cta::after,
+  .menu-drawer__maison-cta::before,
+  .menu-drawer__maison-cta::after {
+    border-radius: inherit;
+  }
+
   .menu-drawer__maison-cta {
     width: calc(100% - 6rem);
     min-height: 4.8rem;
@@ -139,6 +146,32 @@
     assign header_tag = 'sticky-header'
   endif
 %}
+
+{%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+  <div class="header__announcement" role="region" aria-label="Engagements Maison des mémoires">
+    <p>{{ section.settings.announcement_text }}</p>
+  </div>
+  <style>
+    .header__announcement {
+      background: #211a15;
+      color: #fefaf3;
+      padding: 0.7rem 1.5rem;
+      text-align: center;
+      font-size: 1.15rem;
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+    }
+    .header__announcement p {
+      margin: 0;
+    }
+    @media screen and (max-width: 749px) {
+      .header__announcement {
+        font-size: 1.05rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+{%- endif -%}
 
 <{{ header_tag }}
   {% if header_tag == 'sticky-header' %}
@@ -457,6 +490,22 @@
   "class": "section-header",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "header",
+      "content": "Bandeau de réassurance"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Afficher le bandeau supérieur",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Texte du bandeau",
+      "default": "Création française · Livraison gratuite"
+    },
     {
       "type": "select",
       "id": "logo_position",

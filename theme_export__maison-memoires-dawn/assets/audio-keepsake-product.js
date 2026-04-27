@@ -21,6 +21,7 @@ if (!customElements.get('audio-keepsake-form')) {
 
         this.proxyButtons = Array.from(this.querySelectorAll('[data-audio-proxy-submit]'));
         this.proxyButtons.forEach((button) => button.addEventListener('click', this.handleProxySubmit));
+        this.mediaBadges = this.productInfo.querySelector('[data-audio-media-badges]');
 
         this.productInfo.addEventListener('change', this.handleChange);
         this.syncFromState();
@@ -50,6 +51,7 @@ if (!customElements.get('audio-keepsake-form')) {
         const state = this.getCurrentState();
         this.updateGroups(state.mode);
         this.updateSummary(state);
+        this.updateMediaBadges(state.mode);
         this.syncProxyButtons();
       }
 
@@ -128,6 +130,12 @@ if (!customElements.get('audio-keepsake-form')) {
         this.setText(this.summaryFields.duration, state.duration || this.dataset.defaultChoiceLabel);
         this.setText(this.summaryFields.packaging, state.packaging || this.dataset.defaultChoiceLabel);
         this.setText(this.summaryFields.nextStep, this.getNextStepText(state.mode));
+      }
+
+      updateMediaBadges(mode) {
+        if (!this.mediaBadges) return;
+
+        this.mediaBadges.hidden = mode !== 'ai' && mode !== 'voice_music';
       }
 
       syncProxyButtons() {

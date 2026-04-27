@@ -319,18 +319,6 @@
                         {%- endfor -%}
                       </ul>
 
-                      {%- if is_audio_item and audio_mode != blank -%}
-                        {% render 'audio-keepsake-cart-panel',
-                          item: item,
-                          line_index: line_index,
-                          line_key: item.key,
-                          variant_id: item.variant.id,
-                          audio_mode: audio_mode,
-                          audio_option_value: audio_option_value,
-                          duration_value: duration_value,
-                          packaging_value: packaging_value
-                        %}
-                      {%- endif -%}
                     </td>
 
                     <td class="cart-item__totals right medium-hide large-up-hide">
@@ -592,6 +580,22 @@
                       </div>
                     </td>
                   </tr>
+                  {%- if is_audio_item and audio_mode != blank -%}
+                    <tr class="cart-item__audio-row" id="CartItem-{{ line_index }}-audio">
+                      <td colspan="4" class="cart-item__audio-cell">
+                        {% render 'audio-keepsake-cart-panel',
+                          item: item,
+                          line_index: line_index,
+                          line_key: item.key,
+                          variant_id: item.variant.id,
+                          audio_mode: audio_mode,
+                          audio_option_value: audio_option_value,
+                          duration_value: duration_value,
+                          packaging_value: packaging_value
+                        %}
+                      </td>
+                    </tr>
+                  {%- endif -%}
                 {%- endfor -%}
               </tbody>
             </table>

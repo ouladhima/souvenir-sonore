@@ -110,8 +110,8 @@
             data-default-choice-label="À choisir"
             data-next-step-default="Ajoutez d'abord votre souvenir au panier. Vous pourrez ensuite nous transmettre les éléments utiles en quelques instants."
             data-next-step-voice="Après l'ajout au panier, vous importerez votre fichier audio et pourrez ajouter quelques indications utiles."
-            data-next-step-ai="Après l'ajout au panier, vous décrirez l'intention créative. Un aperçu vous sera envoyé avant production."
-            data-next-step-voice-music="Après l'ajout au panier, vous joindrez votre enregistrement puis le brief musical souhaité."
+            data-next-step-ai="Après l'ajout au panier, vous décrirez l'intention créative pour guider la création par IA. Un aperçu vous sera envoyé avant production."
+            data-next-step-voice-music="Après l'ajout au panier, vous joindrez votre enregistrement puis un brief musical pour guider la création par IA."
           >
             <div class="audio-keepsake-purchase">
               <div class="audio-keepsake-purchase__primary">
@@ -129,14 +129,14 @@
                     {%- render 'loading-spinner' -%}
                   </button>
                 </div>
+                <p class="audio-keepsake-purchase__after-purchase">
+                  Après votre commande, vous serez guidé vers une étape dédiée pour personnaliser votre souvenir : message vocal, intention ou ambiance.
+                </p>
                 <div class="audio-keepsake-purchase__microcopy" aria-label="Déroulé de la personnalisation">
                   <span>01. Choix du format</span>
                   <span>02. Ajout au panier</span>
-                  <span>03. Personnalisation avant paiement</span>
+                  <span>03. Personnalisation</span>
                 </div>
-                <p class="audio-keepsake-purchase__note">
-                  Votre fichier audio ou brief créatif se transmet juste après, dans le panier, pour garder cette page simple.
-                </p>
               </div>
             </div>
           </audio-keepsake-form>
@@ -161,6 +161,9 @@
         {%- endif -%}
       {%- endform -%}
     </product-form>
+    {%- if audio_keepsake_experience_enabled -%}
+      {%- render 'maison-legal-links', context: 'purchase' -%}
+    {%- endif -%}
   {%- else -%}
     <div class="product-form">
       <div class="product-form__buttons form">

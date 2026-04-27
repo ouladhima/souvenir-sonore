@@ -36,21 +36,8 @@
   endif
 
   assign status_label = 'À compléter'
-  assign status_text = "Le paiement restera verrouillé tant que les éléments indispensables n'auront pas été enregistrés."
-
   if line_complete
     assign status_label = 'Prêt pour la suite'
-    assign status_text = 'Vos informations principales sont bien enregistrées. Vous pouvez encore les ajuster si besoin.'
-  endif
-
-  assign file_helper = "Importez ici votre message vocal, une archive sonore ou le fichier que vous souhaitez nous confier."
-  assign brief_helper = "Décrivez l'intention, le ton, l'émotion, les prénoms ou les détails qui doivent guider la création."
-  assign lead_text = "Votre souvenir est bien ajouté au panier. Il ne reste qu'à nous transmettre les éléments utiles avant de passer au paiement."
-
-  if audio_mode == 'ai'
-    assign lead_text = "Votre souvenir est bien ajouté au panier. Décrivez maintenant l'intention créative souhaitée avant de poursuivre."
-  elsif audio_mode == 'voice_music'
-    assign lead_text = "Votre souvenir est bien ajouté au panier. Ajoutez votre audio puis le brief musical pour que nous puissions créer un rendu fidèle."
   endif
 -%}
 
@@ -73,18 +60,8 @@
   data-upload-size-error-message="Le fichier est trop volumineux (max 100 Mo). Choisissez un fichier plus petit."
 >
   <div class="audio-keepsake-cart__header">
-    {%- unless line_complete -%}
-      <div>
-        <p class="audio-keepsake-cart__eyebrow">Personnalisation à finaliser</p>
-        <h3 class="audio-keepsake-cart__title">Finalisez votre souvenir depuis le panier</h3>
-      </div>
-    {%- endunless -%}
     <span class="audio-keepsake-cart__status" data-status-badge>{{ status_label }}</span>
   </div>
-
-  {%- unless line_complete -%}
-    <p class="audio-keepsake-cart__lead">{{ lead_text }}</p>
-  {%- endunless -%}
 
   <div class="audio-keepsake-cart__summary">
     <div class="audio-keepsake-cart__summary-item">
@@ -113,18 +90,38 @@
         </div>
         <input
           id="AudioFile-{{ line_index }}"
-          class="audio-keepsake-cart__input audio-keepsake-cart__input--file"
+          class="audio-keepsake-cart__file-input visually-hidden"
           type="file"
           accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac"
           data-file-input
         >
+        <label
+          for="AudioFile-{{ line_index }}"
+          class="audio-keepsake-cart__file-trigger"
+          data-file-trigger
+        >
+          <span class="audio-keepsake-cart__file-trigger-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 16V4"/>
+              <path d="M6 10l6-6 6 6"/>
+              <path d="M4 20h16"/>
+            </svg>
+          </span>
+          <span class="audio-keepsake-cart__file-trigger-text" data-file-trigger-label>
+            {%- if existing_file != blank -%}
+              Remplacer le fichier
+            {%- else -%}
+              Choisir un fichier audio
+            {%- endif -%}
+          </span>
+        </label>
+        <p class="audio-keepsake-cart__file-hint">MP3, WAV, M4A — 100 Mo max</p>
         <div class="audio-keepsake-cart__upload-progress" data-upload-progress hidden>
           <div class="audio-keepsake-cart__upload-bar">
             <div class="audio-keepsake-cart__upload-fill" data-upload-fill></div>
           </div>
           <span class="audio-keepsake-cart__upload-label" data-upload-label>Envoi en cours...</span>
         </div>
-        <p class="audio-keepsake-cart__helper">{{ file_helper }}</p>
         <div class="audio-keepsake-cart__saved" data-file-saved-state>
           {%- if existing_file != blank -%}
             <span class="audio-keepsake-cart__saved-label">Fichier enregistré</span>
@@ -143,40 +140,89 @@
     {%- if needs_brief -%}
       <div class="audio-keepsake-cart__field" data-role="brief">
         <div class="audio-keepsake-cart__label-row">
-          <label class="audio-keepsake-cart__label" for="CreativeBrief-{{ line_index }}">Brief créatif</label>
+          <label class="audio-keepsake-cart__label" for="CreativeBrief-{{ line_index }}">Brief créatif pour création IA</label>
           <details class="audio-keepsake-cart__tooltip">
-            <summary aria-label="Voir un exemple de brief créatif">i</summary>
+            <summary aria-label="Voir un exemple de brief créatif pour création IA">i</summary>
             <div class="audio-keepsake-cart__tooltip-content">
-              Exemple : une ambiance douce et nostalgique, comme une berceuse moderne, avec les prénoms Léa et Paul et l'idée d'un souvenir de naissance.
+              Cliquez sur une catégorie pour afficher 3 propositions de brief, naviguez avec les flèches, puis choisissez celle qui correspond le mieux à votre intention. Le panneau se referme si vous cliquez ailleurs.
             </div>
           </details>
         </div>
+        <p class="audio-keepsake-cart__helper">
+          Ce brief guide la création musicale par IA : personnalisation, style, émotion, langue, voix, tempo et détails à intégrer.
+        </p>
 
-        <div class="audio-keepsake-cart__brief-templates" aria-label="Modèles rapides">
-          <p class="audio-keepsake-cart__brief-templates-label">Démarrer avec un modèle :</p>
-          <div class="audio-keepsake-cart__brief-chips">
-            <button type="button" class="audio-keepsake-cart__brief-chip" data-brief-template="Ambiance douce et romantique, mélodie intime. Prénom(s) : [à compléter]. Émotion : tendresse et complicité, pour un anniversaire ou une déclaration.">Anniversaire</button>
-            <button type="button" class="audio-keepsake-cart__brief-chip" data-brief-template="Mélodie apaisante et lumineuse, style berceuse moderne. Prénom du bébé : [à compléter]. Ton rassurant et doux pour célébrer une naissance.">Naissance</button>
-            <button type="button" class="audio-keepsake-cart__brief-chip" data-brief-template="Orchestration élégante et romantique. Prénoms : [à compléter] & [à compléter]. Date du mariage : [à compléter]. Émotion partagée, solennité et joie.">Mariage</button>
-            <button type="button" class="audio-keepsake-cart__brief-chip" data-brief-template="Ton léger, sincère et chaleureux. Évoquer une complicité de longue date ou un souvenir partagé. Ambiance positive, sans excès de solennité.">Amitié</button>
-            <button type="button" class="audio-keepsake-cart__brief-chip" data-brief-template="Mélodie douce et recueillie. Prénom : [à compléter]. Atmosphère d'apaisement et de mémoire, pour honorer une présence qui reste.">Hommage</button>
+        <div class="audio-keepsake-cart__brief-templates" data-brief-template-picker aria-label="Modèles de brief pour création IA">
+          <p class="audio-keepsake-cart__brief-templates-label">Choisir une inspiration</p>
+          <div class="audio-keepsake-cart__brief-categories" role="tablist" aria-label="Catégories de brief créatif">
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="0" aria-selected="false">Anniversaire</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="1" aria-selected="false">Amour</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="2" aria-selected="false">Naissance</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="3" aria-selected="false">Mariage</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="4" aria-selected="false">Hommage</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="5" aria-selected="false">Famille</button>
           </div>
+          <div class="audio-keepsake-cart__brief-card" data-brief-template-card hidden>
+            <div class="audio-keepsake-cart__brief-card-header">
+              <span data-brief-template-label>Anniversaire</span>
+              <span data-brief-template-counter>1 / 3</span>
+            </div>
+            <p class="audio-keepsake-cart__brief-preview" data-brief-template-preview></p>
+            <div class="audio-keepsake-cart__brief-actions">
+              <div class="audio-keepsake-cart__brief-nav">
+                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-prev aria-label="Voir le brief précédent">‹</button>
+                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-next aria-label="Voir le brief suivant">›</button>
+              </div>
+              <button type="button" class="audio-keepsake-cart__brief-apply" data-brief-template-apply>Utiliser ce brief</button>
+            </div>
+          </div>
+          <template data-brief-template-data>
+            <div data-brief-template-category="Anniversaire">
+              <p data-brief-template-choice>Création musicale par IA pour un anniversaire. Personne célébrée : [Nom à compléter]. Relation : [à compléter]. Style musical souhaité : R&amp;B doux / pop française élégante / piano voix. Ambiance : chaleureuse, intime et lumineuse. Mots ou souvenirs à intégrer : [à compléter]. Éviter : [à compléter].</p>
+              <p data-brief-template-choice>Chanson personnalisée par IA pour [Nom à compléter], anniversaire de [âge à compléter]. Style : rap FR mélodique / RNB / afro-pop douce. Ton : complice, positif, avec refrain mémorable. Détails à intégrer : [surnom, ville, souvenir, date]. Langue : français.</p>
+              <p data-brief-template-choice>Musique IA premium pour surprendre [Nom à compléter]. Univers : balade cinématique / soul moderne / pop acoustique. Émotion : gratitude et tendresse. Message central : [à compléter]. Niveau d'énergie : doux / moyen / festif. Voix souhaitée : [féminine / masculine / duo].</p>
+            </div>
+            <div data-brief-template-category="Amour">
+              <p data-brief-template-choice>Création musicale par IA pour [Nom à compléter], message d'amour de [Votre nom à compléter]. Style : R&amp;B intime / pop piano / soul moderne. Ambiance : tendre, élégante, légèrement nostalgique. Souvenir à intégrer : [à compléter]. Phrase importante à reprendre : [à compléter].</p>
+              <p data-brief-template-choice>Chanson IA romantique pour [Nom à compléter]. Style musical : rap US doux / RNB slow / pop française. Ton : sincère, adulte, sans paroles trop clichées. Rythme : lent à moyen. Détails personnels : [rencontre, lieu, date, surnom]. Émotion finale : [à compléter].</p>
+              <p data-brief-template-choice>Musique personnalisée IA pour déclarer ou remercier [Nom à compléter]. Univers : voix chaude, arrangement minimal, basse douce, refrain facile à retenir. Langue : français avec quelques mots en [anglais / espagnol / autre]. Mots à éviter : [à compléter].</p>
+            </div>
+            <div data-brief-template-category="Naissance">
+              <p data-brief-template-choice>Création musicale par IA pour une naissance. Prénom du bébé : [Nom à compléter]. Prénoms des parents : [à compléter]. Style : berceuse moderne / piano doux / pop acoustique. Ambiance : apaisante, lumineuse, protectrice. Détails à intégrer : date, heure ou lieu de naissance : [à compléter].</p>
+              <p data-brief-template-choice>Chanson IA douce pour accueillir [Nom à compléter]. Style musical : folk délicat / R&amp;B très doux / comptine premium. Voix : tendre et rassurante. Tempo : lent. Message central : bienvenue, amour, promesse de présence. Personnes à mentionner : [à compléter].</p>
+              <p data-brief-template-choice>Musique personnalisée par IA pour offrir à de jeunes parents. Bébé : [Nom à compléter]. Style : pop française élégante / piano voix / ambient chaleureux. Ton : délicat, jamais trop enfantin. Souvenir ou anecdote familiale à intégrer : [à compléter].</p>
+            </div>
+            <div data-brief-template-category="Mariage">
+              <p data-brief-template-choice>Création musicale par IA pour un mariage. Prénoms : [Nom à compléter] et [Nom à compléter]. Style : balade cinématique / pop orchestrale / soul élégante. Ambiance : solennelle, lumineuse, émouvante. Date et lieu : [à compléter]. Histoire ou symbole à intégrer : [à compléter].</p>
+              <p data-brief-template-choice>Chanson IA pour ouverture de coffret de mariage. Couple : [Noms à compléter]. Style musical : piano voix / R&amp;B élégant / pop française. Ton : intime, pas trop grandiloquent. Refrain autour de : [phrase ou idée à compléter]. Voix souhaitée : [à compléter].</p>
+              <p data-brief-template-choice>Musique personnalisée IA pour célébrer [Nom à compléter] et [Nom à compléter]. Énergie : douce puis crescendo. Instruments souhaités : piano, cordes, basse légère, percussions discrètes. Souvenirs à intégrer : [rencontre, voyage, promesse]. Mots à éviter : [à compléter].</p>
+            </div>
+            <div data-brief-template-category="Hommage">
+              <p data-brief-template-choice>Création musicale par IA en hommage à [Nom à compléter]. Style : piano voix / orchestration douce / chanson française sobre. Ambiance : apaisée, digne, chaleureuse, sans pathos excessif. Souvenir ou qualité à évoquer : [à compléter]. Personnes destinataires : [à compléter].</p>
+              <p data-brief-template-choice>Musique IA de mémoire pour [Nom à compléter]. Ton : recueilli et lumineux. Style musical : soul douce / folk acoustique / ambient cinématique. Tempo : lent. Mots importants : [à compléter]. Éviter : [éléments sensibles à compléter].</p>
+              <p data-brief-template-choice>Chanson personnalisée par IA pour garder une présence. Prénom : [Nom à compléter]. Relation : [à compléter]. Souvenirs à intégrer : [voix, lieu, phrase, rituel]. Style : français poétique, instrumentation minimale, voix chaleureuse. Émotion recherchée : [à compléter].</p>
+            </div>
+            <div data-brief-template-category="Famille">
+              <p data-brief-template-choice>Création musicale par IA pour [Nom à compléter], offerte par la famille. Style : pop française douce / RNB chaleureux / folk lumineux. Ambiance : gratitude, transmission, complicité. Prénoms à mentionner : [à compléter]. Souvenirs communs : [à compléter].</p>
+              <p data-brief-template-choice>Chanson IA pour maman, papa ou grand-parent. Destinataire : [Nom à compléter]. Style musical : chanson française moderne / piano voix / soul douce. Ton : élégant, tendre, sincère. Message central : merci pour [à compléter]. Détails personnels : [surnom, maison, ville, phrase familiale].</p>
+              <p data-brief-template-choice>Musique personnalisée par IA pour une fratrie ou un groupe. Prénoms : [Noms à compléter]. Style : rap FR positif / pop entraînante / afro-pop douce. Énergie : joyeuse mais raffinée. Souvenirs, blagues privées ou expressions à intégrer : [à compléter].</p>
+            </div>
+          </template>
         </div>
 
         <textarea
           id="CreativeBrief-{{ line_index }}"
           class="audio-keepsake-cart__input audio-keepsake-cart__input--textarea"
           rows="6"
-          placeholder="Décrivez ici le souvenir, le ton, les mots-clés, l'univers musical ou l'émotion souhaitée."
+          placeholder="Décrivez le destinataire, les prénoms, le contexte, le style musical souhaité, la voix, l'ambiance, les mots à intégrer et les éléments à éviter."
           data-brief-input
         >{{ existing_brief }}</textarea>
-        <p class="audio-keepsake-cart__helper">{{ brief_helper }}</p>
       </div>
     {%- endif -%}
 
     <div class="audio-keepsake-cart__field">
       <div class="audio-keepsake-cart__label-row">
-        <label class="audio-keepsake-cart__label" for="AdditionalNotes-{{ line_index }}">Notes complémentaires</label>
+        <label class="audio-keepsake-cart__label" for="AdditionalNotes-{{ line_index }}">Notes</label>
         <details class="audio-keepsake-cart__tooltip">
           <summary aria-label="Voir un exemple de notes complémentaires">i</summary>
           <div class="audio-keepsake-cart__tooltip-content">
@@ -191,18 +237,16 @@
         placeholder="Ajoutez ici un contexte utile, une date importante, une contrainte ou une attention particulière."
         data-notes-input
       >{{ existing_notes }}</textarea>
-      <p class="audio-keepsake-cart__helper">Optionnel, mais toujours utile si vous souhaitez nous partager une nuance importante.</p>
     </div>
   </div>
 
   <div class="audio-keepsake-cart__footer">
-    <p class="audio-keepsake-cart__status-text" data-status-text>{{ status_text }}</p>
     <p class="audio-keepsake-cart__message" data-form-message hidden></p>
-    <button type="button" class="button button--primary" data-save-button>
+    <button type="button" class="button audio-keepsake-cart__save-btn" data-save-button>
       {%- if line_complete -%}
-        Mettre à jour la personnalisation
+        Mettre à jour
       {%- else -%}
-        Enregistrer ma personnalisation
+        Enregistrer
       {%- endif -%}
     </button>
   </div>

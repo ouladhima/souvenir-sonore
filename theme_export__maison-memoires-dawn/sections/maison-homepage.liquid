@@ -30,144 +30,63 @@
 {%- endcapture -%}
 
 <div class="maison-homepage">
-  <section class="maison-homepage__hero" id="maison-homepage-hero">
+  <section class="maison-homepage__hero maison-homepage__hero--centered" id="maison-homepage-hero">
     <div class="page-width maison-homepage__hero-shell">
       <div class="maison-homepage__hero-copy">
-        <p class="maison-homepage__eyebrow">Cassette audio personnalisée · coffret cadeau premium</p>
-        <h1 class="maison-homepage__hero-title">La cassette audio personnalisée qui transforme une voix en souvenir à offrir.</h1>
+        <h1 class="maison-homepage__hero-title">
+          Certains souvenirs se regardent.<br>
+          Celui-ci s&rsquo;&eacute;coute.
+        </h1>
         <p class="maison-homepage__hero-lead">
-          Transformez un message vocal, une chanson sur mesure ou une création mixte en coffret raffiné,
-          prêt à offrir et à réécouter longtemps après le moment reçu.
+          Un message, une voix, un moment&hellip; &agrave; garder pour toujours.
         </p>
 
-        <div class="maison-homepage__actions">
+        <div class="maison-homepage__actions maison-homepage__actions--centered">
           <a class="button button--primary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
-            Créer mon souvenir
+            Cr&eacute;er mon souvenir
           </a>
-          <a class="button button--secondary" href="#maison-homepage-pourquoi">Découvrir le concept</a>
         </div>
-
-        <ul class="maison-homepage__trust" aria-label="Points de réassurance">
-          <li>Création sous 48h</li>
-          <li>Aperçu avant production</li>
-          <li>Coffret prêt à offrir</li>
-        </ul>
       </div>
-
-      <figure class="maison-homepage__hero-visual">
-        <img
-          src="{{ 'maison-home-hero-main.png' | asset_url }}"
-          alt="Cassette audio personnalisée présentée dans un coffret cadeau raffiné"
-          width="2048"
-          height="1365"
-          fetchpriority="high"
-        >
-        <figcaption>Un objet de mémoire pensé pour être offert avec délicatesse.</figcaption>
-      </figure>
     </div>
   </section>
 
-  <section class="maison-homepage__section" id="maison-homepage-pourquoi">
-    <div class="page-width maison-homepage__intro-grid">
-      <div class="maison-homepage__heading-group">
-        <p class="maison-homepage__eyebrow">Un cadeau audio personnel</p>
-        <h2>Vous confiez une voix, une histoire ou une intention. Nous en faisons une cassette à offrir.</h2>
-      </div>
-
-      <div class="maison-homepage__prose">
-        <p>
-          On offre souvent un objet. Plus rarement, on offre une présence, une voix, une manière
-          d'être là même après le moment offert.
-        </p>
-        <p>
-          Une voix garde un timbre, une émotion, une intention. C'est ce qui transforme ce cadeau
-          en souvenir vivant, et non en simple attention de passage.
-        </p>
-      </div>
-    </div>
-
-    <div class="page-width maison-homepage__reasons">
-      <article class="maison-homepage__reason">
-        <span>01</span>
-        <div>
-          <h3>Dire ce qu'un objet ne dit pas</h3>
-          <p>Un message, un merci, une présence ou une déclaration que l'on peut réécouter.</p>
-        </div>
-      </article>
-      <article class="maison-homepage__reason">
-        <span>02</span>
-        <div>
-          <h3>Faire durer l'émotion</h3>
-          <p>Le souvenir ne s'arrête pas à l'ouverture : il continue à chaque nouvelle écoute.</p>
-        </div>
-      </article>
-      <article class="maison-homepage__reason">
-        <span>03</span>
-        <div>
-          <h3>Offrir quelque chose d'inimitable</h3>
-          <p>Une histoire, une voix et une intention qui n'appartiennent qu'à la personne qui l'offre.</p>
-        </div>
-      </article>
+  <section class="maison-homepage__section maison-homepage__brand-promise">
+    <div class="page-width">
+      <p class="maison-homepage__statement">
+        Chez Maison M&eacute;moire, nous ne cr&eacute;ons pas des objets.<br>
+        Nous capturons des moments que l&rsquo;on ne veut pas oublier.
+      </p>
     </div>
   </section>
 
-  <section class="maison-homepage__section maison-homepage__story">
-    <div class="page-width maison-homepage__story-grid">
-      <figure class="maison-homepage__story-media">
-        <img
-          src="{{ 'maison-home-editorial.png' | asset_url }}"
-          alt="Coffret audio premium mis en scène comme un souvenir intime"
-          width="1536"
-          height="1024"
-          loading="lazy"
-          decoding="async"
-        >
-      </figure>
-
-      <div class="maison-homepage__story-copy">
-        <p class="maison-homepage__eyebrow">Ce qui reste</p>
-        <h2>Un souvenir que l'on n'offre pas pour un jour, mais pour les jours d'après.</h2>
-        <p>
-          Une voix peut rassurer, rapprocher, faire revivre un instant ou redonner une chaleur que
-          les mots écrits ne portent pas de la même manière.
-        </p>
-        <p>
-          C'est pour cela qu'un souvenir audio touche autrement : il garde un rythme, un souffle,
-          une présence. Il ne raconte pas seulement le lien. Il le fait entendre.
-        </p>
-        <p class="maison-homepage__quote">
-          Certains cadeaux s'admirent. Celui-ci se réécoute quand on en a le plus besoin.
-        </p>
-      </div>
+  <section class="maison-homepage__section maison-homepage__problem">
+    <div class="page-width">
+      <p class="maison-homepage__statement maison-homepage__statement--quiet">
+        Les mots se perdent.<br>
+        Les souvenirs s&rsquo;effacent.<br>
+        Et les instants les plus pr&eacute;cieux passent trop vite.
+      </p>
     </div>
   </section>
 
   <section class="maison-homepage__section maison-homepage__object">
     <div class="page-width maison-homepage__object-shell">
       <div class="maison-homepage__object-copy">
-        <p class="maison-homepage__eyebrow">L'objet qui porte l'émotion</p>
-        <h2>Une cassette et son coffret, pensés comme un présent à ouvrir lentement.</h2>
-        <p>
-          La forme compte autant que le fond. Le souvenir se découvre dans un coffret soigné,
-          avec une présence visuelle assez forte pour annoncer qu'il ne s'agit pas d'un cadeau
-          ordinaire.
-        </p>
-
-        <ul class="maison-homepage__object-list">
-          <li>Coffret prêt à offrir, avec une finition sobre et précieuse</li>
-          <li>Personnalisation possible du message et de la présentation</li>
-          <li>Aperçu avant production pour valider l'émotion juste</li>
-        </ul>
+        <h2 class="maison-homepage__object-title">
+          Nous avons imagin&eacute; un objet simple.<br>
+          Un &eacute;crin. Une cassette.<br>
+          Et un message qui ne dispara&icirc;t jamais.
+        </h2>
 
         <a class="button button--secondary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
-          Voir le produit
+          D&eacute;couvrir la cassette
         </a>
       </div>
 
       <figure class="maison-homepage__object-media">
         <img
           src="{{ 'maison-home-showcase-2.png' | asset_url }}"
-          alt="Coffret cadeau personnalisé avec une présentation éditoriale raffinée"
+          alt="Coffret cadeau personnalis&eacute; avec une pr&eacute;sentation &eacute;ditoriale raffin&eacute;e"
           width="1536"
           height="1024"
           loading="lazy"
@@ -191,12 +110,8 @@
 
         <div class="maison-homepage__sequence-sticky">
           <div class="maison-homepage__sequence-copy">
-            <p class="maison-homepage__eyebrow">Le geste prend forme</p>
-            <h2 id="maison-homepage-sequence-title">Ouvrez. Écoutez. Ressentez.</h2>
-            <p>
-              Une révélation lente, pensée pour montrer qu'ici le souvenir ne s'offre pas comme un
-              produit standard, mais comme une présence que l'on découvre.
-            </p>
+            <h2 id="maison-homepage-sequence-title">Ouvrez. &Eacute;coutez. Ressentez.</h2>
+            <p>Un moment. Une voix. Un souvenir.</p>
           </div>
 
           <div class="maison-homepage__sequence-stage" data-sequence-stage>
@@ -210,7 +125,7 @@
               class="maison-homepage__sequence-fallback"
               data-sequence-fallback
               src="{{ 'maison-home-frame-0001.webp' | asset_url }}"
-              alt="Ouverture du coffret et révélation de la cassette audio personnalisée"
+              alt="Ouverture du coffret et r&eacute;v&eacute;lation de la cassette audio personnalis&eacute;e"
               width="1600"
               height="1200"
               loading="lazy"
@@ -218,7 +133,7 @@
             >
             <div class="maison-homepage__sequence-cta">
               <a class="button button--primary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
-                Créer mon souvenir
+                Cr&eacute;er mon souvenir
               </a>
             </div>
           </div>
@@ -227,34 +142,13 @@
     </div>
   </section>
 
-  <section class="maison-homepage__section maison-homepage__process">
+  <section class="maison-homepage__section maison-homepage__ritual">
     <div class="page-width">
-      <div class="maison-homepage__section-heading">
-        <p class="maison-homepage__eyebrow">Comment cela prend forme</p>
-        <h2>Un parcours simple, rassurant, sans vous presser.</h2>
-        <p>
-          L'idée est de vous laisser formuler l'essentiel, puis de vous guider jusqu'à la version
-          juste avant fabrication.
-        </p>
-      </div>
-
-      <div class="maison-homepage__steps">
-        <article class="maison-homepage__step">
-          <span>01</span>
-          <h3>Vous choisissez l'intention</h3>
-          <p>Un message vocal, une création musicale sur mesure ou une combinaison des deux.</p>
-        </article>
-        <article class="maison-homepage__step">
-          <span>02</span>
-          <h3>Vous nous transmettez l'essentiel</h3>
-          <p>Votre audio, votre histoire, le ton souhaité et les détails qui donnent sa justesse au souvenir.</p>
-        </article>
-        <article class="maison-homepage__step">
-          <span>03</span>
-          <h3>Nous créons, puis vous validez</h3>
-          <p>Un aperçu vous est envoyé avant production afin de confirmer le rendu final en toute confiance.</p>
-        </article>
-      </div>
+      <ol class="maison-homepage__ritual-list" data-ritual-reveal aria-label="Le rituel d&rsquo;une &eacute;coute">
+        <li><span class="maison-homepage__ritual-word">Ouvrir</span></li>
+        <li><span class="maison-homepage__ritual-word">Appuyer sur play</span></li>
+        <li><span class="maison-homepage__ritual-word">Ressentir</span></li>
+      </ol>
     </div>
   </section>
 
@@ -262,16 +156,21 @@
   <section class="maison-homepage__section maison-homepage__audio-preview" id="maison-homepage-audio-preview">
     <div class="page-width">
       <div class="maison-homepage__section-heading">
-        <p class="maison-homepage__eyebrow">Exemples de créations</p>
-        <h2>{{ section.settings.ai_audio_heading | default: 'Écoutez ce que nos créations sonores donnent.' }}</h2>
-        <p>{{ section.settings.ai_audio_subtext | default: 'Des compositions musicales générées sur mesure, pensées pour accompagner un moment intime.' }}</p>
+        <h2>{{ section.settings.ai_audio_heading | default: 'Quelques instants&hellip; &agrave; &eacute;couter' }}</h2>
+        <p>{{ section.settings.ai_audio_subtext | default: 'Des mots simples. Des voix vraies. Des souvenirs qui restent.' }}</p>
       </div>
 
       <div class="maison-homepage__audio-cards">
         {%- if section.settings.ai_audio_1_url != blank -%}
           <div class="maison-homepage__audio-card">
+            <div class="maison-homepage__audio-card-visual" aria-hidden="true">
+              <span class="maison-homepage__audio-card-caption">Maison M&eacute;moire</span>
+              <span class="maison-homepage__audio-card-window"></span>
+              <span class="maison-homepage__audio-card-reel maison-homepage__audio-card-reel--left"></span>
+              <span class="maison-homepage__audio-card-reel maison-homepage__audio-card-reel--right"></span>
+            </div>
             <div class="maison-homepage__audio-card-meta">
-              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_1_label | default: 'Création 1' }}</p>
+              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_1_label | default: 'Cr&eacute;ation 1' }}</p>
               {%- if section.settings.ai_audio_1_desc != blank -%}
                 <p class="maison-homepage__audio-card-desc">{{ section.settings.ai_audio_1_desc }}</p>
               {%- endif -%}
@@ -284,8 +183,14 @@
 
         {%- if section.settings.ai_audio_2_url != blank -%}
           <div class="maison-homepage__audio-card">
+            <div class="maison-homepage__audio-card-visual" aria-hidden="true">
+              <span class="maison-homepage__audio-card-caption">Maison M&eacute;moire</span>
+              <span class="maison-homepage__audio-card-window"></span>
+              <span class="maison-homepage__audio-card-reel maison-homepage__audio-card-reel--left"></span>
+              <span class="maison-homepage__audio-card-reel maison-homepage__audio-card-reel--right"></span>
+            </div>
             <div class="maison-homepage__audio-card-meta">
-              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_2_label | default: 'Création 2' }}</p>
+              <p class="maison-homepage__audio-card-label">{{ section.settings.ai_audio_2_label | default: 'Cr&eacute;ation 2' }}</p>
               {%- if section.settings.ai_audio_2_desc != blank -%}
                 <p class="maison-homepage__audio-card-desc">{{ section.settings.ai_audio_2_desc }}</p>
               {%- endif -%}
@@ -300,86 +205,73 @@
   </section>
   {%- endif -%}
 
-  <section class="maison-homepage__section maison-homepage__testimonials">
+  <section class="maison-homepage__section maison-homepage__occasions">
     <div class="page-width">
-      <div class="maison-homepage__section-heading">
-        <p class="maison-homepage__eyebrow">Ils l'ont offert</p>
-        <h2>Des réactions discrètes, mais très révélatrices de l'effet produit.</h2>
+      {%- assign occasions = 'Pour un anniversaire|Pour dire je t&rsquo;aime|Pour une naissance|Pour un mariage|Pour la f&ecirc;te des m&egrave;res|Pour la f&ecirc;te des p&egrave;res|Pour des fian&ccedil;ailles|Pour un bapt&ecirc;me|Pour No&euml;l|Pour la Saint-Valentin|Pour un d&eacute;part &agrave; la retraite|Pour un anniversaire de mariage|Pour annoncer une grande nouvelle|Pour c&eacute;l&eacute;brer une amiti&eacute;|Pour rendre hommage &agrave; un proche|Pour dire merci|Pour marquer une r&eacute;ussite|Pour un d&eacute;m&eacute;nagement' | split: '|' -%}
+
+      <div class="maison-homepage__occasions-viewport" role="region" aria-label="Pour quelles occasions">
+        <ul class="maison-homepage__occasions-track" aria-hidden="false">
+          {%- for occasion in occasions -%}
+            <li>{{ occasion }}</li>
+          {%- endfor -%}
+        </ul>
+        <ul class="maison-homepage__occasions-track" aria-hidden="true">
+          {%- for occasion in occasions -%}
+            <li>{{ occasion }}</li>
+          {%- endfor -%}
+        </ul>
       </div>
 
-      <div class="maison-homepage__testimonials-grid">
-        <blockquote class="maison-homepage__testimonial">
-          <p>
-            "Je voulais offrir la voix de notre fille à son grand-père. Ce n'était pas simplement
-            beau. C'était déjà chargé d'émotion avant même la première écoute."
-          </p>
-          <footer>Camille · cadeau de famille</footer>
-        </blockquote>
-
-        <blockquote class="maison-homepage__testimonial">
-          <p>
-            "Nous cherchions quelque chose de plus personnel qu'un bel objet. Le fait de pouvoir
-            écouter avant production nous a tout de suite rassurés."
-          </p>
-          <footer>Julien · anniversaire de couple</footer>
-        </blockquote>
-
-        <blockquote class="maison-homepage__testimonial">
-          <p>
-            "Pour une naissance, nous voulions un cadeau qui reste. Le coffret était prêt à offrir
-            et l'émotion était là dès l'ouverture."
-          </p>
-          <footer>Sarah · cadeau de naissance</footer>
-        </blockquote>
-      </div>
+      <p class="maison-homepage__occasions-coda">Ou simplement&hellip; pour ne rien oublier.</p>
     </div>
   </section>
+
+  <script>
+    (function () {
+      var ritual = document.querySelector('[data-ritual-reveal]');
+      if (!ritual) return;
+      if (!('IntersectionObserver' in window)) {
+        ritual.classList.add('is-revealed');
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.45 });
+      io.observe(ritual);
+    })();
+  </script>
 
   <section class="maison-homepage__section maison-homepage__faq" id="maison-homepage-faq">
     <div class="page-width maison-homepage__faq-layout">
       <div class="maison-homepage__heading-group">
-        <p class="maison-homepage__eyebrow">FAQ</p>
-        <h2>Les réponses aux questions que l'on se pose avant d'offrir un souvenir si personnel.</h2>
-        <p>
-          Tout est pensé pour que le parcours reste limpide, du premier message jusqu'à la
-          validation finale.
-        </p>
+        <h2>Quelques pr&eacute;cisions, si besoin.</h2>
       </div>
 
       <div class="maison-homepage__faq-items">
         <details class="maison-homepage__faq-item">
-          <summary>Comment transmettre mon enregistrement vocal ?</summary>
+          <summary>Comment fonctionne la chanson sur mesure&nbsp;?</summary>
           <p>
-            Après la commande, vous recevez des indications simples pour transmettre votre
-            enregistrement ou votre message vocal dans les meilleures conditions.
+            Vous partagez l&rsquo;intention, l&rsquo;histoire et l&rsquo;&eacute;motion &agrave; transmettre. Nous composons
+            ensuite une proposition musicale personnalis&eacute;e pens&eacute;e pour votre moment.
           </p>
         </details>
         <details class="maison-homepage__faq-item">
-          <summary>Comment fonctionne la chanson sur mesure ?</summary>
+          <summary>Puis-je &eacute;couter avant la production&nbsp;?</summary>
           <p>
-            Vous partagez l'intention, l'histoire et l'émotion à transmettre. Nous composons
-            ensuite une proposition musicale personnalisée pensée pour votre moment.
-          </p>
-        </details>
-        <details class="maison-homepage__faq-item">
-          <summary>Puis-je écouter avant la production ?</summary>
-          <p>
-            Oui. Vous recevez un aperçu avant fabrication afin d'écouter, confirmer et valider le
+            Oui. Vous recevez un aper&ccedil;u avant fabrication afin d&rsquo;&eacute;couter, confirmer et valider le
             rendu final.
           </p>
         </details>
         <details class="maison-homepage__faq-item">
-          <summary>Sous quel délai la création est-elle préparée ?</summary>
+          <summary>Le coffret est-il pr&ecirc;t &agrave; offrir&nbsp;?</summary>
           <p>
-            La création est généralement préparée sous 48 heures avant validation, hors besoins de
-            retouches plus poussées ou périodes exceptionnelles.
-          </p>
-        </details>
-        <details class="maison-homepage__faq-item">
-          <summary>Le coffret est-il prêt à offrir ?</summary>
-          <p>
-            Oui. Le souvenir est pensé comme un objet cadeau premium, avec une présentation soignée
-            et une finition conçue pour être offerte dès réception.
+            Oui. Le souvenir est pens&eacute; comme un objet cadeau premium, avec une pr&eacute;sentation soign&eacute;e
+            et une finition con&ccedil;ue pour &ecirc;tre offerte d&egrave;s r&eacute;ception.
           </p>
         </details>
       </div>
@@ -387,18 +279,11 @@
 
     <div class="page-width">
       <div class="maison-homepage__cta">
-        <p class="maison-homepage__eyebrow">Prêt à offrir plus qu'un objet ?</p>
-        <h2>Créez un souvenir qui pourra se réécouter longtemps après le moment offert.</h2>
-        <p>
-          Le détail des choix se finalise ensuite sur la page produit, avec aperçu avant
-          production pour garder une expérience simple et sûre.
-        </p>
+        <h2>Offrir plus qu&rsquo;un cadeau.</h2>
+        <p>Cr&eacute;er un souvenir &agrave; &eacute;couter.</p>
         <div class="maison-homepage__actions maison-homepage__actions--centered">
           <a class="button button--primary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
-            Créer mon souvenir
-          </a>
-          <a class="button button--secondary" href="{{ product_url }}" data-product-handle="{{ product_handle }}">
-            Voir le produit
+            Cr&eacute;er mon souvenir
           </a>
         </div>
       </div>
@@ -417,19 +302,19 @@
     },
     {
       "type": "header",
-      "content": "Exemples audio IA"
+      "content": "Exemples audio"
     },
     {
       "type": "text",
       "id": "ai_audio_heading",
       "label": "Titre de la section",
-      "default": "Écoutez ce que nos créations sonores donnent."
+      "default": "Quelques instants… à écouter"
     },
     {
       "type": "text",
       "id": "ai_audio_subtext",
       "label": "Sous-titre",
-      "default": "Des compositions musicales générées sur mesure, pensées pour accompagner un moment intime."
+      "default": "Des mots simples. Des voix vraies. Des souvenirs qui restent."
     },
     {
       "type": "text",

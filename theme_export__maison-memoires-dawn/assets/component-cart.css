@@ -282,6 +282,44 @@ cart-items .underlined-link {
   color: rgba(var(--color-foreground), 0.64);
 }
 
+.cart .maison-legal-links--purchase {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0 0 1.6rem;
+  text-align: center;
+}
+
+.cart .maison-legal-links__title {
+  color: rgba(var(--color-foreground), 0.58);
+  font-size: 1.1rem;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
+.cart .maison-legal-links__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem 1.2rem;
+  margin: 0;
+}
+
+.cart .maison-legal-links__list a {
+  color: rgba(var(--color-foreground), 0.7);
+  font-size: 1.25rem;
+  text-underline-offset: 0.3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .cart .maison-legal-links--purchase {
+    text-align: right;
+  }
+
+  .cart .maison-legal-links__list {
+    justify-content: flex-end;
+  }
+}
+
 .cart__checkout-button {
   min-height: 5.6rem;
   border-radius: 999px;

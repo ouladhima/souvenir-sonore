@@ -3,12 +3,43 @@
 }
 
 .main-page-title {
-  margin-bottom: 3rem;
+  margin-bottom: 2.4rem;
+  letter-spacing: 0;
+}
+
+.page-width--narrow .rte {
+  color: rgba(var(--color-foreground), 0.76);
+  font-size: 1.55rem;
+  line-height: 1.75;
+}
+
+.page-width--narrow .rte h2,
+.page-width--narrow .rte h3 {
+  color: rgb(var(--color-foreground));
+  letter-spacing: 0;
+}
+
+.page-width--narrow .rte h2 {
+  margin-top: 4rem;
+}
+
+.page-width--narrow .rte h3 {
+  margin-top: 3rem;
+}
+
+.page-width--narrow .rte p,
+.page-width--narrow .rte ul,
+.page-width--narrow .rte ol {
+  margin-bottom: 1.8rem;
 }
 
 @media screen and (min-width: 750px) {
   .main-page-title {
     margin-bottom: 4rem;
+  }
+
+  .page-width--narrow .rte {
+    font-size: 1.65rem;
   }
 }
 

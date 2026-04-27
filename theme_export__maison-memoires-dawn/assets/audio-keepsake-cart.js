@@ -2,32 +2,22 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
   class AudioKeepsakeCartPanel extends HTMLElement {
     static updateCheckoutState() {
       const panels = Array.from(document.querySelectorAll('audio-keepsake-cart-panel'));
-      const shouldLockCheckout = panels.some((panel) => {
-        if (typeof panel.isPersistedComplete !== 'function') return true;
-        return panel.isSaving || panel.isUploading || !panel.isPersistedComplete();
+      const isBusy = panels.some((panel) => panel.isSaving || panel.isUploading);
+      const hasIncomplete = panels.some((panel) => {
+        if (typeof panel.isPersistedComplete !== 'function') return false;
+        return !panel.isPersistedComplete();
       });
 
       const checkoutButton = document.getElementById('checkout');
       if (checkoutButton) {
         const cartEmpty = checkoutButton.dataset.cartEmpty === 'true';
-        const locked = cartEmpty || shouldLockCheckout;
+        const locked = cartEmpty || isBusy;
         checkoutButton.disabled = locked;
         checkoutButton.setAttribute('aria-disabled', String(locked));
-        checkoutButton.classList.toggle('cart__checkout-button--locked', shouldLockCheckout && !cartEmpty);
-        if (shouldLockCheckout && !cartEmpty) {
-          checkoutButton.dataset.originalLabel = checkoutButton.dataset.originalLabel || checkoutButton.textContent.trim();
-          checkoutButton.textContent = '\uD83D\uDD12\u00A0 Personnalisation à compléter';
-        } else if (checkoutButton.dataset.originalLabel) {
-          checkoutButton.textContent = checkoutButton.dataset.originalLabel;
-        }
       }
 
       document.querySelectorAll('[data-audio-checkout-note]').forEach((note) => {
-        note.hidden = !shouldLockCheckout;
-      });
-
-      document.querySelectorAll('.cart__dynamic-checkout-buttons').forEach((container) => {
-        container.hidden = shouldLockCheckout;
+        note.hidden = !hasIncomplete;
       });
     }
 
@@ -35,6 +25,7 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       super();
       this.handleInput = this.handleInput.bind(this);
       this.handleSave = this.handleSave.bind(this);
+      this.handleDocumentClick = this.handleDocumentClick.bind(this);
     }
 
     connectedCallback() {
@@ -70,17 +61,7 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       this.notesInput?.addEventListener('input', this.handleInput);
       this.saveButton?.addEventListener('click', this.handleSave);
 
-      this.querySelectorAll('[data-brief-template]').forEach((chip) => {
-        chip.addEventListener('click', () => {
-          if (this.briefInput) {
-            this.briefInput.value = chip.dataset.briefTemplate;
-            this.briefInput.dispatchEvent(new Event('input'));
-            this.briefInput.focus();
-          }
-          this.querySelectorAll('[data-brief-template]').forEach((c) => c.classList.remove('is-active'));
-          chip.classList.add('is-active');
-        });
-      });
+      this.initBriefTemplatePicker();
 
       this.refreshUI();
       this.restoreFlashMessage();
@@ -92,6 +73,134 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       this.briefInput?.removeEventListener('input', this.handleInput);
       this.notesInput?.removeEventListener('input', this.handleInput);
       this.saveButton?.removeEventListener('click', this.handleSave);
+      document.removeEventListener('click', this.handleDocumentClick);
+    }
+
+    initBriefTemplatePicker() {
+      this.briefTemplatePicker = this.querySelector('[data-brief-template-picker]');
+      if (!this.briefTemplatePicker || !this.briefInput) return;
+
+      const source = this.briefTemplatePicker.querySelector('[data-brief-template-data]');
+      const categoryNodes = Array.from(
+        source?.content?.querySelectorAll('[data-brief-template-category]') || []
+      );
+
+      this.briefTemplates = categoryNodes
+        .map((categoryNode) => ({
+          label: categoryNode.dataset.briefTemplateCategory || '',
+          choices: Array.from(categoryNode.querySelectorAll('[data-brief-template-choice]'))
+            .map((choiceNode) => choiceNode.textContent.trim())
+            .filter(Boolean),
+        }))
+        .filter((category) => category.label && category.choices.length);
+
+      if (!this.briefTemplates.length) return;
+
+      this.briefTemplateState = { categoryIndex: 0, choiceIndex: 0 };
+      this.briefCategoryButtons = Array.from(
+        this.briefTemplatePicker.querySelectorAll('[data-brief-category-button]')
+      );
+      this.briefTemplateLabel = this.briefTemplatePicker.querySelector('[data-brief-template-label]');
+      this.briefTemplateCounter = this.briefTemplatePicker.querySelector('[data-brief-template-counter]');
+      this.briefTemplatePreview = this.briefTemplatePicker.querySelector('[data-brief-template-preview]');
+      this.briefTemplateCard = this.briefTemplatePicker.querySelector('[data-brief-template-card]');
+      this.briefTemplatePrev = this.briefTemplatePicker.querySelector('[data-brief-template-prev]');
+      this.briefTemplateNext = this.briefTemplatePicker.querySelector('[data-brief-template-next]');
+      this.briefTemplateApply = this.briefTemplatePicker.querySelector('[data-brief-template-apply]');
+
+      this.briefCategoryButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const index = parseInt(button.dataset.briefCategoryIndex, 10);
+          this.selectBriefCategory(index);
+        });
+      });
+
+      this.briefTemplatePrev?.addEventListener('click', () => this.changeBriefChoice(-1));
+      this.briefTemplateNext?.addEventListener('click', () => this.changeBriefChoice(1));
+      this.briefTemplateApply?.addEventListener('click', () => this.applyBriefTemplate());
+
+      document.addEventListener('click', this.handleDocumentClick);
+      this.hideBriefTemplateCard();
+    }
+
+    handleDocumentClick(event) {
+      if (!this.briefTemplatePicker || this.briefTemplateCard?.hidden) return;
+      if (this.briefTemplatePicker.contains(event.target)) return;
+
+      this.hideBriefTemplateCard();
+    }
+
+    showBriefTemplateCard() {
+      if (this.briefTemplateCard) {
+        this.briefTemplateCard.hidden = false;
+      }
+    }
+
+    hideBriefTemplateCard() {
+      if (this.briefTemplateCard) {
+        this.briefTemplateCard.hidden = true;
+      }
+
+      this.briefCategoryButtons?.forEach((button) => {
+        button.classList.remove('is-active');
+        button.setAttribute('aria-selected', 'false');
+      });
+    }
+
+    selectBriefCategory(index) {
+      if (!Number.isInteger(index) || !this.briefTemplates?.[index]) return;
+
+      this.briefTemplateState = { categoryIndex: index, choiceIndex: 0 };
+      this.showBriefTemplateCard();
+      this.renderBriefTemplate();
+    }
+
+    changeBriefChoice(delta) {
+      const category = this.briefTemplates?.[this.briefTemplateState?.categoryIndex];
+      if (!category?.choices?.length) return;
+
+      const nextIndex =
+        (this.briefTemplateState.choiceIndex + delta + category.choices.length) % category.choices.length;
+      this.briefTemplateState.choiceIndex = nextIndex;
+      this.renderBriefTemplate();
+    }
+
+    getCurrentBriefTemplate() {
+      const category = this.briefTemplates?.[this.briefTemplateState?.categoryIndex];
+      if (!category?.choices?.length) return null;
+
+      return {
+        category,
+        choice: category.choices[this.briefTemplateState.choiceIndex],
+      };
+    }
+
+    renderBriefTemplate() {
+      const current = this.getCurrentBriefTemplate();
+      if (!current) return;
+
+      this.setText(this.briefTemplateLabel, current.category.label);
+      this.setText(
+        this.briefTemplateCounter,
+        `${this.briefTemplateState.choiceIndex + 1} / ${current.category.choices.length}`
+      );
+      this.setText(this.briefTemplatePreview, current.choice);
+
+      this.briefCategoryButtons?.forEach((button) => {
+        const isActive =
+          parseInt(button.dataset.briefCategoryIndex, 10) === this.briefTemplateState.categoryIndex;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-selected', String(isActive));
+      });
+    }
+
+    applyBriefTemplate() {
+      const current = this.getCurrentBriefTemplate();
+      if (!current?.choice || !this.briefInput) return;
+
+      this.briefInput.value = current.choice;
+      this.briefInput.dispatchEvent(new Event('input'));
+      this.briefInput.focus();
     }
 
     parseProperties(rawValue) {
@@ -457,40 +566,46 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
         return;
       }
 
-      this.saveButton.textContent = this.isPersistedComplete()
-        ? 'Mettre à jour la personnalisation'
-        : 'Enregistrer ma personnalisation';
+      this.saveButton.textContent = this.isPersistedComplete() ? 'Mettre à jour' : 'Enregistrer';
     }
 
     updateStatus() {
-      if (!this.statusBadge || !this.statusText) return;
+      if (!this.statusBadge) return;
 
       if (this.isPersistedComplete()) {
         this.statusBadge.textContent = 'Prêt pour la suite';
-        this.statusText.textContent =
-          'Vos informations principales sont bien enregistrées. Vous pouvez encore les ajuster si besoin.';
-        return;
-      }
-
-      if (this.hasCurrentRequiredData()) {
+      } else if (this.hasCurrentRequiredData()) {
         this.statusBadge.textContent = 'Prêt à enregistrer';
-        this.statusText.textContent =
-          'Les éléments indispensables sont prêts. Enregistrez-les pour déverrouiller le paiement.';
-        return;
+      } else {
+        this.statusBadge.textContent = 'À compléter';
       }
-
-      this.statusBadge.textContent = 'À compléter';
-      this.statusText.textContent =
-        "Le paiement restera verrouillé tant que les éléments indispensables n'auront pas été enregistrés.";
     }
 
     updateSavedFileState() {
+      const triggerLabel = this.querySelector('[data-file-trigger-label]');
+      const triggerEl = this.querySelector('[data-file-trigger]');
+      const pendingFile = this.fileInput?.files?.[0];
+
+      if (triggerLabel) {
+        if (pendingFile) {
+          triggerLabel.textContent = pendingFile.name;
+        } else if (this.existingFileValue) {
+          triggerLabel.textContent = 'Remplacer le fichier';
+        } else {
+          triggerLabel.textContent = 'Choisir un fichier audio';
+        }
+      }
+
+      if (triggerEl) {
+        triggerEl.classList.toggle('is-filled', Boolean(pendingFile || this.existingFileValue));
+      }
+
       if (!this.savedFileState) return;
 
-      if (this.fileInput?.files?.[0]) {
+      if (pendingFile) {
         this.savedFileState.innerHTML = `
           <span class="audio-keepsake-cart__saved-label">Nouveau fichier prêt</span>
-          <span>${this.escapeHtml(this.fileInput.files[0].name)}</span>
+          <span>${this.escapeHtml(pendingFile.name)}</span>
         `;
         return;
       }
@@ -572,6 +687,10 @@ if (!customElements.get('audio-keepsake-cart-panel')) {
       this.messageElement.hidden = true;
       this.messageElement.textContent = '';
       this.messageElement.classList.remove('is-error', 'is-success');
+    }
+
+    setText(element, value) {
+      if (element) element.textContent = value || '';
     }
 
     escapeHtml(value) {

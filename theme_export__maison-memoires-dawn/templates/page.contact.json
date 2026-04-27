@@ -4,7 +4,42 @@
       "type": "main-page",
       "settings": {
         "padding_top": 36,
-        "padding_bottom": 36
+        "padding_bottom": 12
+      }
+    },
+    "intro": {
+      "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "caption",
+          "settings": {
+            "caption": "Service client",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Une question avant de créer votre souvenir ?",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nous répondons à chaque message sous 24h ouvrées, avec attention et précision. Décrivez librement votre intention, votre projet ou votre question : nous vous accompagnons dans le choix le plus juste.</p>"
+          }
+        }
+      },
+      "block_order": ["eyebrow", "heading", "text"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 24,
+        "padding_bottom": 12
       }
     },
     "form": {
@@ -13,13 +48,14 @@
         "heading": "",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 24,
+        "padding_bottom": 48
       }
     }
   },
   "order": [
     "main",
+    "intro",
     "form"
   ]
 }

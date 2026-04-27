@@ -1,0 +1,130 @@
+{% doc %}
+  Renders Maison des mémoires legal and reassurance links only when the related Shopify pages exist.
+
+  @param {string} [context] - Use `footer` for all useful pages or `purchase` for checkout reassurance pages.
+
+  @example
+  {% render 'maison-legal-links', context: 'footer' %}
+{% enddoc %}
+
+{%- liquid
+  assign link_context = context | default: 'footer'
+  assign cgv_page = pages['cgv']
+  assign return_page = pages['politique-de-retour']
+  assign privacy_page = pages['politique-de-confidentialite']
+  assign legal_page = pages['mentions-legales']
+  assign shipping_page = pages['livraison']
+
+  assign has_cgv_content = false
+  if cgv_page != blank
+    if cgv_page.content != blank
+      assign has_cgv_content = true
+    endif
+  endif
+
+  assign has_return_content = false
+  if return_page != blank
+    if return_page.content != blank
+      assign has_return_content = true
+    endif
+  endif
+
+  assign has_privacy_content = false
+  if privacy_page != blank
+    if privacy_page.content != blank
+      assign has_privacy_content = true
+    endif
+  endif
+
+  assign has_legal_content = false
+  if legal_page != blank
+    if legal_page.content != blank
+      assign has_legal_content = true
+    endif
+  endif
+
+  assign has_shipping_content = false
+  if shipping_page != blank
+    if shipping_page.content != blank
+      assign has_shipping_content = true
+    endif
+  endif
+
+  assign has_purchase_links = false
+  if has_shipping_content
+    assign has_purchase_links = true
+  endif
+  if has_return_content
+    assign has_purchase_links = true
+  endif
+  if has_cgv_content
+    assign has_purchase_links = true
+  endif
+
+  assign has_footer_links = false
+  if has_purchase_links
+    assign has_footer_links = true
+  endif
+  if has_privacy_content
+    assign has_footer_links = true
+  endif
+  if has_legal_content
+    assign has_footer_links = true
+  endif
+-%}
+
+{%- if link_context == 'purchase' -%}
+  {%- if has_purchase_links -%}
+    <nav class="maison-legal-links maison-legal-links--purchase" aria-label="Informations utiles avant achat">
+      <span class="maison-legal-links__title">Informations utiles</span>
+      <ul class="maison-legal-links__list list-unstyled">
+        {%- if has_shipping_content -%}
+          <li>
+            <a href="{{ shipping_page.url }}">{{ shipping_page.title | default: 'Livraison' | escape }}</a>
+          </li>
+        {%- endif -%}
+        {%- if has_return_content -%}
+          <li>
+            <a href="{{ return_page.url }}">{{ return_page.title | default: 'Politique de retour' | escape }}</a>
+          </li>
+        {%- endif -%}
+        {%- if has_cgv_content -%}
+          <li>
+            <a href="{{ cgv_page.url }}">{{ cgv_page.title | default: 'CGV' | escape }}</a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+{%- elsif has_footer_links -%}
+  <nav class="maison-legal-links maison-legal-links--footer" aria-label="Informations utiles">
+    <p class="maison-legal-links__title">Informations utiles</p>
+    <ul class="maison-legal-links__list list-unstyled">
+      {%- if has_shipping_content -%}
+        <li>
+          <a href="{{ shipping_page.url }}">{{ shipping_page.title | default: 'Livraison' | escape }}</a>
+        </li>
+      {%- endif -%}
+      {%- if has_return_content -%}
+        <li>
+          <a href="{{ return_page.url }}">{{ return_page.title | default: 'Politique de retour' | escape }}</a>
+        </li>
+      {%- endif -%}
+      {%- if has_cgv_content -%}
+        <li>
+          <a href="{{ cgv_page.url }}">{{ cgv_page.title | default: 'CGV' | escape }}</a>
+        </li>
+      {%- endif -%}
+      {%- if has_privacy_content -%}
+        <li>
+          <a href="{{ privacy_page.url }}">{{ privacy_page.title | default: 'Politique de confidentialité' | escape }}</a>
+        </li>
+      {%- endif -%}
+      {%- if has_legal_content -%}
+        <li>
+          <a href="{{ legal_page.url }}">{{ legal_page.title | default: 'Mentions légales' | escape }}</a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

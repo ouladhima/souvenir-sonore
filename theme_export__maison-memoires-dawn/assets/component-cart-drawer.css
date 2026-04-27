@@ -322,6 +322,32 @@ cart-drawer-items {
   text-align: left;
 }
 
+.cart-drawer .maison-legal-links--purchase {
+  display: grid;
+  gap: 0.8rem;
+  margin: -0.6rem 0 1.6rem;
+}
+
+.cart-drawer .maison-legal-links__title {
+  color: rgba(var(--color-foreground), 0.58);
+  font-size: 1.05rem;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
+.cart-drawer .maison-legal-links__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+  margin: 0;
+}
+
+.cart-drawer .maison-legal-links__list a {
+  color: rgba(var(--color-foreground), 0.7);
+  font-size: 1.2rem;
+  text-underline-offset: 0.3rem;
+}
+
 .cart-drawer .product-option dd {
   word-break: break-word;
 }

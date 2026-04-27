@@ -1,1 +1,58 @@
-{"sections":{"main":{"type":"main-404","settings":{}}},"order":["main"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "intent": {
+      "type": "rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "caption",
+          "settings": {
+            "caption": "Maison des mémoires",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Cette page n'existe plus, mais votre souvenir, lui, peut commencer ici.",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Découvrez l'écrin sonore : une cassette audio personnalisée, présentée dans un coffret prêt à offrir.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Créer mon souvenir",
+            "button_link": "/products/ecrin-sonore",
+            "button_style_secondary": false,
+            "button_label_2": "Retour à l'accueil",
+            "button_link_2": "/",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": ["eyebrow", "heading", "text", "button"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 32,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "intent"
+  ]
+}

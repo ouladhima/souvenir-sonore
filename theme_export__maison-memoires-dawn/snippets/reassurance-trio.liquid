@@ -1,0 +1,86 @@
+{% comment %}
+  Renders a sober reassurance trio used near commitment moments.
+  Accepts:
+  - context: {String} 'pdp' | 'cart' (optional, default 'pdp')
+
+  Usage:
+  {% render 'reassurance-trio', context: 'pdp' %}
+{% endcomment %}
+
+{%- assign trio_context = context | default: 'pdp' -%}
+
+{% style %}
+    .reassurance-trio {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem 1.6rem;
+      margin: 1.6rem 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(33, 26, 21, 0.68);
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    .reassurance-trio__item {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .reassurance-trio__item + .reassurance-trio__item::before {
+      content: "·";
+      position: absolute;
+      left: -1rem;
+      color: rgba(33, 26, 21, 0.32);
+      font-weight: 600;
+    }
+
+    .reassurance-trio__label {
+      white-space: nowrap;
+    }
+
+    .reassurance-trio--pdp {
+      margin-top: 1.4rem;
+      margin-bottom: 0.4rem;
+      justify-content: flex-start;
+    }
+
+    .reassurance-trio--cart {
+      margin: 0 0 1.6rem;
+      padding: 1.2rem 1.6rem;
+      border: 0.1rem solid rgba(118, 91, 69, 0.18);
+      background: #fefaf3;
+      border-radius: 0.4rem;
+      justify-content: center;
+    }
+
+    @media screen and (max-width: 749px) {
+      .reassurance-trio {
+        font-size: 1.1rem;
+        gap: 0.4rem 1.4rem;
+      }
+
+      .reassurance-trio--pdp {
+        justify-content: center;
+      }
+    }
+{% endstyle %}
+
+<ul class="reassurance-trio reassurance-trio--{{ trio_context }}" aria-label="Engagements Maison des mémoires">
+  <li class="reassurance-trio__item">
+    <span class="reassurance-trio__label">Création personnalisée</span>
+  </li>
+  <li class="reassurance-trio__item">
+    <span class="reassurance-trio__label">Coffret prêt à offrir</span>
+  </li>
+  <li class="reassurance-trio__item">
+    <span class="reassurance-trio__label">Livraison gratuite</span>
+  </li>
+</ul>

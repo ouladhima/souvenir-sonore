@@ -1,0 +1,19 @@
+{% comment %}
+  Renders an estimated delivery window for the cart.
+  Pure Liquid, no JS. Date range based on current time + 5 to 7 days
+  (covers 48h creation + 2-3 days shipping with a small buffer).
+
+  Usage:
+  {% render 'cart-delivery-estimate' %}
+{% endcomment %}
+
+{%- assign now_seconds = 'now' | date: '%s' | plus: 0 -%}
+{%- assign min_seconds = now_seconds | plus: 432000 -%}
+{%- assign max_seconds = now_seconds | plus: 604800 -%}
+{%- assign min_date = min_seconds | date: '%-d %B' -%}
+{%- assign max_date = max_seconds | date: '%-d %B' -%}
+
+<p class="cart__delivery-estimate" aria-label="Estimation de livraison">
+  <span class="cart__delivery-estimate-eyebrow">Livraison estimée</span>
+  <span class="cart__delivery-estimate-range">entre le {{ min_date }} et le {{ max_date }}</span>
+</p>

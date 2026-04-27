@@ -1,0 +1,343 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="cassette-personalized-story section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="cassette-personalized-story__grid">
+      <div class="cassette-personalized-story__content">
+        {%- if section.settings.caption != blank -%}
+          <p class="cassette-personalized-story__eyebrow">{{ section.settings.caption | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cassette-personalized-story__heading {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.intro != blank -%}
+          <div class="cassette-personalized-story__intro rte">
+            {{ section.settings.intro }}
+          </div>
+        {%- endif -%}
+
+        <div class="cassette-personalized-story__points" aria-label="Points forts">
+          {%- if section.settings.point_1 != blank -%}
+            <p>{{ section.settings.point_1 | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.point_2 != blank -%}
+            <p>{{ section.settings.point_2 | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.point_3 != blank -%}
+            <p>{{ section.settings.point_3 | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="cassette-personalized-story__media" aria-label="Présentation de la cassette audio personnalisée">
+        <div class="cassette-personalized-story__image cassette-personalized-story__image--primary">
+          {%- if section.settings.primary_image != blank -%}
+            {{
+              section.settings.primary_image
+              | image_url: width: 1600
+              | image_tag:
+                widths: '420, 640, 840, 1100, 1400, 1600',
+                sizes: '(min-width: 990px) 52vw, 92vw',
+                loading: 'lazy',
+                alt: section.settings.primary_image_alt
+            }}
+          {%- else -%}
+            <img
+              src="{{ 'maison-home-showcase-1.png' | asset_url }}"
+              alt="{{ section.settings.primary_image_alt | escape }}"
+              loading="lazy"
+              width="1536"
+              height="1024"
+            >
+          {%- endif -%}
+        </div>
+
+        <div class="cassette-personalized-story__image cassette-personalized-story__image--secondary">
+          {%- if section.settings.secondary_image != blank -%}
+            {{
+              section.settings.secondary_image
+              | image_url: width: 900
+              | image_tag:
+                widths: '240, 360, 520, 720, 900',
+                sizes: '(min-width: 990px) 18vw, 42vw',
+                loading: 'lazy',
+                alt: section.settings.secondary_image_alt
+            }}
+          {%- else -%}
+            <img
+              src="{{ 'maison-home-hero-secondary.png' | asset_url }}"
+              alt="{{ section.settings.secondary_image_alt | escape }}"
+              loading="lazy"
+              width="1024"
+              height="576"
+            >
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .cassette-personalized-story {
+    overflow: hidden;
+    background: #fefaf3;
+    color: #211a15;
+  }
+
+  .cassette-personalized-story__grid {
+    display: grid;
+    gap: 3.2rem;
+    align-items: center;
+  }
+
+  .cassette-personalized-story__content {
+    max-width: 62rem;
+  }
+
+  .cassette-personalized-story__eyebrow {
+    margin: 0 0 1.4rem;
+    color: rgba(33, 26, 21, 0.62);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cassette-personalized-story__heading {
+    margin: 0;
+    max-width: 58rem;
+    color: #211a15;
+  }
+
+  .cassette-personalized-story__intro {
+    margin-top: 1.8rem;
+    color: rgba(33, 26, 21, 0.78);
+    font-size: 1.55rem;
+    line-height: 1.7;
+  }
+
+  .cassette-personalized-story__intro p {
+    margin: 0;
+  }
+
+  .cassette-personalized-story__points {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2.4rem;
+    padding-top: 2.2rem;
+    border-top: 0.1rem solid rgba(118, 91, 69, 0.18);
+  }
+
+  .cassette-personalized-story__points p {
+    margin: 0;
+    color: rgba(33, 26, 21, 0.82);
+    font-size: 1.35rem;
+    line-height: 1.5;
+  }
+
+  .cassette-personalized-story__media {
+    position: relative;
+    min-height: 32rem;
+  }
+
+  .cassette-personalized-story__image {
+    overflow: hidden;
+    background: #f7eee2;
+    box-shadow: 0 2.2rem 5rem rgba(58, 43, 34, 0.1);
+  }
+
+  .cassette-personalized-story__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cassette-personalized-story__image--primary {
+    aspect-ratio: 1.12;
+  }
+
+  .cassette-personalized-story__image--secondary {
+    position: absolute;
+    right: 0;
+    bottom: -2.2rem;
+    width: min(46%, 24rem);
+    aspect-ratio: 0.86;
+    border: 0.8rem solid #fefaf3;
+  }
+
+  @media screen and (min-width: 750px) {
+    .cassette-personalized-story__grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 5.6rem;
+    }
+
+    .cassette-personalized-story__intro {
+      font-size: 1.65rem;
+    }
+
+    .cassette-personalized-story__points {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .cassette-personalized-story__media {
+      min-height: 43rem;
+    }
+
+    .cassette-personalized-story__image--secondary {
+      right: -1.8rem;
+      bottom: -3.2rem;
+      width: min(42%, 26rem);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .cassette-personalized-story__media {
+      margin-right: -1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cassette personnalisée",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Surtitre",
+      "default": "Cassette audio personnalisée"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Un souvenir audio pensé comme un objet précieux."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Petit"
+        },
+        {
+          "value": "h1",
+          "label": "Moyen"
+        },
+        {
+          "value": "h0",
+          "label": "Grand"
+        }
+      ],
+      "default": "h1",
+      "label": "Taille du titre"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texte",
+      "default": "<p>Votre voix, une archive ou une chanson créée pour l’occasion devient une cassette à offrir, présentée dans un coffret sobre et prête à être gardée.</p>"
+    },
+    {
+      "type": "text",
+      "id": "point_1",
+      "label": "Point fort 1",
+      "default": "Souvenir prêt à écouter"
+    },
+    {
+      "type": "text",
+      "id": "point_2",
+      "label": "Point fort 2",
+      "default": "Coffret prêt à offrir"
+    },
+    {
+      "type": "text",
+      "id": "point_3",
+      "label": "Point fort 3",
+      "default": "Création adaptée à votre histoire"
+    },
+    {
+      "type": "image_picker",
+      "id": "primary_image",
+      "label": "Image principale"
+    },
+    {
+      "type": "text",
+      "id": "primary_image_alt",
+      "label": "Texte alternatif image principale",
+      "default": "Cassette audio personnalisée dans son coffret cadeau"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_image",
+      "label": "Image secondaire"
+    },
+    {
+      "type": "text",
+      "id": "secondary_image_alt",
+      "label": "Texte alternatif image secondaire",
+      "default": "Coffret cadeau Maison des mémoires"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Espacement"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge supérieure",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Marge inférieure",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cassette personnalisée"
+    }
+  ]
+}
+{% endschema %}

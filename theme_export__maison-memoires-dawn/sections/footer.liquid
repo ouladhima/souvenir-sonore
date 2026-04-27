@@ -25,9 +25,69 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .footer__reassurance {
+    border-top: 0.1rem solid rgba(118, 91, 69, 0.14);
+    border-bottom: 0.1rem solid rgba(118, 91, 69, 0.14);
+    padding: 2.4rem 0;
+  }
+
+  .footer__reassurance-grid {
+    display: grid;
+    gap: 1.6rem;
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer__reassurance-item {
+    color: rgba(33, 26, 21, 0.78);
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .footer__reassurance-item strong {
+    display: block;
+    color: rgba(33, 26, 21, 0.92);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer__reassurance {
+      padding: 3rem 0;
+    }
+
+    .footer__reassurance-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.4rem;
+    }
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="footer__reassurance">
+    <div class="page-width">
+      <div class="footer__reassurance-grid" aria-label="Engagements Maison des mémoires">
+        <p class="footer__reassurance-item">
+          <strong>Création sous 48h</strong>
+          Préparation soignée avant chaque expédition
+        </p>
+        <p class="footer__reassurance-item">
+          <strong>Coffret prêt à offrir</strong>
+          Un objet pensé pour la délicatesse du geste
+        </p>
+        <p class="footer__reassurance-item">
+          <strong>Paiement sécurisé</strong>
+          Transactions chiffrées via Shopify Payments
+        </p>
+      </div>
+    </div>
+  </div>
   {%- liquid
     assign has_social_icons = true
     if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
@@ -317,6 +377,7 @@
           </ul>
         {%- endif -%}
       </div>
+      {%- render 'maison-legal-links', context: 'footer' -%}
     </div>
   </div>
 </footer>
