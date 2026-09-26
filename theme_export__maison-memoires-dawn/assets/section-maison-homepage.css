@@ -761,3 +761,148 @@ html.js-enabled .maison-homepage__sequence.is-complete .maison-homepage__sequenc
     transition: none;
   }
 }
+
+/* ── Hero intro (cassette assembly sequence) ──
+   Base rules = settled state (no JS, reduced motion, Theme Editor).
+   `.is-intro` is added inline before first paint; JS removes it once the sequence ends. */
+.maison-homepage__hero--intro {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+}
+
+.maison-homepage__hero-heading {
+  position: relative;
+}
+
+.maison-homepage__hero-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 112rem);
+  aspect-ratio: 16 / 9;
+  pointer-events: none;
+  /* Frames are baked on white: multiply makes the white vanish into the cream background. */
+  mix-blend-mode: multiply;
+  opacity: 0.38;
+  transform: translate(-50%, -50%) scale(1.05);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 70%, transparent 100%);
+  transition:
+    opacity 1.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 2.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.maison-homepage__hero-stage picture,
+.maison-homepage__hero-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.maison-homepage .maison-homepage__hero-stage img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+
+.maison-homepage__hero-poster,
+.maison-homepage__hero-canvas {
+  opacity: 0;
+}
+
+.maison-homepage__hero--intro .maison-homepage__hero-title,
+.maison-homepage__hero--intro .maison-homepage__hero-lead,
+.maison-homepage__hero--intro .maison-homepage__actions {
+  position: relative;
+  z-index: 1;
+  transition:
+    opacity 1s ease,
+    transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.maison-homepage__hero--intro .maison-homepage__hero-title {
+  transition-delay: 0.35s;
+}
+
+.maison-homepage__hero--intro .maison-homepage__hero-lead {
+  transition-delay: 0.6s;
+}
+
+.maison-homepage__hero--intro .maison-homepage__actions {
+  transition-delay: 0.8s;
+}
+
+.maison-homepage__hero.is-intro .maison-homepage__hero-stage {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.maison-homepage__hero.is-intro .maison-homepage__hero-final {
+  opacity: 0;
+}
+
+.maison-homepage__hero.is-intro .maison-homepage__hero-poster,
+.maison-homepage__hero.is-intro.is-playing .maison-homepage__hero-canvas {
+  opacity: 1;
+}
+
+.maison-homepage__hero.is-intro.is-playing .maison-homepage__hero-poster {
+  opacity: 0;
+}
+
+.maison-homepage__hero.is-intro .maison-homepage__hero-title,
+.maison-homepage__hero.is-intro .maison-homepage__hero-lead,
+.maison-homepage__hero.is-intro .maison-homepage__actions {
+  opacity: 0;
+  transform: translateY(1.6rem);
+}
+
+/* Failsafe if the script never runs: reveal everything after a few seconds. */
+.maison-homepage__hero.is-intro:not(.is-armed) .maison-homepage__hero-stage {
+  animation: maison-hero-intro-failsafe-stage 1.6s ease 9s forwards;
+}
+
+.maison-homepage__hero.is-intro:not(.is-armed) .maison-homepage__hero-title,
+.maison-homepage__hero.is-intro:not(.is-armed) .maison-homepage__hero-lead,
+.maison-homepage__hero.is-intro:not(.is-armed) .maison-homepage__actions {
+  animation: maison-hero-intro-failsafe-copy 1s ease 9s forwards;
+}
+
+@keyframes maison-hero-intro-failsafe-stage {
+  to {
+    opacity: 0.38;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@keyframes maison-hero-intro-failsafe-copy {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .maison-homepage__hero--intro {
+    padding-top: 8rem;
+  }
+
+  .maison-homepage__hero-stage {
+    width: 100vw;
+    aspect-ratio: 880 / 720;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maison-homepage__hero-stage,
+  .maison-homepage__hero--intro .maison-homepage__hero-title,
+  .maison-homepage__hero--intro .maison-homepage__hero-lead,
+  .maison-homepage__hero--intro .maison-homepage__actions {
+    transition: none;
+  }
+}

@@ -301,6 +301,174 @@ class ScrollSequenceSection {
   }
 }
 
+class HeroIntro {
+  static LOAD_TIMEOUT = 3500;
+
+  constructor(root) {
+    this.root = root;
+    this.stage = root.querySelector("[data-hero-intro-stage]");
+    this.canvas = root.querySelector("[data-hero-intro-canvas]");
+    this.finalImage = root.querySelector("[data-hero-intro-final]");
+    this.duration = Number(root.dataset.introDuration || 5000);
+    this.frames = [];
+    this.pending = [];
+    this.done = false;
+
+    if (!root.classList.contains("is-intro")) return;
+    root.classList.add("is-armed");
+
+    this.context = this.canvas?.getContext("2d", { alpha: false });
+    const urls = this.parseFrameUrls();
+
+    if (!this.stage || !this.context || !urls.length) {
+      this.settle();
+      return;
+    }
+
+    this.load(urls);
+  }
+
+  parseFrameUrls() {
+    const source = this.root.querySelector("[data-hero-intro-frames]");
+    if (!source) return [];
+
+    try {
+      const sets = JSON.parse(source.textContent || "{}");
+      const urls = window.matchMedia("(max-width: 749px)").matches ? sets.mobile : sets.desktop;
+      return Array.isArray(urls) ? urls : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  load(urls) {
+    const timeout = window.setTimeout(() => this.abort(), HeroIntro.LOAD_TIMEOUT);
+
+    Promise.all(urls.map((url) => this.loadImage(url)))
+      .then((frames) => {
+        window.clearTimeout(timeout);
+        if (this.done) return;
+        this.frames = frames;
+        this.whenVisible(() => this.play());
+      })
+      .catch(() => {
+        window.clearTimeout(timeout);
+        this.abort();
+      });
+  }
+
+  loadImage(url) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.decoding = "async";
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = url;
+      this.pending.push(image);
+    });
+  }
+
+  abort() {
+    if (this.done) return;
+    this.pending.forEach((image) => {
+      if (!image.complete) image.removeAttribute("src");
+    });
+    this.settle();
+  }
+
+  whenVisible(callback) {
+    if (!document.hidden) {
+      callback();
+      return;
+    }
+
+    const handleVisibility = () => {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", handleVisibility);
+      callback();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+  }
+
+  resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.canvas.width = Math.max(1, Math.round(this.stage.offsetWidth * dpr));
+    this.canvas.height = Math.max(1, Math.round(this.stage.offsetHeight * dpr));
+    this.lastPosition = -1;
+  }
+
+  drawAt(progress) {
+    const position = progress * (this.frames.length - 1);
+    if (position === this.lastPosition) return;
+    this.lastPosition = position;
+
+    const index = Math.floor(position);
+    // Short cross-fade in the middle of each frame interval: smooths the lighter mobile set (12 fps)
+    // without the ghosting a full-length dissolve gives fast-moving parts.
+    const blend = clamp((position - index - 0.3) / 0.4, 0, 1);
+    const { width, height } = this.canvas;
+
+    this.context.globalAlpha = 1;
+    this.context.drawImage(this.frames[index], 0, 0, width, height);
+
+    if (blend > 0 && this.frames[index + 1]) {
+      this.context.globalAlpha = blend;
+      this.context.drawImage(this.frames[index + 1], 0, 0, width, height);
+    }
+  }
+
+  play() {
+    try {
+      this.resizeCanvas();
+      this.drawAt(0);
+    } catch (_error) {
+      this.settle();
+      return;
+    }
+
+    this.root.classList.add("is-playing");
+    this.handleResize = () => this.resizeCanvas();
+    window.addEventListener("resize", this.handleResize, { passive: true });
+
+    let start = 0;
+    const tick = (now) => {
+      if (!start) start = now;
+      const progress = Math.min((now - start) / this.duration, 1);
+      this.drawAt(progress);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(tick);
+        return;
+      }
+
+      this.finish();
+    };
+
+    window.requestAnimationFrame(tick);
+  }
+
+  finish() {
+    window.removeEventListener("resize", this.handleResize);
+
+    // Swap to the crisp still only once it is decoded, so the hand-off is invisible.
+    const ready = this.finalImage?.decode ? this.finalImage.decode().catch(() => {}) : Promise.resolve();
+    ready.then(() => this.settle());
+  }
+
+  settle() {
+    if (this.done) return;
+    this.done = true;
+    this.frames = [];
+    this.pending = [];
+    this.root.classList.remove("is-intro", "is-playing");
+  }
+}
+
+document.querySelectorAll("[data-hero-intro]").forEach((root) => {
+  new HeroIntro(root);
+});
+
 document.querySelectorAll("[data-scroll-sequence]").forEach((root) => {
   new ScrollSequenceSection(root);
 });
