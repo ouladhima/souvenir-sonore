@@ -63,6 +63,29 @@
   margin-top: 1.6rem;
 }
 
+.audio-keepsake-product__description {
+  color: rgba(var(--color-foreground), 0.72);
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.audio-keepsake-product__description-copy p {
+  margin: 0;
+}
+
+.audio-keepsake-product__description-copy p + p {
+  margin-top: 1.2rem;
+}
+
+.audio-keepsake-product__description-highlight {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.audio-keepsake-product__description-highlight p {
+  margin: 0;
+}
+
 .audio-keepsake-product__media-badges {
   display: none;
 }

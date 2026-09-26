@@ -12,10 +12,10 @@
           "settings": {}
         },
         "promise": {
-          "type": "text",
+          "type": "audio_desc",
           "settings": {
-            "text": "Un souvenir \u00e0 \u00e9couter, cr\u00e9\u00e9 \u00e0 partir de votre histoire.\nUne voix, un message, un moment\u2026 que vous pourrez r\u00e9\u00e9couter, encore et encore.\n\n\ud83c\udfa7 \u00c0 l'int\u00e9rieur de votre coffret\n\ud83c\udf99\ufe0f Un message unique \u2014 votre voix, ou un texte que nous transformons pour vous\n\ud83c\udfbc Une ambiance sonore personnalis\u00e9e \u2014 cr\u00e9\u00e9e \u00e0 partir de votre intention\n\ud83c\udf81 Un coffret pr\u00eat \u00e0 offrir \u2014 pens\u00e9 comme un v\u00e9ritable \u00e9crin\n\u2728 Une exp\u00e9rience \u00e0 vivre \u2014 ouvrir, d\u00e9couvrir\u2026 puis \u00e9couter\n\n\ud83d\udca1 Une exp\u00e9rience simple et imm\u00e9diate\n\u2022 Aucun \u00e9quipement n\u00e9cessaire\n\u2022 La cassette int\u00e8gre son propre syst\u00e8me de lecture\n\n\ud83e\udd0d Une attention qui ne ressemble \u00e0 aucune autre\n\u2022 Chaque cr\u00e9ation est enti\u00e8rement personnalis\u00e9e\n\u2022 Un souvenir que l'on peut r\u00e9\u00e9couter \u00e0 tout moment\n\u2022 Une attention intime, unique et durable",
-            "text_style": "subtitle"
+            "description": "<p><strong>Un souvenir \u00e0 \u00e9couter, cr\u00e9\u00e9 \u00e0 partir de votre histoire.</strong></p><p>Une voix, un message, un moment\u2026 \u00e0 retrouver, encore et encore.</p><p>Chaque cr\u00e9ation prend vie dans un coffret pr\u00eat \u00e0 offrir, pens\u00e9 comme un \u00e9crin. \u00c0 l\u2019int\u00e9rieur, un message unique \u2014 votre voix ou une composition cr\u00e9\u00e9e sur mesure — accompagn\u00e9 d\u2019une ambiance sonore d\u00e9licate.</p>",
+            "highlight": "<strong>Tout est d\u00e9j\u00e0 l\u00e0. Aucun appareil, aucun lecteur. Il suffit d\u2019ouvrir\u2026 puis d\u2019\u00e9couter.</strong>"
           }
         },
         "variant_picker": {

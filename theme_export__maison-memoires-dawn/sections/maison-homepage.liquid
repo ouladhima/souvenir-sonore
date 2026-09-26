@@ -21,7 +21,7 @@
 
 {%- capture frame_urls -%}
   [
-    {%- for i in (1..96) -%}
+    {%- for i in (1..120) -%}
       {%- assign frame_number = i | prepend: '0000' | slice: -4, 4 -%}
       {{- 'maison-home-frame-' | append: frame_number | append: '.webp' | asset_url | json -}}
       {%- unless forloop.last -%},{%- endunless -%}
@@ -59,16 +59,6 @@
     </div>
   </section>
 
-  <section class="maison-homepage__section maison-homepage__problem">
-    <div class="page-width">
-      <p class="maison-homepage__statement maison-homepage__statement--quiet">
-        Les mots se perdent.<br>
-        Les souvenirs s&rsquo;effacent.<br>
-        Et les instants les plus pr&eacute;cieux passent trop vite.
-      </p>
-    </div>
-  </section>
-
   <section class="maison-homepage__section maison-homepage__object">
     <div class="page-width maison-homepage__object-shell">
       <div class="maison-homepage__object-copy">
@@ -96,12 +86,33 @@
     </div>
   </section>
 
+  <section class="maison-homepage__section maison-homepage__occasions">
+    <div class="page-width">
+      {%- assign occasions = 'Pour un anniversaire|Pour dire je t&rsquo;aime|Pour une naissance|Pour un mariage|Pour la f&ecirc;te des m&egrave;res|Pour la f&ecirc;te des p&egrave;res|Pour des fian&ccedil;ailles|Pour un bapt&ecirc;me|Pour No&euml;l|Pour la Saint-Valentin|Pour un d&eacute;part &agrave; la retraite|Pour un anniversaire de mariage|Pour annoncer une grande nouvelle|Pour c&eacute;l&eacute;brer une amiti&eacute;|Pour rendre hommage &agrave; un proche|Pour dire merci|Pour marquer une r&eacute;ussite|Pour un d&eacute;m&eacute;nagement' | split: '|' -%}
+
+      <div class="maison-homepage__occasions-viewport" role="region" aria-label="Pour quelles occasions">
+        <ul class="maison-homepage__occasions-track" aria-hidden="false">
+          {%- for occasion in occasions -%}
+            <li>{{ occasion }}</li>
+          {%- endfor -%}
+        </ul>
+        <ul class="maison-homepage__occasions-track" aria-hidden="true">
+          {%- for occasion in occasions -%}
+            <li>{{ occasion }}</li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <p class="maison-homepage__occasions-coda">Ou simplement&hellip; pour ne rien oublier.</p>
+    </div>
+  </section>
+
   <section class="maison-homepage__section maison-homepage__sequence" id="maison-homepage-sequence" aria-labelledby="maison-homepage-sequence-title">
     <div class="page-width">
       <div
         class="maison-homepage__sequence-shell"
         data-scroll-sequence
-        data-frame-count="96"
+        data-frame-count="120"
         data-frame-pad="4"
         data-mobile-step="2"
         data-hold-ratio="0.84"
@@ -139,16 +150,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="maison-homepage__section maison-homepage__ritual">
-    <div class="page-width">
-      <ol class="maison-homepage__ritual-list" data-ritual-reveal aria-label="Le rituel d&rsquo;une &eacute;coute">
-        <li><span class="maison-homepage__ritual-word">Ouvrir</span></li>
-        <li><span class="maison-homepage__ritual-word">Appuyer sur play</span></li>
-        <li><span class="maison-homepage__ritual-word">Ressentir</span></li>
-      </ol>
     </div>
   </section>
 
@@ -205,47 +206,6 @@
   </section>
   {%- endif -%}
 
-  <section class="maison-homepage__section maison-homepage__occasions">
-    <div class="page-width">
-      {%- assign occasions = 'Pour un anniversaire|Pour dire je t&rsquo;aime|Pour une naissance|Pour un mariage|Pour la f&ecirc;te des m&egrave;res|Pour la f&ecirc;te des p&egrave;res|Pour des fian&ccedil;ailles|Pour un bapt&ecirc;me|Pour No&euml;l|Pour la Saint-Valentin|Pour un d&eacute;part &agrave; la retraite|Pour un anniversaire de mariage|Pour annoncer une grande nouvelle|Pour c&eacute;l&eacute;brer une amiti&eacute;|Pour rendre hommage &agrave; un proche|Pour dire merci|Pour marquer une r&eacute;ussite|Pour un d&eacute;m&eacute;nagement' | split: '|' -%}
-
-      <div class="maison-homepage__occasions-viewport" role="region" aria-label="Pour quelles occasions">
-        <ul class="maison-homepage__occasions-track" aria-hidden="false">
-          {%- for occasion in occasions -%}
-            <li>{{ occasion }}</li>
-          {%- endfor -%}
-        </ul>
-        <ul class="maison-homepage__occasions-track" aria-hidden="true">
-          {%- for occasion in occasions -%}
-            <li>{{ occasion }}</li>
-          {%- endfor -%}
-        </ul>
-      </div>
-
-      <p class="maison-homepage__occasions-coda">Ou simplement&hellip; pour ne rien oublier.</p>
-    </div>
-  </section>
-
-  <script>
-    (function () {
-      var ritual = document.querySelector('[data-ritual-reveal]');
-      if (!ritual) return;
-      if (!('IntersectionObserver' in window)) {
-        ritual.classList.add('is-revealed');
-        return;
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-revealed');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.45 });
-      io.observe(ritual);
-    })();
-  </script>
-
   <section class="maison-homepage__section maison-homepage__faq" id="maison-homepage-faq">
     <div class="page-width maison-homepage__faq-layout">
       <div class="maison-homepage__heading-group">
@@ -254,17 +214,48 @@
 
       <div class="maison-homepage__faq-items">
         <details class="maison-homepage__faq-item">
+          <summary>Que puis-je mettre sur ma cassette&nbsp;?</summary>
+          <p>
+            Votre propre message vocal, une chanson cr&eacute;&eacute;e &agrave; partir de votre histoire, ou une
+            cr&eacute;ation qui associe votre voix &agrave; une ambiance musicale. Choisissez le format qui
+            correspond le mieux &agrave; votre souvenir.
+          </p>
+        </details>
+        <details class="maison-homepage__faq-item">
+          <summary>Quand transmettre mon audio ou mes id&eacute;es&nbsp;?</summary>
+          <p>
+            Apr&egrave;s l&rsquo;ajout au panier, vous pourrez joindre votre fichier audio ou d&eacute;crire
+            votre projet avant de finaliser la commande. Un espace de notes permet aussi de pr&eacute;ciser
+            les pr&eacute;noms, les souvenirs et l&rsquo;intention &agrave; transmettre.
+          </p>
+        </details>
+        <details class="maison-homepage__faq-item">
           <summary>Comment fonctionne la chanson sur mesure&nbsp;?</summary>
           <p>
-            Vous partagez l&rsquo;intention, l&rsquo;histoire et l&rsquo;&eacute;motion &agrave; transmettre. Nous composons
-            ensuite une proposition musicale personnalis&eacute;e pens&eacute;e pour votre moment.
+            Vous partagez l&rsquo;intention, l&rsquo;histoire et l&rsquo;&eacute;motion &agrave; transmettre dans votre
+            brief. Nous cr&eacute;ons ensuite une proposition musicale personnalis&eacute;e, pens&eacute;e pour
+            votre moment.
+          </p>
+        </details>
+        <details class="maison-homepage__faq-item">
+          <summary>Quel fichier audio puis-je envoyer&nbsp;?</summary>
+          <p>
+            Un message enregistr&eacute; sur votre t&eacute;l&eacute;phone ou une archive sonore convient.
+            Le formulaire accepte notamment les fichiers MP3, WAV et M4A, jusqu&rsquo;&agrave; 100 Mo.
           </p>
         </details>
         <details class="maison-homepage__faq-item">
           <summary>Puis-je &eacute;couter avant la production&nbsp;?</summary>
           <p>
-            Oui. Vous recevez un aper&ccedil;u avant fabrication afin d&rsquo;&eacute;couter, confirmer et valider le
-            rendu final.
+            Pour une cr&eacute;ation audio sur mesure, vous recevez un aper&ccedil;u avant fabrication
+            afin d&rsquo;&eacute;couter et de valider le rendu.
+          </p>
+        </details>
+        <details class="maison-homepage__faq-item">
+          <summary>Faut-il un lecteur de cassette&nbsp;?</summary>
+          <p>
+            Non. La cassette int&egrave;gre son propre syst&egrave;me de lecture&nbsp;: le souvenir peut
+            &ecirc;tre &eacute;cout&eacute; sans &eacute;quipement suppl&eacute;mentaire.
           </p>
         </details>
         <details class="maison-homepage__faq-item">

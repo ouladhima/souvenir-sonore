@@ -104,11 +104,14 @@
         </div>
         {%- if audio_keepsake_enabled -%}
           {%- for block in section.blocks -%}
-            {%- if block.type == 'text' and block.settings.text_style == 'subtitle' -%}
-              <div class="audio-keepsake-product__media-note" {{ block.shopify_attributes }}>
-                <p class="product__text inline-richtext subtitle">
-                  {{- block.settings.text -}}
-                </p>
+            {%- if block.type == 'audio_desc' -%}
+              <div class="audio-keepsake-product__media-note audio-keepsake-product__description" {{ block.shopify_attributes }}>
+                <div class="audio-keepsake-product__description-copy rte">
+                  {{ block.settings.description }}
+                </div>
+                <div class="audio-keepsake-product__description-highlight rte">
+                  {{ block.settings.highlight }}
+                </div>
               </div>
               {%- break -%}
             {%- endif -%}
@@ -842,6 +845,25 @@
           ],
           "default": "body",
           "label": "t:sections.main-product.blocks.text.settings.text_style.label"
+        }
+      ]
+    },
+    {
+      "type": "audio_desc",
+      "name": "Description écrin sonore",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p><strong>Un souvenir à écouter, créé à partir de votre histoire.</strong></p><p>Une voix, un message, un moment… à retrouver, encore et encore.</p><p>Chaque création prend vie dans un coffret prêt à offrir, pensé comme un écrin. À l’intérieur, un message unique — votre voix ou une composition créée sur mesure — accompagné d’une ambiance sonore délicate.</p>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "highlight",
+          "label": "Phrase mise en avant",
+          "default": "<strong>Tout est déjà là. Aucun appareil, aucun lecteur. Il suffit d’ouvrir… puis d’écouter.</strong>"
         }
       ]
     },
