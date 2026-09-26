@@ -14,7 +14,7 @@
         "promise": {
           "type": "audio_desc",
           "settings": {
-            "description": "<p><strong>Un souvenir \u00e0 \u00e9couter, cr\u00e9\u00e9 \u00e0 partir de votre histoire.</strong></p><p>Une voix, un message, un moment\u2026 \u00e0 retrouver, encore et encore.</p><p>Chaque cr\u00e9ation prend vie dans un coffret pr\u00eat \u00e0 offrir, pens\u00e9 comme un \u00e9crin. \u00c0 l\u2019int\u00e9rieur, un message unique \u2014 votre voix ou une composition cr\u00e9\u00e9e sur mesure — accompagn\u00e9 d\u2019une ambiance sonore d\u00e9licate.</p>",
+            "description": "<p><strong>Une cassette audio personnalisée, prête à offrir.</strong></p><p>Votre message vocal, une chanson créée sur mesure ou les deux : choisissez la forme que prendra votre souvenir. Nous le présentons dans un coffret pensé comme un écrin.</p>",
             "highlight": "<strong>Tout est d\u00e9j\u00e0 l\u00e0. Aucun appareil, aucun lecteur. Il suffit d\u2019ouvrir\u2026 puis d\u2019\u00e9couter.</strong>"
           }
         },

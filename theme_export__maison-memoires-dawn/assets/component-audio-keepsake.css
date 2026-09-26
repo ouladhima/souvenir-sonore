@@ -87,7 +87,35 @@
 }
 
 .audio-keepsake-product__media-badges {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  max-width: calc(100% - 2.4rem);
+  pointer-events: none;
+}
+
+.audio-keepsake-product__media-badges[hidden] {
   display: none;
+}
+
+.audio-keepsake-product__media-badges span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.7rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(var(--color-background), 0.9);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  box-shadow: 0 1rem 2.4rem rgba(18, 18, 18, 0.08);
+  color: rgba(var(--color-foreground), 0.74);
+  font-size: 1.1rem;
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
 .audio-keepsake-price {
@@ -159,6 +187,10 @@
 .audio-keepsake-product .product-form__submit {
   min-height: 5.6rem;
   border-radius: 999px;
+}
+
+.audio-keepsake-product .product-form__submit:after {
+  box-shadow: none;
 }
 
 .audio-keepsake-purchase__after-purchase {
@@ -467,32 +499,15 @@
   }
 
   .audio-keepsake-product__media-badges {
-    position: absolute;
     right: 2rem;
     bottom: 2rem;
-    z-index: 2;
     flex-wrap: nowrap;
-    justify-content: flex-end;
     gap: 0.7rem;
     max-width: calc(100% - 4rem);
-    pointer-events: none;
-  }
-
-  .audio-keepsake-product__media-badges:not([hidden]) {
-    display: flex;
   }
 
   .audio-keepsake-product__media-badges span {
-    display: inline-flex;
-    align-items: center;
     min-height: 2.8rem;
     padding: 0.55rem 0.9rem;
-    border-radius: 999px;
-    background: rgba(var(--color-background), 0.9);
-    border: 0.1rem solid rgba(var(--color-foreground), 0.08);
-    box-shadow: 0 1rem 2.4rem rgba(18, 18, 18, 0.08);
-    color: rgba(var(--color-foreground), 0.74);
-    font-size: 1.1rem;
-    white-space: nowrap;
   }
 }

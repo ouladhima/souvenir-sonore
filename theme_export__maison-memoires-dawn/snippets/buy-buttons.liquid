@@ -57,9 +57,6 @@
         assign submit_label = 'products.product.sold_out' | t
       endif
 
-      if audio_keepsake_experience_enabled and submit_disabled == false
-        assign submit_label = 'Créer mon souvenir'
-      endif
     -%}
 
     <product-form

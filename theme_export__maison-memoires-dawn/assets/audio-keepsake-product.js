@@ -182,7 +182,17 @@ if (!customElements.get('audio-keepsake-form')) {
         if (normalizedValue === this.normalizeValue(this.dataset.aiValue)) return 'ai';
         if (normalizedValue === this.normalizeValue(this.dataset.voiceMusicValue)) return 'voice_music';
 
-        if (normalizedValue.includes('voix') && normalizedValue.includes('musique')) return 'voice_music';
+        const hasVoiceHint =
+          normalizedValue.includes('enregistrement') ||
+          normalizedValue.includes('voix') ||
+          normalizedValue.includes('message');
+        const hasMusicHint =
+          normalizedValue.includes('musique') ||
+          normalizedValue.includes('composee') ||
+          normalizedValue.includes('compose') ||
+          normalizedValue.includes('chanson');
+
+        if (hasVoiceHint && hasMusicHint) return 'voice_music';
         if (
           normalizedValue.includes('musique composee') ||
           normalizedValue.includes('chanson') ||

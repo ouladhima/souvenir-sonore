@@ -96,7 +96,7 @@ La version codée reprend cependant plusieurs codes de la Version A:
 
 ## Hero
 
-- Eyebrow: **Cassette audio personnalisée · coffret cadeau premium**
+- Eyebrow: **Cassette audio personnalisée · coffret cadeau**
 - H1: **Le souvenir personnalisé qui s'écoute et se garde pour toujours.**
 - Subheading: **Transformez une voix, une intention musicale ou les deux en une cassette audio personnalisée, présentée dans un coffret raffiné à offrir, ouvrir et réécouter.**
 - Note de contexte: **Voix enregistrée, chanson créée sur mesure ou composition mixte: vous choisissez l'intention, nous orchestrons le souvenir.**
