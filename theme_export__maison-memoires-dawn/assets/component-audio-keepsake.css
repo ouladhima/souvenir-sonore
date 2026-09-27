@@ -418,6 +418,107 @@
   font-size: 1.55rem;
 }
 
+/* Coffret picker: visual cards with a miniature of each coffret. */
+.audio-keepsake-product .product-form__input--coffret {
+  max-width: none;
+  min-width: 0;
+}
+
+.coffret-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.4rem, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.coffret-choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.5rem 0.5rem 1.1rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.14);
+  border-radius: 1.6rem;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--duration-short) ease, box-shadow var(--duration-short) ease;
+}
+
+.coffret-choice__media {
+  display: block;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: rgb(247, 238, 226);
+}
+
+.coffret-choice__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--duration-default) ease, filter var(--duration-default) ease;
+}
+
+.coffret-choice__name {
+  padding: 0 0.3rem;
+  font-size: 1.3rem;
+  line-height: 1.35;
+  letter-spacing: 0.02rem;
+}
+
+.coffret-choice__status {
+  margin-top: -0.4rem;
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: rgba(var(--color-foreground), 0.62);
+}
+
+.product-form__input--coffret input[type='radio']:not(:disabled) + .coffret-choice:hover {
+  border-color: rgba(var(--color-foreground), 0.45);
+}
+
+.product-form__input--coffret input[type='radio']:checked + .coffret-choice {
+  border-color: rgb(var(--color-foreground));
+  box-shadow: 0 0 0 0.1rem rgb(var(--color-foreground));
+}
+
+.product-form__input--coffret input[type='radio']:focus-visible + .coffret-choice {
+  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.55);
+}
+
+.product-form__input--coffret input[type='radio'].disabled + .coffret-choice .coffret-choice__image {
+  opacity: 0.7;
+}
+
+.product-form__input--coffret input[type='radio']:disabled + .coffret-choice {
+  border-color: rgba(var(--color-foreground), 0.08);
+  background: rgba(var(--color-foreground), 0.02);
+  cursor: default;
+}
+
+.product-form__input--coffret input[type='radio']:disabled + .coffret-choice .coffret-choice__image {
+  opacity: 0.5;
+  filter: saturate(0.55);
+}
+
+.product-form__input--coffret input[type='radio']:disabled + .coffret-choice .coffret-choice__name {
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.coffret-picker__note {
+  margin: 1.2rem 0 0;
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.55;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
 @media screen and (min-width: 750px) {
   .audio-keepsake-product .product__info-container {
     padding: 2.4rem;

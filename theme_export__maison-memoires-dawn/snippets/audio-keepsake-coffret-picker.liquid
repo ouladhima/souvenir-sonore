@@ -1,0 +1,109 @@
+{% comment %}
+  Renders the packaging option (coffret) as visual cards, each with a miniature
+  of the coffret. A coffret with no available variant at all is shown as
+  "Bientôt de retour" and cannot be selected; it comes back automatically as soon
+  as one of its variants is in stock again.
+
+  Keeps Dawn's radio markup (ids, names, data attributes) so variant-selects and
+  product-info keep working.
+
+  Accepts:
+  - product: {Object} product object.
+  - option: {Object} product_option object of the packaging option.
+
+  Usage:
+  {% render 'audio-keepsake-coffret-picker', product: product, option: option %}
+{% endcomment %}
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign option_index = option.position | minus: 1
+  assign sold_out_count = 0
+  assign in_stock_count = 0
+  assign in_stock_name = ''
+-%}
+<fieldset class="js product-form__input product-form__input--coffret">
+  <legend class="form__label">{{ option.name }}</legend>
+  <div class="coffret-picker">
+    {%- for value in option.values -%}
+      {%- liquid
+        assign value_name = value.name
+        assign value_image = null
+        assign value_in_stock = false
+
+        for variant in product.variants
+          if variant.options[option_index] == value_name
+            if value_image == null and variant.featured_media
+              assign value_image = variant.featured_media.preview_image
+            endif
+            if variant.available
+              assign value_in_stock = true
+            endif
+          endif
+        endfor
+
+        if value_in_stock
+          assign in_stock_count = in_stock_count | plus: 1
+          assign in_stock_name = value_name
+        else
+          assign sold_out_count = sold_out_count | plus: 1
+        endif
+
+        assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index0
+        assign input_name = option.name | append: '-' | append: option.position
+      -%}
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if value.selected %}
+          checked
+        {% endif %}
+        {% if value.available == false %}
+          class="disabled"
+        {% endif %}
+        {% unless value_in_stock %}
+          disabled
+        {% endunless %}
+        data-product-url="{{ value.product_url }}"
+        data-option-value-id="{{ value.id }}"
+      >
+      <label for="{{ input_id }}" class="coffret-choice">
+        <span class="coffret-choice__media">
+          {%- if value_image -%}
+            {{
+              value_image
+              | image_url: width: 360
+              | image_tag:
+                widths: '180, 270, 360',
+                sizes: '(min-width: 990px) 16rem, 30vw',
+                loading: 'lazy',
+                alt: '',
+                class: 'coffret-choice__image'
+            }}
+          {%- endif -%}
+        </span>
+        <span class="coffret-choice__name">{{ value }}</span>
+        {%- if value_in_stock == false -%}
+          <span class="coffret-choice__status">Bientôt de retour</span>
+        {%- elsif value.available == false -%}
+          <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+        {%- endif -%}
+      </label>
+    {%- endfor -%}
+  </div>
+
+  {%- if sold_out_count > 0 and in_stock_count > 0 -%}
+    <p class="coffret-picker__note">
+      {%- if sold_out_count == 1 -%}
+        Ce coffret est momentanément épuisé et revient très bientôt.
+      {%- else -%}
+        Ces coffrets sont momentanément épuisés et reviennent très bientôt.
+      {%- endif -%}
+      {%- if in_stock_count == 1 %}
+        En attendant, le {{ in_stock_name | downcase }} accueille votre souvenir avec le même soin.
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+</fieldset>

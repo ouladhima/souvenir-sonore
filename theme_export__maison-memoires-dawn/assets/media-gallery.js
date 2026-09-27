@@ -57,8 +57,9 @@ if (!customElements.get('media-gallery')) {
             activeMedia.parentElement.scrollTo({ left: activeMedia.offsetLeft });
           }
           const activeMediaRect = activeMedia.getBoundingClientRect();
-          // Don't scroll if the image is already in view
-          if (activeMediaRect.top > -0.5) return;
+          // Don't scroll if the image is already in view, nor on mobile where the
+          // page would jump away from the options being picked.
+          if (activeMediaRect.top > -0.5 || !this.mql.matches) return;
           const top = activeMediaRect.top + window.scrollY;
           window.scrollTo({ top: top, behavior: 'smooth' });
         });

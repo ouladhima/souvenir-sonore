@@ -545,7 +545,12 @@
                 %}
 
               {%- when 'variant_picker' -%}
-                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+                {% render 'product-variant-picker',
+                  product: product,
+                  block: block,
+                  product_form_id: product_form_id,
+                  audio_keepsake: audio_keepsake_enabled
+                %}
               {%- when 'buy_buttons' -%}
                 {%- liquid
                   assign show_pickup_availability = block.settings.show_pickup_availability
