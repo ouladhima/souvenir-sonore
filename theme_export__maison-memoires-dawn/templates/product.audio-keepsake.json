@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -186,7 +195,7 @@
           "type": "question",
           "settings": {
             "question": "Recevrai-je un aper\u00e7u avant la fabrication ?",
-            "answer": "<p>Oui. Pour l'audio cr\u00e9\u00e9 par IA, vous recevez un aper\u00e7u avant production afin d'\u00e9couter, confirmer et valider le rendu final.</p>"
+            "answer": "<p>Oui. Pour une musique compos\u00e9e par nos soins, vous recevez un aper\u00e7u avant production afin d'\u00e9couter, confirmer et valider le rendu final.</p>"
           }
         },
         "question_5": {

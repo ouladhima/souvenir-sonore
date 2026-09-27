@@ -1,8 +1,10 @@
 {% comment %}
   Renders the packaging option (coffret) as visual cards, each with a miniature
-  of the coffret. A coffret with no available variant at all is shown as
-  "Bientôt de retour" and cannot be selected; it comes back automatically as soon
-  as one of its variants is in stock again.
+  of the coffret. A coffret with no available variant at all stays selectable so
+  its photos can be seen (gallery update, plus an inline preview on mobile where
+  the gallery is off screen), but it wears a "Bientôt de retour" band and the add
+  to cart button switches to sold out. It comes back automatically as soon as one
+  of its variants is in stock again.
 
   Keeps Dawn's radio markup (ids, names, data attributes) so variant-selects and
   product-info keep working.
@@ -20,6 +22,8 @@
   assign sold_out_count = 0
   assign in_stock_count = 0
   assign in_stock_name = ''
+  assign selected_sold_out_name = ''
+  assign selected_sold_out_image = null
 -%}
 <fieldset class="js product-form__input product-form__input--coffret">
   <legend class="form__label">{{ option.name }}</legend>
@@ -46,6 +50,10 @@
           assign in_stock_name = value_name
         else
           assign sold_out_count = sold_out_count | plus: 1
+          if value.selected
+            assign selected_sold_out_name = value_name
+            assign selected_sold_out_image = value_image
+          endif
         endif
 
         assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index0
@@ -60,17 +68,15 @@
         {% if value.selected %}
           checked
         {% endif %}
-        {% if value.available == false %}
-          class="disabled"
-        {% endif %}
-        {% unless value_in_stock %}
-          disabled
-        {% endunless %}
+        class="{% if value.available == false %}disabled{% endif %}{% unless value_in_stock %} coffret-sold-out{% endunless %}"
         data-product-url="{{ value.product_url }}"
         data-option-value-id="{{ value.id }}"
       >
       <label for="{{ input_id }}" class="coffret-choice">
         <span class="coffret-choice__media">
+          {%- if value_in_stock == false -%}
+            <span class="coffret-choice__band">Bientôt de retour</span>
+          {%- endif -%}
           {%- if value_image -%}
             {{
               value_image
@@ -86,7 +92,7 @@
         </span>
         <span class="coffret-choice__name">{{ value }}</span>
         {%- if value_in_stock == false -%}
-          <span class="coffret-choice__status">Bientôt de retour</span>
+          <span class="visually-hidden">{{ 'products.product.sold_out' | t }}</span>
         {%- elsif value.available == false -%}
           <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
         {%- endif -%}
@@ -94,15 +100,51 @@
     {%- endfor -%}
   </div>
 
-  {%- if sold_out_count > 0 and in_stock_count > 0 -%}
+  {%- if selected_sold_out_name != blank -%}
+    {%- liquid
+      # "Le coffret noir" reads well whether or not the value already starts with "Coffret".
+      assign sold_out_label = selected_sold_out_name | downcase
+      if sold_out_label contains 'coffret'
+        assign sold_out_label = 'le ' | append: sold_out_label
+      else
+        assign sold_out_label = 'le coffret ' | append: sold_out_label
+      endif
+      assign in_stock_label = in_stock_name | downcase
+      if in_stock_label contains 'coffret'
+        assign in_stock_label = 'le ' | append: in_stock_label
+      else
+        assign in_stock_label = 'le coffret ' | append: in_stock_label
+      endif
+    -%}
+    {%- if selected_sold_out_image -%}
+      <figure class="coffret-picker__preview">
+        {{
+          selected_sold_out_image
+          | image_url: width: 900
+          | image_tag:
+            widths: '450, 675, 900',
+            sizes: 'calc(100vw - 3rem)',
+            loading: 'lazy',
+            alt: selected_sold_out_name,
+            class: 'coffret-picker__preview-image'
+        }}
+        <figcaption class="coffret-picker__preview-caption">{{ selected_sold_out_name }} · Bientôt de retour</figcaption>
+      </figure>
+    {%- endif -%}
+    <p class="coffret-picker__note" role="status">
+      {{ sold_out_label | capitalize }} est momentanément épuisé et revient très bientôt.
+      {%- if in_stock_count == 1 %}
+        {{ in_stock_label | capitalize }} est disponible dès aujourd’hui, avec le même soin.
+      {%- elsif in_stock_count > 1 %}
+        Les autres coffrets sont disponibles dès aujourd’hui.
+      {%- endif -%}
+    </p>
+  {%- elsif sold_out_count > 0 and in_stock_count > 0 -%}
     <p class="coffret-picker__note">
       {%- if sold_out_count == 1 -%}
-        Ce coffret est momentanément épuisé et revient très bientôt.
+        Un coffret est momentanément épuisé : découvrez-le, il revient très bientôt.
       {%- else -%}
-        Ces coffrets sont momentanément épuisés et reviennent très bientôt.
-      {%- endif -%}
-      {%- if in_stock_count == 1 %}
-        En attendant, le {{ in_stock_name | downcase }} accueille votre souvenir avec le même soin.
+        Certains coffrets sont momentanément épuisés : découvrez-les, ils reviennent très bientôt.
       {%- endif -%}
     </p>
   {%- endif -%}

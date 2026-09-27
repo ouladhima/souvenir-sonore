@@ -9,8 +9,8 @@
 {%- liquid
   assign audio_target_handle = settings.audio_keepsake_product_handle | strip
   if audio_target_handle == blank or all_products[audio_target_handle] == blank
-    if all_products['ecrin-sonore'] != blank
-      assign audio_target_handle = 'ecrin-sonore'
+    if all_products['ecrin-sonore-cassette-audio-personnalisee'] != blank
+      assign audio_target_handle = 'ecrin-sonore-cassette-audio-personnalisee'
     endif
   endif
   capture audio_product_url

@@ -2,7 +2,7 @@
 <script src="{{ 'section-maison-homepage.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
-  assign product_handle = settings.audio_keepsake_product_handle | default: 'ecrin-sonore' | strip
+  assign product_handle = settings.audio_keepsake_product_handle | default: 'ecrin-sonore-cassette-audio-personnalisee' | strip
   capture product_url
     render 'audio-keepsake-product-url'
   endcapture

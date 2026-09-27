@@ -22,7 +22,7 @@
       if request.page_type == 'index'
         assign seo_page_title = 'Cassette audio personnalisée premium | Maison des mémoires'
         assign seo_page_description = 'Offrez une cassette audio personnalisée dans un coffret cadeau raffiné. Voix, chanson sur mesure ou création mixte, avec aperçu avant production.'
-      elsif request.page_type == 'product' and product.handle == 'ecrin-sonore'
+      elsif request.page_type == 'product' and product.template_suffix == 'audio-keepsake'
         assign seo_page_title = 'Cassette audio personnalisée | Maison des mémoires'
         assign seo_page_description = 'Créez une cassette audio personnalisée dans un coffret prêt à offrir. Message vocal, chanson sur mesure ou création mixte, avec aperçu avant production.'
       elsif request.page_type == 'page'
@@ -50,7 +50,7 @@
       {{ seo_page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless request.page_type == 'index' or seo_page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless request.page_type == 'index' or seo_page_title contains shop.name or seo_page_title contains 'Maison des mémoires' %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
     {% if seo_page_description %}

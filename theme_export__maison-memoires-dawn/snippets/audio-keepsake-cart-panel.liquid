@@ -140,72 +140,92 @@
     {%- if needs_brief -%}
       <div class="audio-keepsake-cart__field" data-role="brief">
         <div class="audio-keepsake-cart__label-row">
-          <label class="audio-keepsake-cart__label" for="CreativeBrief-{{ line_index }}">Brief créatif pour création IA</label>
+          <label class="audio-keepsake-cart__label" for="CreativeBrief-{{ line_index }}">Votre brief créatif</label>
           <details class="audio-keepsake-cart__tooltip">
-            <summary aria-label="Voir un exemple de brief créatif pour création IA">i</summary>
+            <summary aria-label="Comment utiliser les inspirations de brief">i</summary>
             <div class="audio-keepsake-cart__tooltip-content">
-              Cliquez sur une catégorie pour afficher 3 propositions de brief, naviguez avec les flèches, puis choisissez celle qui correspond le mieux à votre intention. Le panneau se referme si vous cliquez ailleurs.
+              Choisissez une occasion, parcourez les inspirations avec les flèches, puis adaptez celle qui vous ressemble en remplaçant les éléments entre crochets.
             </div>
           </details>
         </div>
         <p class="audio-keepsake-cart__helper">
-          Ce brief guide la création musicale par IA : personnalisation, style, émotion, langue, voix, tempo et détails à intégrer.
+          Racontez-nous à qui s’adresse la chanson, l’émotion recherchée, le style, la voix et les détails à glisser dans les paroles.
         </p>
 
-        <div class="audio-keepsake-cart__brief-templates" data-brief-template-picker aria-label="Modèles de brief pour création IA">
+        <div class="audio-keepsake-cart__brief-templates" data-brief-template-picker aria-label="Inspirations de brief créatif">
           <p class="audio-keepsake-cart__brief-templates-label">Choisir une inspiration</p>
-          <div class="audio-keepsake-cart__brief-categories" role="tablist" aria-label="Catégories de brief créatif">
+          <div class="audio-keepsake-cart__brief-categories" role="tablist" aria-label="Occasions">
             <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="0" aria-selected="false">Anniversaire</button>
             <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="1" aria-selected="false">Amour</button>
             <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="2" aria-selected="false">Naissance</button>
             <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="3" aria-selected="false">Mariage</button>
-            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="4" aria-selected="false">Hommage</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="4" aria-selected="false">Amitié</button>
             <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="5" aria-selected="false">Famille</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="6" aria-selected="false">Hommage</button>
+            <button type="button" role="tab" class="audio-keepsake-cart__brief-category" data-brief-category-button data-brief-category-index="7" aria-selected="false">Merci</button>
           </div>
           <div class="audio-keepsake-cart__brief-card" data-brief-template-card hidden>
             <div class="audio-keepsake-cart__brief-card-header">
               <span data-brief-template-label>Anniversaire</span>
-              <span data-brief-template-counter>1 / 3</span>
+              <span data-brief-template-counter>1 / 4</span>
             </div>
             <p class="audio-keepsake-cart__brief-preview" data-brief-template-preview></p>
             <div class="audio-keepsake-cart__brief-actions">
               <div class="audio-keepsake-cart__brief-nav">
-                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-prev aria-label="Voir le brief précédent">‹</button>
-                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-next aria-label="Voir le brief suivant">›</button>
+                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-prev aria-label="Voir l’inspiration précédente">‹</button>
+                <button type="button" class="audio-keepsake-cart__brief-nav-button" data-brief-template-next aria-label="Voir l’inspiration suivante">›</button>
               </div>
               <button type="button" class="audio-keepsake-cart__brief-apply" data-brief-template-apply>Utiliser ce brief</button>
             </div>
           </div>
           <template data-brief-template-data>
             <div data-brief-template-category="Anniversaire">
-              <p data-brief-template-choice>Création musicale par IA pour un anniversaire. Personne célébrée : [Nom à compléter]. Relation : [à compléter]. Style musical souhaité : R&amp;B doux / pop française élégante / piano voix. Ambiance : chaleureuse, intime et lumineuse. Mots ou souvenirs à intégrer : [à compléter]. Éviter : [à compléter].</p>
-              <p data-brief-template-choice>Chanson personnalisée par IA pour [Nom à compléter], anniversaire de [âge à compléter]. Style : rap FR mélodique / RNB / afro-pop douce. Ton : complice, positif, avec refrain mémorable. Détails à intégrer : [surnom, ville, souvenir, date]. Langue : français.</p>
-              <p data-brief-template-choice>Musique IA premium pour surprendre [Nom à compléter]. Univers : balade cinématique / soul moderne / pop acoustique. Émotion : gratitude et tendresse. Message central : [à compléter]. Niveau d'énergie : doux / moyen / festif. Voix souhaitée : [féminine / masculine / duo].</p>
+              <p data-brief-template-choice>Pour les 30 ans de [prénom], mon meilleur ami depuis le lycée. J’aimerais quelque chose de festif et un peu drôle, façon funk ou disco, avec un refrain qu’on puisse chanter tous ensemble le soir de la fête. À glisser dans les paroles : [son surnom] et [une anecdote entre nous].</p>
+              <p data-brief-template-choice>C’est l’anniversaire de ma mère, [prénom], qui aura [âge] ans. Elle adore la chanson française des années 70. Une mélodie douce, au piano, qui parle de [ce qu’elle nous a transmis] et de [un lieu qui compte pour elle].</p>
+              <p data-brief-template-choice>Surprise pour les 18 ans de ma fille [prénom]. Un son actuel et lumineux, entre pop et afro, qui lui donne confiance pour la suite. Pas trop sentimental, plutôt fier et joyeux. Elle rêve de [son projet ou sa passion].</p>
+              <p data-brief-template-choice>Pour les 60 ans de [prénom], passionné de jazz. Une ambiance de club feutré, contrebasse et saxophone, voix chaude. Évoquer [ses voyages, son métier ou sa passion] avec une pointe d’humour, sans jamais parler de vieillir.</p>
             </div>
             <div data-brief-template-category="Amour">
-              <p data-brief-template-choice>Création musicale par IA pour [Nom à compléter], message d'amour de [Votre nom à compléter]. Style : R&amp;B intime / pop piano / soul moderne. Ambiance : tendre, élégante, légèrement nostalgique. Souvenir à intégrer : [à compléter]. Phrase importante à reprendre : [à compléter].</p>
-              <p data-brief-template-choice>Chanson IA romantique pour [Nom à compléter]. Style musical : rap US doux / RNB slow / pop française. Ton : sincère, adulte, sans paroles trop clichées. Rythme : lent à moyen. Détails personnels : [rencontre, lieu, date, surnom]. Émotion finale : [à compléter].</p>
-              <p data-brief-template-choice>Musique personnalisée IA pour déclarer ou remercier [Nom à compléter]. Univers : voix chaude, arrangement minimal, basse douce, refrain facile à retenir. Langue : français avec quelques mots en [anglais / espagnol / autre]. Mots à éviter : [à compléter].</p>
+              <p data-brief-template-choice>Une chanson pour [prénom], pour nos 10 ans ensemble. On s’est rencontrés à [lieu], un soir de [saison]. J’aimerais une ballade acoustique, guitare et voix, sincère et sans clichés. Il y a une phrase qu’on se dit souvent : « [phrase] ».</p>
+              <p data-brief-template-choice>Je veux déclarer ma flamme à [prénom]. Une bossa-nova légère et ensoleillée, un peu rétro, qui sourit plus qu’elle ne pleure. Quelques mots en portugais dans le refrain seraient parfaits.</p>
+              <p data-brief-template-choice>Pour [prénom], qui vit loin de moi en ce moment. Un titre R&amp;B lent et intime, avec une voix [féminine / masculine]. Le thème : la distance, les appels du soir et le jour où l’on se retrouvera à [ville].</p>
+              <p data-brief-template-choice>Chanson pour la Saint-Valentin de [prénom]. Style soul des années 60, cuivres et chœurs, joyeux et élégant à la fois. Parler de nos petits rituels : [le café du dimanche, une chanson fétiche, un surnom…].</p>
             </div>
             <div data-brief-template-category="Naissance">
-              <p data-brief-template-choice>Création musicale par IA pour une naissance. Prénom du bébé : [Nom à compléter]. Prénoms des parents : [à compléter]. Style : berceuse moderne / piano doux / pop acoustique. Ambiance : apaisante, lumineuse, protectrice. Détails à intégrer : date, heure ou lieu de naissance : [à compléter].</p>
-              <p data-brief-template-choice>Chanson IA douce pour accueillir [Nom à compléter]. Style musical : folk délicat / R&amp;B très doux / comptine premium. Voix : tendre et rassurante. Tempo : lent. Message central : bienvenue, amour, promesse de présence. Personnes à mentionner : [à compléter].</p>
-              <p data-brief-template-choice>Musique personnalisée par IA pour offrir à de jeunes parents. Bébé : [Nom à compléter]. Style : pop française élégante / piano voix / ambient chaleureux. Ton : délicat, jamais trop enfantin. Souvenir ou anecdote familiale à intégrer : [à compléter].</p>
+              <p data-brief-template-choice>Une berceuse pour [prénom du bébé], né(e) le [date]. Très douce, boîte à musique et voix feutrée, pour l’endormir le soir. Les prénoms des parents : [prénoms]. On aimerait qu’elle parle de [la lumière, les étoiles, la mer…].</p>
+              <p data-brief-template-choice>Cadeau de naissance pour mes amis [prénoms des parents]. Quelque chose de folk et lumineux, ukulélé et sifflements, qui célèbre l’arrivée de [prénom du bébé] sans être enfantin. Les parents se sont rencontrés à [lieu].</p>
+              <p data-brief-template-choice>Pour accueillir notre deuxième enfant, [prénom]. On voudrait que son grand frère ou sa grande sœur, [prénom], soit aussi dans la chanson. Style comptine moderne, piano et petites percussions, tendre et joyeux.</p>
+              <p data-brief-template-choice>Une chanson pour notre petit-enfant, [prénom], de la part de ses grands-parents. Une valse lente, un peu à l’ancienne, accordéon et cordes douces. Le message : nous serons toujours là pour toi.</p>
             </div>
             <div data-brief-template-category="Mariage">
-              <p data-brief-template-choice>Création musicale par IA pour un mariage. Prénoms : [Nom à compléter] et [Nom à compléter]. Style : balade cinématique / pop orchestrale / soul élégante. Ambiance : solennelle, lumineuse, émouvante. Date et lieu : [à compléter]. Histoire ou symbole à intégrer : [à compléter].</p>
-              <p data-brief-template-choice>Chanson IA pour ouverture de coffret de mariage. Couple : [Noms à compléter]. Style musical : piano voix / R&amp;B élégant / pop française. Ton : intime, pas trop grandiloquent. Refrain autour de : [phrase ou idée à compléter]. Voix souhaitée : [à compléter].</p>
-              <p data-brief-template-choice>Musique personnalisée IA pour célébrer [Nom à compléter] et [Nom à compléter]. Énergie : douce puis crescendo. Instruments souhaités : piano, cordes, basse légère, percussions discrètes. Souvenirs à intégrer : [rencontre, voyage, promesse]. Mots à éviter : [à compléter].</p>
+              <p data-brief-template-choice>Pour le mariage de [prénom] et [prénom], le [date] à [lieu]. Une ballade pop qui monte doucement jusqu’à un grand final, pour l’entrée des mariés. Leur histoire : [comment ils se sont rencontrés].</p>
+              <p data-brief-template-choice>Cadeau de témoin pour [prénom] et [prénom]. Un titre festif, esprit gospel ou soul, qui donne envie de taper dans les mains. Glisser quelques clins d’œil : [souvenirs d’amis, surnoms, voyage commun].</p>
+              <p data-brief-template-choice>Pour notre première danse. Nous aimons le jazz manouche et les guinguettes : guitare, violon, ambiance chaleureuse et intemporelle. Le refrain pourrait reprendre nos vœux : « [phrase] ».</p>
+              <p data-brief-template-choice>Pour les noces d’or de mes parents, [prénoms], mariés depuis 50 ans. Chanson française élégante, orchestre léger, qui raconte leur vie à deux : [la maison, les enfants, les voyages].</p>
             </div>
-            <div data-brief-template-category="Hommage">
-              <p data-brief-template-choice>Création musicale par IA en hommage à [Nom à compléter]. Style : piano voix / orchestration douce / chanson française sobre. Ambiance : apaisée, digne, chaleureuse, sans pathos excessif. Souvenir ou qualité à évoquer : [à compléter]. Personnes destinataires : [à compléter].</p>
-              <p data-brief-template-choice>Musique IA de mémoire pour [Nom à compléter]. Ton : recueilli et lumineux. Style musical : soul douce / folk acoustique / ambient cinématique. Tempo : lent. Mots importants : [à compléter]. Éviter : [éléments sensibles à compléter].</p>
-              <p data-brief-template-choice>Chanson personnalisée par IA pour garder une présence. Prénom : [Nom à compléter]. Relation : [à compléter]. Souvenirs à intégrer : [voix, lieu, phrase, rituel]. Style : français poétique, instrumentation minimale, voix chaleureuse. Émotion recherchée : [à compléter].</p>
+            <div data-brief-template-category="Amitié">
+              <p data-brief-template-choice>Pour [prénom], mon amie depuis la maternelle, qui part vivre à [ville]. Une chanson pop-rock un peu nostalgique mais pleine d’énergie, sur tout ce qu’on a traversé ensemble : [trois souvenirs].</p>
+              <p data-brief-template-choice>Chanson pour notre bande d’amis, à écouter pendant nos retrouvailles de chaque été. Style reggae ou ska, ensoleillé et plein d’humour. Nos surnoms : [surnoms]. Le lieu de nos vacances : [lieu].</p>
+              <p data-brief-template-choice>Pour remonter le moral de [prénom], qui traverse une période difficile. Un titre doux et plein d’espoir, guitare et voix, qui lui rappelle qu’on est là. Sans jamais nommer ce qui ne va pas.</p>
+              <p data-brief-template-choice>Pour l’enterrement de vie de jeune fille ou de garçon de [prénom]. Un morceau électro-pop dansant et complice, avec des paroles pleines de clins d’œil : [anecdotes à glisser]. Rien de gênant devant la famille.</p>
             </div>
             <div data-brief-template-category="Famille">
-              <p data-brief-template-choice>Création musicale par IA pour [Nom à compléter], offerte par la famille. Style : pop française douce / RNB chaleureux / folk lumineux. Ambiance : gratitude, transmission, complicité. Prénoms à mentionner : [à compléter]. Souvenirs communs : [à compléter].</p>
-              <p data-brief-template-choice>Chanson IA pour maman, papa ou grand-parent. Destinataire : [Nom à compléter]. Style musical : chanson française moderne / piano voix / soul douce. Ton : élégant, tendre, sincère. Message central : merci pour [à compléter]. Détails personnels : [surnom, maison, ville, phrase familiale].</p>
-              <p data-brief-template-choice>Musique personnalisée par IA pour une fratrie ou un groupe. Prénoms : [Noms à compléter]. Style : rap FR positif / pop entraînante / afro-pop douce. Énergie : joyeuse mais raffinée. Souvenirs, blagues privées ou expressions à intégrer : [à compléter].</p>
+              <p data-brief-template-choice>Pour la fête des pères. Mon père, [prénom], adore le blues et la country. Un morceau guitare et harmonica, chaleureux, qui parle de [la pêche, le bricolage, les dimanches…] et le remercie à sa façon.</p>
+              <p data-brief-template-choice>Pour la fête des mères, de la part de [prénoms des enfants]. Une chanson tendre, piano et cordes, dans l’esprit de la variété française d’aujourd’hui. Chacun aimerait y avoir sa petite phrase : [phrases].</p>
+              <p data-brief-template-choice>Pour les 90 ans de ma grand-mère, [prénom], née à [région ou pays]. Si possible avec des sonorités de chez elle : [instrument, langue, musique traditionnelle]. Évoquer [sa cuisine, son jardin, ses histoires].</p>
+              <p data-brief-template-choice>Chanson pour réunir toute la famille à Noël. Joyeuse, un peu jazzy, avec clochettes et chœurs. Mentionner tout le monde : [prénoms], et la maison de [lieu] où l’on se retrouve chaque année.</p>
+            </div>
+            <div data-brief-template-category="Hommage">
+              <p data-brief-template-choice>En mémoire de mon père, [prénom], qui aimait [sa passion]. Une chanson sobre et apaisée, guitare et violoncelle, qui célèbre sa vie plutôt que son absence. Il répétait souvent : « [phrase] ».</p>
+              <p data-brief-template-choice>Pour garder le souvenir de [prénom], partie trop tôt. Un morceau lumineux, presque aérien, sur ce qu’elle nous a laissé : [son rire, sa force, ses mots]. À écouter en famille, sans lourdeur.</p>
+              <p data-brief-template-choice>Hommage à mon grand-père, [prénom], ancien [métier]. Une chanson à l’ancienne, accordéon et voix grave, qui raconte sa vie : [son village, son métier, sa famille].</p>
+              <p data-brief-template-choice>Pour notre compagnon à quatre pattes, [nom], qui a partagé [nombre] années de notre vie. Une petite chanson tendre et un peu drôle, pleine de ses habitudes : [ses manies, ses endroits préférés].</p>
+            </div>
+            <div data-brief-template-category="Merci">
+              <p data-brief-template-choice>Pour le départ à la retraite de [prénom], après [nombre] ans dans l’équipe. Un titre festif et chaleureux, esprit funk ou variété, avec des clins d’œil au bureau : [anecdotes, expressions fétiches].</p>
+              <p data-brief-template-choice>Pour remercier [prénom], la nounou de nos enfants depuis [nombre] ans. Une chanson douce et reconnaissante, où les enfants lui disent merci : [prénoms des enfants].</p>
+              <p data-brief-template-choice>Pour notre professeur, [prénom], de la part de toute la classe. Une chanson pop entraînante, avec un refrain simple que les élèves pourront chanter. À glisser : [matière, expression fétiche, sortie de classe].</p>
+              <p data-brief-template-choice>Pour dire merci à [prénom], qui a été là pendant [l’épreuve ou le projet]. Une ballade soul, sincère et sans excès, sur ce que sa présence a changé pour moi.</p>
             </div>
           </template>
         </div>
