@@ -74,6 +74,7 @@
           </div>
 
           <h1 class="maison-homepage__hero-title">
+            <span class="maison-homepage__hero-kicker">Cassette audio personnalisée</span>
             Certains souvenirs se regardent.<br>
             Celui-ci s&rsquo;&eacute;coute.
           </h1>
@@ -142,12 +143,12 @@
       <div class="maison-homepage__occasions-viewport" role="region" aria-label="Pour quelles occasions">
         <ul class="maison-homepage__occasions-track" aria-hidden="false">
           {%- for occasion in occasions -%}
-            <li>{{ occasion }}</li>
+            {% render 'maison-occasion-item', occasion: occasion, occasion_index: forloop.index %}
           {%- endfor -%}
         </ul>
         <ul class="maison-homepage__occasions-track" aria-hidden="true">
           {%- for occasion in occasions -%}
-            <li>{{ occasion }}</li>
+            {% render 'maison-occasion-item', occasion: occasion, occasion_index: forloop.index, duplicate: true %}
           {%- endfor -%}
         </ul>
       </div>

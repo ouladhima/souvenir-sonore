@@ -78,6 +78,17 @@
   line-height: 1.04;
 }
 
+.maison-homepage__hero-kicker {
+  display: block;
+  margin-bottom: 1.6rem;
+  color: rgba(var(--maison-fg), 0.68);
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
 .maison-homepage__hero-lead {
   margin: 2rem auto 0;
   max-width: 44ch;
@@ -520,6 +531,19 @@ html.js-enabled .maison-homepage__sequence.is-complete .maison-homepage__sequenc
   font-size: clamp(1.7rem, 2.1vw, 2.1rem);
   line-height: 1.5;
   color: rgba(var(--maison-fg), 0.62);
+}
+
+.maison-homepage__occasions-track a,
+.maison-homepage__occasions-track a:visited,
+.maison-homepage__occasions-track a:hover {
+  color: inherit;
+  cursor: inherit;
+  text-decoration: none;
+}
+
+.maison-homepage__occasions-track a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {

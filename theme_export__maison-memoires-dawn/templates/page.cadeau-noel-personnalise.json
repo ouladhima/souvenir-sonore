@@ -1,0 +1,116 @@
+{
+  "sections": {
+    "main": {
+      "type": "seo-intent-page",
+      "blocks": {
+        "meaning": {
+          "type": "text",
+          "settings": {
+            "heading": "Un cadeau de Noël qui garde une voix",
+            "text": "<p>À Noël, les cadeaux les plus précieux sont souvent ceux qui font revenir quelqu’un, une scène ou quelques mots que l’on n’oublie pas. Une cassette audio personnalisée offre cette présence sous une forme que l’on peut tenir, ouvrir et conserver. Vous choisissez un message vocal, une chanson sur mesure ou une création mêlant voix et musique ; nous en faisons un souvenir sonore présenté dans un coffret raffiné.</p><p>Ce cadeau de Noël personnalisé ne cherche pas l’effet de surprise pour un seul soir. Il invite à réécouter une voix familière quand la maison redevient calme, à retrouver une émotion en famille et à transmettre une histoire qui compte. Chaque détail part de la personne à qui vous l’offrez : ses souvenirs, ses liens, ses mots.</p>"
+          }
+        },
+        "grandparents": {
+          "type": "text",
+          "settings": {
+            "heading": "Pour les grands-parents, des voix à garder près de soi",
+            "text": "<p>Un message des petits-enfants peut devenir le cœur du coffret. Une comptine chantée ensemble, quelques phrases spontanées, un souvenir raconté à plusieurs voix : ces instants simples prennent une autre valeur lorsqu’ils restent accessibles après les fêtes. Même à distance, une voix rapproche ceux qui ne peuvent pas être réunis autour du sapin.</p><p>Vous pouvez enregistrer les enfants sans chercher la prise parfaite. Un rire, une hésitation ou un prénom prononcé avec tendresse font aussi partie du souvenir. Le cadeau devient personnel parce qu’il ressemble à votre famille, sans scénario imposé.</p>"
+          }
+        },
+        "distance": {
+          "type": "text",
+          "settings": {
+            "heading": "Pour ceux que l’on ne retrouve pas cette année",
+            "text": "<p>Lorsque la famille ou les amis passent Noël dans des villes différentes, il reste parfois difficile de faire tenir toute son affection dans une carte. Une cassette audio personnalisée permet de dire ce que l’on aurait aimé partager en personne : raconter une année, remercier, adresser une promesse ou simplement souhaiter un beau réveillon dans sa propre voix.</p><p>On peut choisir un message intimiste, une chanson pensée pour cette personne ou un montage de plusieurs proches. Le coffret matérialise cette attention : il donne à l’écoute un moment à part, que la personne pourra retrouver longtemps après la fin des fêtes.</p>"
+          }
+        },
+        "first_christmas": {
+          "type": "text",
+          "settings": {
+            "heading": "Le premier Noël d’un enfant, raconté pour plus tard",
+            "text": "<p>Le premier Noël d’un bébé est aussi un souvenir pour les parents, les frères et sœurs et les grands-parents. Enregistrer quelques mots aujourd’hui, c’est laisser à l’enfant une trace de cette période qu’il ne pourra pas encore raconter lui-même. Une berceuse, les voix de sa famille ou une courte lettre lue à haute voix peuvent former un cadeau de naissance et de Noël à la fois.</p><p>Le coffret peut être offert aux parents dès cette année, puis transmis à l’enfant plus tard. Sa valeur vient du temps qui passe : les voix changent, mais le message demeure.</p>"
+          }
+        },
+        "experience": {
+          "type": "text",
+          "settings": {
+            "heading": "Une création personnelle, pensée pour être offerte",
+            "text": "<p>Le point de départ est simple : choisissez la forme sonore qui convient à votre histoire, puis confiez-nous votre enregistrement ou les indications nécessaires à une création sur mesure. Vous pouvez préciser les prénoms, l’occasion, une anecdote, le ton et les mots que vous souhaitez garder. Pour les créations sur mesure, un aperçu vous est envoyé avant la production afin de confirmer que l’émotion est juste.</p><p>Le coffret et la cassette donnent au cadeau une présence tangible sous le sapin. Ils prolongent le plaisir de l’ouverture par celui de l’écoute. Ce soin apporté à la forme compte autant que le contenu : le cadeau doit sembler choisi pour quelqu’un, jamais pris au hasard.</p>"
+          }
+        },
+        "link_audio": {
+          "type": "link",
+          "settings": {
+            "title": "Découvrir le cadeau audio",
+            "text": "Explorez les différentes façons de personnaliser une cassette avec une voix ou une chanson.",
+            "link_url": "/pages/cadeau-audio-personnalise",
+            "link_label": "Voir le guide du cadeau audio"
+          }
+        },
+        "link_birth": {
+          "type": "link",
+          "settings": {
+            "title": "Pour une naissance",
+            "text": "Une voix enregistrée aujourd’hui peut devenir un souvenir précieux à transmettre plus tard.",
+            "link_url": "/pages/cadeau-naissance-personnalise",
+            "link_label": "Découvrir le cadeau de naissance"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Que peut contenir une cassette de Noël personnalisée ?",
+            "answer": "<p>Selon votre intention, elle peut accueillir un message vocal, une chanson créée sur mesure ou une composition mêlant voix et musique. Le contenu se construit autour de la personne à qui vous l’offrez.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je réunir plusieurs voix de la famille ?",
+            "answer": "<p>Oui, vous pouvez décrire votre projet et transmettre les éléments sonores utiles lors de la personnalisation. Indiquez qui intervient et l’ordre souhaité pour que le souvenir raconte votre histoire.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Puis-je écouter le résultat avant la production ?",
+            "answer": "<p>Pour une création audio sur mesure, un aperçu est envoyé avant la production. Il permet de vérifier le ton et de confirmer le rendu.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Quand préparer un cadeau audio pour Noël ?",
+            "answer": "<p>Commencez dès que vous avez votre idée et les voix que vous souhaitez réunir. Le temps nécessaire dépend du format choisi et des éléments à transmettre ; consultez les délais affichés sur la fiche produit avant de commander.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "meaning",
+        "grandparents",
+        "distance",
+        "first_christmas",
+        "experience",
+        "link_audio",
+        "link_birth",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "eyebrow": "Idée cadeau de Noël",
+        "heading": "Cadeau de Noël personnalisé : une voix à offrir, un souvenir à garder",
+        "intro": "<p>Pour Noël, offrez davantage qu’un objet : une voix, une chanson ou quelques mots qui continueront d’accompagner la personne aimée. Maison des mémoires en fait une cassette audio personnalisée dans un coffret pensé pour l’émotion du moment et la beauté du souvenir.</p>",
+        "primary_label": "Créer ma cassette audio",
+        "primary_link": "/products/ecrin-sonore-cassette-audio-personnalisee",
+        "secondary_label": "Lire les questions",
+        "secondary_link": "",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

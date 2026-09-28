@@ -14,6 +14,13 @@
   assign privacy_page = pages['politique-de-confidentialite']
   assign legal_page = pages['mentions-legales']
   assign shipping_page = pages['livraison']
+  assign sale_policy = blank
+  for policy in shop.policies
+    if policy.url contains '/policies/terms-of-sale'
+      assign sale_policy = policy
+      break
+    endif
+  endfor
 
   assign has_cgv_content = false
   if cgv_page != blank
@@ -51,13 +58,13 @@
   endif
 
   assign has_purchase_links = false
-  if has_shipping_content
+  if shop.shipping_policy != blank or has_shipping_content
     assign has_purchase_links = true
   endif
-  if has_return_content
+  if shop.refund_policy != blank or has_return_content
     assign has_purchase_links = true
   endif
-  if has_cgv_content
+  if sale_policy != blank or has_cgv_content
     assign has_purchase_links = true
   endif
 
@@ -78,17 +85,23 @@
     <nav class="maison-legal-links maison-legal-links--purchase" aria-label="Informations utiles avant achat">
       <span class="maison-legal-links__title">Informations utiles</span>
       <ul class="maison-legal-links__list list-unstyled">
-        {%- if has_shipping_content -%}
+        {%- if shop.shipping_policy != blank -%}
+          <li><a href="{{ shop.shipping_policy.url }}">Livraison</a></li>
+        {%- elsif has_shipping_content -%}
           <li>
             <a href="{{ shipping_page.url }}">{{ shipping_page.title | default: 'Livraison' | escape }}</a>
           </li>
         {%- endif -%}
-        {%- if has_return_content -%}
+        {%- if shop.refund_policy != blank -%}
+          <li><a href="{{ shop.refund_policy.url }}">Politique de retour</a></li>
+        {%- elsif has_return_content -%}
           <li>
             <a href="{{ return_page.url }}">{{ return_page.title | default: 'Politique de retour' | escape }}</a>
           </li>
         {%- endif -%}
-        {%- if has_cgv_content -%}
+        {%- if sale_policy != blank -%}
+          <li><a href="{{ sale_policy.url }}">Conditions générales de vente</a></li>
+        {%- elsif has_cgv_content -%}
           <li>
             <a href="{{ cgv_page.url }}">{{ cgv_page.title | default: 'CGV' | escape }}</a>
           </li>

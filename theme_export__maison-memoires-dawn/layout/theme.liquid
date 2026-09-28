@@ -7,6 +7,21 @@
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    {%- if request.page_type == 'search' or request.page_type == 'list-collections' or request.page_type == '404' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- elsif request.page_type == 'collection' -%}
+      {%- if collection.handle == 'frontpage' or collection.handle == 'all' -%}
+        <meta name="robots" content="noindex, follow">
+      {%- endif -%}
+    {%- elsif request.page_type == 'page' -%}
+      {%- case page.handle -%}
+        {%- when 'cgv', 'livraison', 'politique-de-retour', 'politique-de-confidentialite', 'mentions-legales' -%}
+          <meta name="robots" content="noindex, follow">
+      {%- endcase -%}
+    {%- elsif request.page_type == 'blog' and blog.articles_count == 0 -%}
+      <meta name="robots" content="noindex, follow">
+    {%- endif -%}
+
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
@@ -42,6 +57,9 @@
           when 'cadeau-mariage-personnalise'
             assign seo_page_title = 'Cadeau mariage personnalisé | Maison des mémoires'
             assign seo_page_description = 'Un cadeau de mariage personnalisé à écouter et conserver : cassette audio, message vocal ou chanson sur mesure dans un coffret élégant.'
+          when 'cadeau-noel-personnalise'
+            assign seo_page_title = 'Cadeau de Noël personnalisé | Maison des mémoires'
+            assign seo_page_description = 'Offrez un cadeau de Noël personnalisé qui garde une voix ou une chanson dans une cassette audio et un coffret raffiné, pensé pour durer.'
         endcase
       endif
     -%}

@@ -7,6 +7,16 @@
   assign og_locale = request.locale.iso_code | replace: '-', '_'
   assign social_image_source = page_image | default: settings.brand_image | default: settings.logo
 
+  if social_image_source != blank
+    assign social_image = social_image_source | image_url: width: 1200 | prepend: 'https:'
+    assign social_image_width = social_image_source.width | at_most: 1200
+    assign social_image_height = social_image_width | divided_by: social_image_source.aspect_ratio | round
+  else
+    assign social_image = 'maison-home-showcase-2.png' | asset_url | prepend: 'https:'
+    assign social_image_width = 1536
+    assign social_image_height = 1024
+  endif
+
   if request.page_type == 'product'
     assign og_type = 'product'
   elsif request.page_type == 'article'
@@ -23,13 +33,10 @@
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 
-{%- if social_image_source -%}
-  {%- assign social_image = social_image_source | image_url: width: 1200 | prepend: 'https:' -%}
-  <meta property="og:image" content="{{ social_image }}">
-  <meta property="og:image:secure_url" content="{{ social_image }}">
-  <meta property="og:image:width" content="{{ social_image_source.width }}">
-  <meta property="og:image:height" content="{{ social_image_source.height }}">
-{%- endif -%}
+<meta property="og:image" content="{{ social_image }}">
+<meta property="og:image:secure_url" content="{{ social_image }}">
+<meta property="og:image:width" content="{{ social_image_width }}">
+<meta property="og:image:height" content="{{ social_image_height }}">
 
 {%- if request.page_type == 'product' -%}
   <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
@@ -42,7 +49,5 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
-{%- if social_image_source -%}
-  <meta name="twitter:image" content="{{ social_image }}">
-  <meta name="twitter:image:alt" content="{{ og_title | escape }}">
-{%- endif -%}
+<meta name="twitter:image" content="{{ social_image }}">
+<meta name="twitter:image:alt" content="{{ og_title | escape }}">

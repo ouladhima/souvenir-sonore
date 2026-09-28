@@ -2,7 +2,33 @@
   assign site_url = shop.url | default: request.origin
   assign organization_id = site_url | append: '#organization'
   assign website_id = site_url | append: '#website'
-  assign current_title = seo_title | default: page_title | default: shop.name
+  assign organization_logo = settings.logo | default: shop.brand.logo
+  assign breadcrumb_title = blank
+  case request.page_type
+    when 'product'
+      assign breadcrumb_title = product.title
+    when 'page'
+      assign breadcrumb_title = page.title
+    when 'collection'
+      assign breadcrumb_title = collection.title
+    when 'blog'
+      assign breadcrumb_title = blog.title
+    when 'article'
+      assign breadcrumb_title = article.title
+  endcase
+  assign social_urls = settings.social_instagram_link | append: '|' | append: settings.social_pinterest_link | append: '|' | append: settings.social_tiktok_link | split: '|'
+  assign has_social_url = false
+  capture organization_social_urls
+    for social_url in social_urls
+      if social_url != blank
+        if has_social_url
+          echo ','
+        endif
+        echo social_url | json
+        assign has_social_url = true
+      endif
+    endfor
+  endcapture
   assign brand_description = shop.description | default: 'Maison des mémoires crée des cassettes audio personnalisées et des coffrets cadeaux sonores pensés pour conserver une voix, une émotion et un souvenir.'
   assign search_template = request.origin | append: routes.search_url | append: '?q={search_term_string}'
 -%}
@@ -17,8 +43,11 @@
         "name": {{ shop.name | default: 'Maison des mémoires' | json }},
         "url": {{ site_url | json }},
         "description": {{ brand_description | strip_html | json }}
-        {%- if settings.logo != blank -%}
-          ,"logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}
+        {%- if organization_logo != blank -%}
+          ,"logo": {{ organization_logo | image_url: width: 600 | prepend: 'https:' | json }}
+        {%- endif -%}
+        {%- if has_social_url -%}
+          ,"sameAs": [{{ organization_social_urls | strip }}]
         {%- endif -%}
       },
       {
@@ -40,7 +69,7 @@
           "query-input": "required name=search_term_string"
         }
       }
-      {%- unless request.page_type == 'index' -%}
+      {%- if breadcrumb_title != blank -%}
         ,
         {
           "@type": "BreadcrumbList",
@@ -55,12 +84,12 @@
             {
               "@type": "ListItem",
               "position": 2,
-              "name": {{ current_title | strip_html | json }},
+              "name": {{ breadcrumb_title | strip_html | json }},
               "item": {{ canonical_url | json }}
             }
           ]
         }
-      {%- endunless -%}
+      {%- endif -%}
     ]
   }
 </script>

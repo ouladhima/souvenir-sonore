@@ -13,6 +13,13 @@
         <div class="seo-intent-page__intro rte">{{ section.settings.intro }}</div>
       {%- endif -%}
 
+      {%- if section.settings.hero_image != blank -%}
+        {%- assign hero_image_alt = section.settings.hero_image_alt | default: section.settings.heading -%}
+        <figure class="seo-intent-page__image">
+          {{ section.settings.hero_image | image_url: width: 1400 | image_tag: alt: hero_image_alt, loading: 'eager', widths: '375, 550, 750, 990, 1200, 1400', sizes: '(min-width: 990px) 760px, 100vw' }}
+        </figure>
+      {%- endif -%}
+
       <div class="seo-intent-page__actions">
         {%- if section.settings.primary_label != blank -%}
           <a
@@ -136,6 +143,18 @@
     color: rgba(var(--color-foreground), 0.75);
     font-size: 1.7rem;
     line-height: 1.75;
+  }
+
+  .seo-intent-page__image {
+    max-width: 76rem;
+    margin: 0 auto;
+  }
+
+  .seo-intent-page__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1.6rem;
   }
 
   .seo-intent-page__actions {
@@ -276,6 +295,16 @@
       "id": "intro",
       "label": "Introduction",
       "default": "<p>Un cadeau audio personnalisé permet de transmettre une voix, une chanson ou une émotion dans un format pensé pour être conservé.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Image du cadeau"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Description de l'image"
     },
     {
       "type": "text",

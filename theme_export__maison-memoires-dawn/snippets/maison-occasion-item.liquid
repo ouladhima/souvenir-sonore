@@ -1,0 +1,38 @@
+{% doc %}
+  Renders one occasion in the scrolling list, linking only occasions with a matching gift page.
+
+  @param {string} occasion - Visible occasion text.
+  @param {number} occasion_index - One-based position in the list.
+  @param {boolean} [duplicate] - Keep the visual duplicate out of keyboard navigation.
+{% enddoc %}
+
+{%- liquid
+  assign gift_page_handle = blank
+  case occasion_index
+    when 1
+      assign gift_page_handle = 'cadeau-anniversaire-personnalise'
+    when 2
+      assign gift_page_handle = 'cadeau-personnalise-couple'
+    when 3
+      assign gift_page_handle = 'cadeau-naissance-personnalise'
+    when 4
+      assign gift_page_handle = 'cadeau-mariage-personnalise'
+    when 9
+      assign gift_page_handle = 'cadeau-noel-personnalise'
+    when 10
+      assign gift_page_handle = 'cadeau-personnalise-couple'
+  endcase
+
+  assign gift_page = blank
+  if gift_page_handle != blank
+    assign gift_page = pages[gift_page_handle]
+  endif
+-%}
+
+<li>
+  {%- if gift_page != blank -%}
+    <a href="{{ gift_page.url }}"{% if duplicate %} tabindex="-1"{% endif %}>{{ occasion }}</a>
+  {%- else -%}
+    {{ occasion }}
+  {%- endif -%}
+</li>
