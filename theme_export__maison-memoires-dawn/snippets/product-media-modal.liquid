@@ -39,9 +39,31 @@
         endif
       -%}
 
+      {%- liquid
+        # Maison: per-variant media groups, same rule as the gallery
+        assign use_media_groups = false
+        if section.settings.hide_variants and variant_images.size > 0
+          capture media_group_ids
+            render 'variant-media-group-ids', product: product, variant: product.selected_or_first_available_variant
+          endcapture
+          assign media_group_ids = media_group_ids | strip | split: ','
+          if media_group_ids.size > 0
+            assign use_media_groups = true
+          endif
+        endif
+      -%}
+
       {%- for media in product.media -%}
+        {%- if use_media_groups -%}
+          {%- assign media_key = media.id | append: '' -%}
+          {%- unless media_group_ids contains media_key -%}
+            {%- continue -%}
+          {%- endunless -%}
+        {%- endif -%}
         {%- liquid
-          if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
+          if use_media_groups
+            assign variant_image = false
+          elsif section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
             assign variant_image = true
           else
             assign variant_image = false

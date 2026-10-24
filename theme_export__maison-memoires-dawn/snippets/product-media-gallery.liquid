@@ -25,6 +25,23 @@
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
 
+  # Maison: per-variant media groups (several photos/videos per coffret), see 'variant-media-group-ids'
+  assign use_media_groups = false
+  if section.settings.hide_variants and variant_images.size > 0 and limit != 1
+    capture media_group_ids
+      render 'variant-media-group-ids', product: product, variant: product.selected_or_first_available_variant
+    endcapture
+    assign media_group_ids = media_group_ids | strip | split: ','
+    if media_group_ids.size > 0
+      assign use_media_groups = true
+      assign media_count = media_group_ids.size
+      assign single_media_visible = false
+      if media_count == 1
+        assign single_media_visible = true
+      endif
+    endif
+  endif
+
   if media_count == 1 or single_media_visible
     assign single_media_visible_mobile = true
   endif
@@ -86,13 +103,18 @@
         </li>
       {%- endif -%}
       {%- for media in product.media -%}
-        {% if media_position >= limit
+        {%- if use_media_groups -%}
+          {%- assign media_key = media.id | append: '' -%}
+          {%- unless media_group_ids contains media_key -%}
+            {%- continue -%}
+          {%- endunless -%}
+        {%- elsif media_position >= limit
           or media_position >= 1
           and section.settings.hide_variants
           and variant_images contains media.src
-        %}
-          {% continue %}
-        {% endif %}
+        -%}
+          {%- continue -%}
+        {%- endif -%}
 
         {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
           <li
@@ -252,6 +274,12 @@
           </li>
         {%- endif -%}
         {%- for media in product.media -%}
+          {%- if use_media_groups -%}
+            {%- assign media_key = media.id | append: '' -%}
+            {%- unless media_group_ids contains media_key -%}
+              {%- continue -%}
+            {%- endunless -%}
+          {%- endif -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             {%- liquid
               capture media_index

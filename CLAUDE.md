@@ -68,6 +68,8 @@ Other custom pieces:
 - `templates/page.cadeau-*.json` (+ `page.cadeau-personnalise-couple.json`) — SEO landing page templates. As of 2026-09-28 the matching pages were **not created in the Shopify admin** (all return 404), so they are not live yet.
 - Page `<title>`/description overrides for home, product and landing pages are in `layout/theme.liquid`. The shop name is « Maison Mémoire » while copy says « Maison des mémoires »; the title logic treats both as the brand so it is not repeated.
 - `snippets/maison-legal-links.liquid` — legal links shown near purchase.
+- Product gallery media groups (`snippets/variant-media-group-ids.liquid`, used by `product-media-gallery` and `product-media-modal` when "hide other variants' media" is on): grouping follows the media order in the admin. Media before the first variant image show for every variant; a variant image starts a group that includes the photos/videos after it, up to the next variant image. On variant change, `MediaGallery.syncFromHtml()` (`assets/media-gallery.js`, called from `product-info.js` `updateMedia`) re-syncs thumbnails, slide classes and slider buttons.
+- Favicon: `snippets/favicon-links.liquid` (cassette SVG/PNG + apple-touch-icon in `assets/`); a favicon set in the Theme Editor overrides it.
 
 ## Gotchas
 

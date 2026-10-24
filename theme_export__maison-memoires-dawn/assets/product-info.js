@@ -298,6 +298,9 @@ if (!customElements.get('product-info')) {
           });
         }
 
+        // Maison: sync thumbnails and classes for per-coffret media groups
+        this.querySelector('media-gallery')?.syncFromHtml?.(html.querySelector('media-gallery'));
+
         // set featured media as active in the media gallery
         this.querySelector(`media-gallery`)?.setActiveMedia?.(
           `${this.dataset.section}-${variantFeaturedMediaId}`,

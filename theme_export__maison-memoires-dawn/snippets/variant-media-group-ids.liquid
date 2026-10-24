@@ -1,0 +1,34 @@
+{%- comment -%}
+  Outputs a comma-separated list of the media ids to show for a variant.
+  Used by the product gallery when "hide other variants' media" is on.
+
+  Grouping follows the media order set in the Shopify admin:
+  - media placed before the first variant image are shown for every variant;
+  - a variant image starts a group, and the media that follow it (extra photos,
+    videos) belong to that group until the next variant image.
+  So: image "Coffret standard" + its photos/videos, then image "Coffret premium"
+  + its photos/videos, and so on.
+
+  Accepts:
+  - product: {Object}
+  - variant: {Object} the selected variant
+{%- endcomment -%}
+{%- liquid
+  assign variant_image_srcs = product.images | where: 'attached_to_variant?', true | map: 'src'
+  assign featured_key = ''
+  if variant.featured_media != blank
+    assign featured_key = variant.featured_media.id | append: ''
+  endif
+
+  assign group_key = 'common'
+  for media in product.media
+    assign media_key = media.id | append: ''
+    if media.media_type == 'image' and variant_image_srcs contains media.src
+      assign group_key = media_key
+    endif
+
+    if featured_key == '' or group_key == 'common' or group_key == featured_key
+      echo media_key | append: ','
+    endif
+  endfor
+-%}

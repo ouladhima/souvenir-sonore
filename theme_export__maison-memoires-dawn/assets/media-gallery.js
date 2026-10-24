@@ -10,9 +10,13 @@ if (!customElements.get('media-gallery')) {
           thumbnails: this.querySelector('[id^="GalleryThumbnails"]'),
         };
         this.mql = window.matchMedia('(min-width: 750px)');
+        this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
+        this.bindThumbnails();
+      }
+
+      bindThumbnails() {
         if (!this.elements.thumbnails) return;
 
-        this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
         this.elements.thumbnails.querySelectorAll('[data-target]').forEach((mediaToSwitch) => {
           mediaToSwitch
             .querySelector('button')
@@ -21,7 +25,41 @@ if (!customElements.get('media-gallery')) {
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
       }
 
+      // Maison: after a variant change, align thumbnails, slide classes and slider buttons
+      // with the freshly rendered gallery (each coffret can have its own photos/videos).
+      syncFromHtml(newGallery) {
+        if (!newGallery) return;
+
+        this.elements.viewer.querySelectorAll('li[data-media-id]').forEach((item) => {
+          const match = newGallery.querySelector(`li[data-media-id="${item.dataset.mediaId}"]`);
+          if (match) item.className = match.className;
+        });
+
+        const buttons = this.elements.viewer.querySelector('.slider-buttons');
+        const newButtons = newGallery.querySelector('.slider-buttons');
+        if (buttons && newButtons) buttons.className = newButtons.className;
+
+        const thumbnails = this.querySelector('[id^="GalleryThumbnails"]');
+        const newThumbnails = newGallery.querySelector('[id^="GalleryThumbnails"]');
+        const targets = (element) =>
+          element
+            ? Array.from(element.querySelectorAll('[data-target]'), (item) => item.dataset.target)
+                .sort()
+                .join()
+            : '';
+        if (targets(thumbnails) === targets(newThumbnails)) return;
+
+        const imported = newThumbnails ? document.importNode(newThumbnails, true) : null;
+        if (thumbnails && imported) thumbnails.replaceWith(imported);
+        else if (thumbnails) thumbnails.remove();
+        else if (imported) this.elements.viewer.after(imported);
+
+        this.elements.thumbnails = imported;
+        this.bindThumbnails();
+      }
+
       onSlideChanged(event) {
+        if (!this.elements.thumbnails) return;
         const thumbnail = this.elements.thumbnails.querySelector(
           `[data-target="${event.detail.currentElement.dataset.mediaId}"]`
         );
