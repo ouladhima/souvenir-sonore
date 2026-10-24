@@ -86,7 +86,12 @@
   margin: 0;
 }
 
-/* Top-right of the main image: the bottom of the stage holds the thumbnails, the top-left the zoom icon */
+/* Badges sit inside the main image viewer: top-right on mobile (zoom icon is top-left,
+   slider counter below), bottom-right from tablet up. */
+.audio-keepsake-product__media-stage .product__media-viewport {
+  position: relative;
+}
+
 .audio-keepsake-product__media-badges {
   position: absolute;
   right: 1.2rem;
@@ -646,14 +651,20 @@
   }
 
   .audio-keepsake-product__media-badges {
-    right: 2rem;
-    top: 2rem;
     gap: 0.7rem;
-    max-width: calc(100% - 7rem);
   }
 
   .audio-keepsake-product__media-badges span {
     min-height: 2.8rem;
     padding: 0.55rem 0.9rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .audio-keepsake-product__media-badges {
+    top: auto;
+    right: 2rem;
+    bottom: 2rem;
+    max-width: calc(100% - 4rem);
   }
 }

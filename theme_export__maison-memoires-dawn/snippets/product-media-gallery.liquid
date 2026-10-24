@@ -6,6 +6,7 @@
   - product: {Object} Product liquid object
   - variant_images: {Array} Product images associated with a variant
   - limit: {Number} (optional) When passed, limits the number of media items to render
+  - media_overlay: {String} (optional) HTML placed over the main image (inside the viewer, not over the thumbnails)
 
   Usage:
   {% render 'product-media-gallery' %}
@@ -73,6 +74,7 @@
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
+    {%- if media_overlay != blank -%}<div class="product__media-viewport">{%- endif -%}
     <ul
       id="Slider-Gallery-{{ section.id }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
@@ -147,6 +149,7 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
+    {%- if media_overlay != blank -%}{{ media_overlay }}</div>{%- endif -%}
     <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
       <button
         type="button"
