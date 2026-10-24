@@ -21,7 +21,7 @@ if (!customElements.get('audio-keepsake-form')) {
 
         this.proxyButtons = Array.from(this.querySelectorAll('[data-audio-proxy-submit]'));
         this.proxyButtons.forEach((button) => button.addEventListener('click', this.handleProxySubmit));
-        this.mediaBadges = this.productInfo.querySelector('[data-audio-media-badges]');
+        this.mediaBadges = Array.from(this.productInfo.querySelectorAll('[data-audio-media-badges]'));
 
         this.productInfo.addEventListener('change', this.handleChange);
         this.syncFromState();
@@ -133,9 +133,10 @@ if (!customElements.get('audio-keepsake-form')) {
       }
 
       updateMediaBadges(mode) {
-        if (!this.mediaBadges) return;
-
-        this.mediaBadges.hidden = mode !== 'ai' && mode !== 'voice_music';
+        const hidden = mode !== 'ai' && mode !== 'voice_music';
+        this.mediaBadges?.forEach((badge) => {
+          badge.hidden = hidden;
+        });
       }
 
       syncProxyButtons() {
