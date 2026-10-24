@@ -1,0 +1,10 @@
+{%- comment -%}
+  Favicon: cassette by default. A favicon set in the Theme Editor takes over.
+{%- endcomment -%}
+{%- if settings.favicon != blank -%}
+  <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+{%- else -%}
+  <link rel="icon" type="image/svg+xml" href="{{ 'favicon-cassette.svg' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ 'favicon-cassette-96.png' | asset_url }}">
+{%- endif -%}
+<link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url }}">

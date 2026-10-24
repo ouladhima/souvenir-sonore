@@ -11,7 +11,17 @@
   "sections": {
     "main": {
       "type": "maison-homepage",
-      "settings": {}
+      "settings": {
+        "home_product": "",
+        "ai_audio_heading": "Quelques instants… à écouter",
+        "ai_audio_subtext": "Des mots simples. Des voix vraies. Des souvenirs qui restent.",
+        "ai_audio_1_label": "Message entre amis",
+        "ai_audio_1_url": "https://cdn.shopify.com/s/files/1/1065/6710/6824/files/Enregistrement_vacances_antoine.m4a?v=1790447315",
+        "ai_audio_1_desc": "Message personnalisé pour un ami qui n'a pas pu se rendre disponible.",
+        "ai_audio_2_label": "Musique latino pour déclarer son amour",
+        "ai_audio_2_url": "https://cdn.shopify.com/s/files/1/1065/6710/6824/files/Faro_en_la_Oscuridad.mp3?v=1790447398",
+        "ai_audio_2_desc": "Musique générée par nos soin en espagnol."
+      }
     }
   },
   "order": [
